@@ -1,54 +1,29 @@
 ---
-import AppLayout from "../../../layouts/AppLayout.astro";
+import AppLayout from "@/layouts/AppLayout.astro";
+import GlobalSearch from "@/features/schedules/components/composition/GlobalSearch.astro";
+import Card from "@/components/UI/Card.astro";
+import Badge from "@/components/UI/Badge.astro";
 import {
   semesterLabel,
   groups,
   scheduleEntries,
   getScheduleSummary,
-} from "../../../lib/schedules";
+} from "@/lib/schedules";
 
 const summary = getScheduleSummary(scheduleEntries);
 
 const spotlightItems = [
   {
-    title: "Ver horarios de estudiantes",
-    description:
-      "Consulta por carrera, grupo y día para entender rápidamente la carga académica.",
+    title: "Vista de Estudiantes",
+    description: "Consulta por carrera, año y grupo con detección de conflictos.",
     href: "/campus/schedules/students",
-    label: "Vista de estudiantes",
+    icon: "🎓",
   },
   {
-    title: "Ver horarios de profesores",
-    description:
-      "Busca a un docente y revisa su semana, materias y distribución de carga.",
+    title: "Vista de Profesores",
+    description: "Busca a un docente y revisa su carga semanal y materias.",
     href: "/campus/schedules/professors",
-    label: "Vista de docentes",
-  },
-  {
-    title: "Explorar insights",
-    description:
-      "Analiza carreras, aulas, bloques críticos y el tamaño general del dataset.",
-    href: "/campus/schedules/insights",
-    label: "Análisis del sistema",
-  },
-];
-
-const semesterCards = [
-  {
-    title: semesterLabel,
-    description:
-      "Cuatrimestre activo con horarios procesados desde PDFs oficiales.",
-    active: true,
-  },
-  {
-    title: "Próximo cuatrimestre",
-    description: "Espacio reservado para futuras cargas de horarios.",
-    active: false,
-  },
-  {
-    title: "Archivo histórico",
-    description: "Estructura preparada para guardar periodos anteriores.",
-    active: false,
+    icon: "👨‍🏫",
   },
 ];
 ---
@@ -62,54 +37,54 @@ const semesterCards = [
       <div class="hero-copy">
         <p class="eyebrow">Sistema de Horarios Académicos</p>
         <h1 class="hero-title">
-          Horarios claros, consultables y listos para usar.
+          Tus horarios, <span class="text-gradient">claros y consultables</span>.
         </h1>
         <p class="hero-text text-soft">
-          Centralizamos los PDFs oficiales de la universidad en una estructura
-          digital que permite leer horarios por día, carrera o profesor sin
-          perder tiempo descifrando tablas.
+          Explora la carga académica del periodo <strong>{semesterLabel}</strong>. 
+          Datos sincronizados desde el catálogo oficial de la universidad.
         </p>
 
-        <div class="hero-actions">
-          <a class="hero-button primary" href="/campus/schedules/students"
-            >Ver estudiantes</a
-          >
-          <a class="hero-button secondary" href="/campus/schedules/professors"
-            >Ver profesores</a
-          >
+        <GlobalSearch />
+
+        <div class="hero-meta">
+          <Badge size="xs" variant="muted">Dataset v2.4</Badge>
+          <span class="text-xs text-soft">Última actualización: Hoy, 08:30 AM</span>
         </div>
       </div>
 
-      <div class="card hero-panel">
+      <Card class="hero-panel" padding="lg">
         <div class="panel-top">
           <span class="panel-tag">Datos del periodo</span>
-          <strong>{semesterLabel}</strong>
+          <Badge variant="primary">{semesterLabel}</Badge>
         </div>
 
         <div class="panel-grid">
-          <div>
-            <span>Entradas</span>
-            <strong>{summary.totalEntries}</strong>
-          </div>
-          <div>
+          <a href="/campus/schedules/students" class="panel-stat">
             <span>Profesores</span>
             <strong>{summary.totalProfessors}</strong>
-          </div>
-          <div>
+          </a>
+          <a href="/campus/schedules/students" class="panel-stat">
             <span>Carreras</span>
             <strong>{summary.totalMajors}</strong>
-          </div>
-          <div>
+          </a>
+          <a href="/campus/schedules/students" class="panel-stat">
             <span>Grupos</span>
             <strong>{groups.length}</strong>
-          </div>
+          </a>
+          <a href="/campus/schedules/students" class="panel-stat">
+            <span>Clases</span>
+            <strong>{summary.totalEntries}</strong>
+          </a>
         </div>
 
-        <p class="panel-note text-soft">
-          Fuente: PDFs oficiales de la universidad, procesados por el Community
-          Hub. Este sitio no sustituye al sistema oficial.
-        </p>
-      </div>
+        <div class="panel-insight">
+          <p class="insight-label">Insight del periodo</p>
+          <p class="insight-value">
+            La materia con más secciones es <strong>{summary.mostPopularSubject?.name}</strong> 
+            con {summary.mostPopularSubject?.count} grupos activos.
+          </p>
+        </div>
+      </Card>
     </div>
   </section>
 
@@ -126,10 +101,12 @@ const semesterCards = [
         {
           spotlightItems.map((item) => (
             <a class="card access-card" href={item.href}>
-              <p class="access-label">{item.label}</p>
-              <h3>{item.title}</h3>
-              <p class="text-soft">{item.description}</p>
-              <span class="access-cta">Abrir vista</span>
+              <div class="access-icon">{item.icon}</div>
+              <div class="access-content">
+                <h3>{item.title}</h3>
+                <p class="text-soft">{item.description}</p>
+              </div>
+              <div class="access-arrow">→</div>
             </a>
           ))
         }
@@ -194,50 +171,28 @@ const semesterCards = [
     font-size: var(--font-size-lg);
   }
 
-  .hero-actions {
+  .hero-meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  .hero-button {
-    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    padding: 0 var(--space-5);
-    border-radius: var(--radius-full);
-    font-weight: var(--font-weight-semibold);
-    border: 1px solid transparent;
-  }
-
-  .hero-button.primary {
-    background: var(--color-primary);
-    color: var(--color-text-on-brand);
-  }
-
-  .hero-button.secondary {
-    background: var(--color-surface);
-    color: var(--color-text);
-    border-color: var(--color-border);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
   }
 
   .hero-panel {
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
+    background: linear-gradient(180deg, var(--color-surface) 0%, color-mix(in srgb, var(--color-surface) 95%, var(--color-primary)) 100%);
   }
 
   .panel-top {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
   }
 
-  .panel-tag,
-  .semester-card-header span,
-  .access-label {
+  .panel-tag {
     font-size: var(--font-size-xs);
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -247,16 +202,26 @@ const semesterCards = [
   .panel-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
+    gap: var(--space-3);
   }
 
-  .panel-grid div {
+  .panel-stat {
     padding: var(--space-4);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
   }
 
-  .panel-grid span {
+  .panel-stat:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    background: var(--color-surface);
+  }
+
+  .panel-stat span {
     display: block;
     margin-bottom: var(--space-1);
     font-size: var(--font-size-xs);
@@ -265,12 +230,30 @@ const semesterCards = [
     color: var(--color-text-muted);
   }
 
-  .panel-grid strong {
+  .panel-stat strong {
     font-size: var(--font-size-2xl);
+    color: var(--color-primary);
   }
 
-  .panel-note {
+  .panel-insight {
+    margin-top: var(--space-2);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-accent) 5%, var(--color-surface));
+    border: 1px dashed var(--color-accent);
+  }
+
+  .insight-label {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 4px;
+  }
+
+  .insight-value {
     font-size: var(--font-size-sm);
+    margin: 0;
   }
 
   .section-heading {
@@ -281,50 +264,56 @@ const semesterCards = [
     margin-bottom: var(--space-5);
   }
 
-  .section-heading h2 {
-    margin-bottom: 0;
-  }
-
-  .section-copy {
-    max-width: 42ch;
-  }
-
-  .semester-grid,
   .access-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .semester-card,
   .access-card {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    min-height: 100%;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-5);
     text-decoration: none;
     color: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .semester-card-active {
+  .access-card:hover {
     border-color: var(--color-primary);
-    box-shadow: var(--shadow-md);
+    background: color-mix(in srgb, var(--color-primary) 2%, var(--color-surface));
+    transform: scale(1.01);
   }
 
-  .semester-card-header {
+  .access-icon {
+    font-size: 2.5rem;
+    background: var(--color-surface-muted);
+    width: 64px;
+    height: 64px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--space-4);
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-xl);
   }
 
-  .access-card:hover .access-cta {
-    transform: translateX(4px);
+  .access-content {
+    flex: 1;
   }
 
-  .access-cta {
-    margin-top: auto;
-    font-weight: var(--font-weight-semibold);
+  .access-content h3 {
+    margin: 0 0 4px 0;
+  }
+
+  .access-arrow {
+    font-size: 1.5rem;
     color: var(--color-primary);
-    transition: transform 0.2s ease;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .access-card:hover .access-arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .transparency {
