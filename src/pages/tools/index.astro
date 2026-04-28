@@ -1,0 +1,27 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+---
+
+<AppLayout title="Herramientas">
+  <section class="section">
+    <div class="container text-center">
+      <h1>Herramientas</h1>
+      <p class="text-soft">Utilidades diseñadas para resolver problemas concretos del día a día académico.</p>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="grid grid-cols-2">
+        <a href="/tools/parser" class="card">
+          <h3>Parser de Horarios</h3>
+          <p>Convierte tu horario en un calendario.</p>
+        </a>
+        <div class="card">
+          <h3 class="text-muted">Calculadora de Promedio (Próximamente)</h3>
+          <p>Gestiona tus notas de forma sencilla.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</AppLayout>

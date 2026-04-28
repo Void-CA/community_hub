@@ -1,11 +1,44 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import AppLayout from '../layouts/AppLayout.astro';
+import BentoGrid from '../components/Home/BentoGrid.astro';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<AppLayout title="Bienvenido">
+  <section class="hero section">
+    <div class="container text-center">
+      <h1 class="hero-title">ULSA Community Hub</h1>
+      <p class="hero-subtitle text-soft">
+        Centralizando herramientas, recursos y colaboración para la comunidad estudiantil.
+      </p>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <BentoGrid />
+    </div>
+  </section>
+</AppLayout>
+
+<style>
+  .hero {
+    padding-bottom: var(--space-8);
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin-bottom: var(--space-4);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pt-0 {
+    padding-top: 0;
+  }
+</style>

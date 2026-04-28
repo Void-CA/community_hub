@@ -1,0 +1,55 @@
+---
+import BentoCard from './BentoCard.astro';
+---
+
+<div class="bento-grid">
+  <BentoCard 
+    title="Parser de Horarios" 
+    description="Transforma tu PDF del SIGA en un calendario digital usable en segundos."
+    href="/tools/parser"
+    category="Herramienta"
+    span="medium"
+    color="var(--brand-500)"
+  />
+  
+  <BentoCard 
+    title="Guías Rápidas" 
+    description="Explicaciones prácticas para trámites y herramientas académicas."
+    href="/resources"
+    category="Recurso"
+    span="small"
+  />
+
+  <BentoCard 
+    title="Calendario 2026" 
+    description="Fechas clave, exámenes y eventos del campus actualizados."
+    href="/campus"
+    category="Campus"
+    span="small"
+  />
+
+  <BentoCard 
+    title="Proyectos Estudiantiles" 
+    description="Explora lo que otros lasallistas están construyendo."
+    href="/community"
+    category="Comunidad"
+    span="small"
+  />
+
+  <BentoCard 
+    title="Laboratorio Beta" 
+    description="Prueba nuevas ideas y herramientas en desarrollo temprano."
+    href="/lab"
+    category="Experimental"
+    span="medium"
+    color="var(--accent-500)"
+  />
+
+  <BentoCard 
+    title="Acerca del Hub" 
+    description="Conoce la filosofía detrás de este proyecto abierto."
+    href="/about"
+    category="Info"
+    span="small"
+  />
+</div>

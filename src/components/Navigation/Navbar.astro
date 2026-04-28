@@ -1,0 +1,95 @@
+---
+const navItems = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Herramientas', href: '/tools' },
+  { name: 'Recursos', href: '/resources' },
+  { name: 'Comunidad', href: '/community' },
+  { name: 'Campus', href: '/campus' },
+  { name: 'Lab', href: '/lab' },
+];
+---
+
+<nav class="navbar">
+  <div class="container navbar-container">
+    <a href="/" class="logo">
+      <span class="logo-accent">ULSA</span> Hub
+    </a>
+    
+    <div class="nav-links">
+      {navItems.map(item => (
+        <a href={item.href} class="nav-link">{item.name}</a>
+      ))}
+    </div>
+
+    <div class="nav-actions">
+      <a href="/about" class="btn-about">Acerca de</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+  }
+
+  .logo-accent {
+    color: var(--color-primary);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-6);
+  }
+
+  .nav-link {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-soft);
+    position: relative;
+    padding: var(--space-1) 0;
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+  }
+
+  .btn-about {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    background-color: var(--brand-50);
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-about:hover {
+    background-color: var(--brand-100);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none; /* In a real app we'd add a mobile menu */
+    }
+  }
+</style>

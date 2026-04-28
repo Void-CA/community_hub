@@ -1,0 +1,40 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Navbar from '../components/Navigation/Navbar.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Navbar />
+  <main>
+    <slot />
+  </main>
+  
+  <footer class="footer">
+    <div class="container text-center">
+      <p class="text-muted">© {new Date().getFullYear()} ULSA Community Hub. Hecho por y para estudiantes.</p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  main {
+    min-height: calc(100vh - 64px - 80px); /* Adjust based on footer/nav */
+  }
+
+  .footer {
+    padding: var(--space-8) 0;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+  }
+
+  p {
+    font-size: var(--font-size-sm);
+  }
+</style>
