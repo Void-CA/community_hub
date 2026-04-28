@@ -13,9 +13,10 @@ import AppLayout from '../../layouts/AppLayout.astro';
   <section class="section pt-0">
     <div class="container">
       <div class="grid grid-cols-2">
-        <a href="/tools/parser" class="card">
+        <a href="/tools/parser-horarios" class="card">
           <h3>Parser de Horarios</h3>
-          <p>Convierte tu horario en un calendario.</p>
+          <p>Convierte texto de horarios en una vista estructurada lista para usar.</p>
+          <span class="card-cta">Usar herramienta</span>
         </a>
         <div class="card">
           <h3 class="text-muted">Calculadora de Promedio (Próximamente)</h3>
@@ -25,3 +26,23 @@ import AppLayout from '../../layouts/AppLayout.astro';
     </div>
   </section>
 </AppLayout>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .card-cta {
+    margin-top: auto;
+    display: inline-flex;
+    width: fit-content;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    background-color: var(--brand-50);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+</style>

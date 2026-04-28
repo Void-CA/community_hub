@@ -1,0 +1,66 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+
+const toolUrl = 'https://wrangler-horarios-voidca.netlify.app/';
+---
+
+<ToolLayout
+  title="Parser de Horarios"
+  description="Convierte un horario en texto en una vista estructurada y reutilizable. La herramienta vive dentro del hub y se apoya en la demo externa para el procesamiento."
+  previewLabel="Vista previa integrada"
+  previewLinkLabel="Abrir en nueva pestaña"
+  fallbackTitle="Abre el parser directamente"
+  fallbackDescription="Si la vista embebida no carga, puedes usar la herramienta externa sin salir del flujo del hub."
+  fallbackHref={toolUrl}
+  fallbackHrefLabel="Abrir herramienta"
+>
+  <a slot="actions" href={toolUrl} class="primary-action" target="_blank" rel="noreferrer">
+    Abrir herramienta
+  </a>
+  <a slot="actions" href="/tools" class="secondary-action">Volver a herramientas</a>
+
+  <iframe
+    slot="preview"
+    title="Parser de Horarios"
+    src={toolUrl}
+    loading="lazy"
+    referrerpolicy="no-referrer"
+  ></iframe>
+</ToolLayout>
+
+<style>
+  .primary-action,
+  .secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .primary-action {
+    background-color: var(--color-primary);
+    color: var(--color-text-on-brand);
+  }
+
+  .secondary-action {
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+  }
+
+  iframe {
+    width: 100%;
+    min-height: 760px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  @media (max-width: 1024px) {
+    iframe {
+      min-height: 640px;
+    }
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+import AppLayout from './AppLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow?: string;
+  previewLabel?: string;
+  previewLinkLabel?: string;
+  fallbackTitle?: string;
+  fallbackDescription?: string;
+  fallbackHref?: string;
+  fallbackHrefLabel?: string;
+}
+
+const {
+  title,
+  description,
+  eyebrow = 'Herramienta del Hub',
+  previewLabel = 'Vista previa',
+  previewLinkLabel = 'Abrir en nueva pestaña',
+  fallbackTitle = 'La vista previa no está disponible',
+  fallbackDescription = 'Abre la herramienta directamente para continuar.',
+  fallbackHref,
+  fallbackHrefLabel = 'Abrir herramienta',
+} = Astro.props;
+
+const hasPreview = Astro.slots.has('preview');
+---
+
+<AppLayout title={title} description={description}>
+  <section class="section tool-hero">
+    <div class="container tool-layout">
+      <div class="tool-copy">
+        <span class="eyebrow">{eyebrow}</span>
+        <h1>{title}</h1>
+        <p class="text-soft">{description}</p>
+
+        <div class="actions">
+          <slot name="actions" />
+        </div>
+      </div>
+
+      <div class="tool-frame card">
+        <div class="frame-header">
+          <span>{previewLabel}</span>
+          {fallbackHref && (
+            <a href={fallbackHref} target="_blank" rel="noreferrer">
+              {previewLinkLabel}
+            </a>
+          )}
+        </div>
+
+        {hasPreview ? (
+          <div class="preview-shell">
+            <slot name="preview" />
+          </div>
+        ) : (
+          <div class="fallback-shell">
+            <h2>{fallbackTitle}</h2>
+            <p class="text-soft">{fallbackDescription}</p>
+            {fallbackHref && (
+              <a href={fallbackHref} class="fallback-action" target="_blank" rel="noreferrer">
+                {fallbackHrefLabel}
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</AppLayout>
+
+<style>
+  .tool-hero {
+    padding-top: var(--space-8);
+  }
+
+  .tool-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .tool-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .eyebrow {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+  }
+
+  h1 {
+    margin-bottom: 0;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .tool-frame {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .frame-header {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-soft);
+  }
+
+  .preview-shell,
+  .fallback-shell {
+    width: 100%;
+  }
+
+  .fallback-shell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-height: 640px;
+    justify-content: center;
+    align-items: flex-start;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    background: var(--color-surface);
+  }
+
+  .fallback-shell h2 {
+    margin-bottom: 0;
+    font-size: var(--font-size-2xl);
+  }
+
+  .fallback-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary);
+    color: var(--color-text-on-brand);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  @media (max-width: 1024px) {
+    .tool-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .fallback-shell {
+      min-height: 420px;
+    }
+  }
+</style>

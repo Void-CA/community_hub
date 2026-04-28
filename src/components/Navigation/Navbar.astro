@@ -41,8 +41,10 @@ const navItems = [
 
   .navbar-container {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-4);
   }
 
   .logo {
@@ -50,6 +52,8 @@ const navItems = [
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-bold);
     color: var(--color-text);
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .logo-accent {
@@ -81,13 +85,15 @@ const navItems = [
     border-radius: var(--radius-full);
     background-color: var(--brand-50);
     transition: background-color 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .btn-about:hover {
     background-color: var(--brand-100);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .nav-links {
       display: none; /* In a real app we'd add a mobile menu */
     }
