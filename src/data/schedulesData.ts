@@ -10,11 +10,32 @@ export interface ScheduleEntry {
   group: number;
   professor: string;
   room: string;
+  academicYear: number;
 }
 
 export interface ProfessorSchedule {
   by_day: Record<string, ScheduleEntry[]>;
 }
+
+export interface SchedulePeriod {
+  id: string;
+  year: string;
+  term: string;
+  label: string;
+}
+
+export interface ScheduleDataset {
+  period: SchedulePeriod;
+  entries: ScheduleEntry[];
+  professorSchedules: Record<string, ProfessorSchedule>;
+}
+
+type RawScheduleEntry = Omit<ScheduleEntry, 'academicYear'>;
+type RawFullSchedule = Record<string, RawScheduleEntry[]> | RawScheduleEntry[];
+type RawProfessorSchedule = {
+  by_day: Record<string, RawScheduleEntry[]>;
+};
+type RawProfessorSchedules = Record<string, RawProfessorSchedule>;
 
 const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const dayLabels: Record<string, string> = {
@@ -60,19 +81,162 @@ const blockLabels: Record<string, string> = {
 const majorAccents = ['#4f46e5', '#0f766e', '#b45309', '#be123c', '#7c3aed', '#0284c7', '#15803d', '#c2410c'];
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
 
-export const semesterLabel = '2026-IIC';
-export const scheduleEntries = fullSchedule as ScheduleEntry[];
-export const professorSchedules = professorSchedulesRaw as Record<string, ProfessorSchedule>;
+function buildEntryIdentity(entry: RawScheduleEntry) {
+  const majors = [...entry.majors].sort(collator.compare).join('|');
+  return [entry.day, entry.start_block, entry.end_block, entry.subject, String(entry.group), entry.professor, entry.room, majors].join('::');
+}
+
+function normalizeScheduleEntries(rawSchedule: RawFullSchedule) {
+  if (Array.isArray(rawSchedule)) {
+    return rawSchedule.map((entry) => ({ ...entry, academicYear: 0 }));
+  }
+
+  const result: ScheduleEntry[] = [];
+
+  for (const [yearKey, yearEntries] of Object.entries(rawSchedule)) {
+    const academicYear = Number(yearKey);
+
+    for (const entry of yearEntries) {
+      result.push({
+        ...entry,
+        academicYear: Number.isNaN(academicYear) ? 0 : academicYear,
+      });
+    }
+  }
+
+  return result;
+}
+
+function buildAcademicYearIndex(entries: ScheduleEntry[]) {
+  const index = new Map<string, number>();
+
+  for (const entry of entries) {
+    const identity = buildEntryIdentity(entry);
+
+    if (!index.has(identity)) {
+      index.set(identity, entry.academicYear);
+    }
+  }
+
+  return index;
+}
+
+function normalizeProfessorSchedules(
+  rawSchedules: RawProfessorSchedules,
+  academicYearByIdentity: Map<string, number>
+) {
+  return Object.fromEntries(
+    Object.entries(rawSchedules).map(([professorName, professorSchedule]) => {
+      const byDay = Object.fromEntries(
+        Object.entries(professorSchedule.by_day).map(([day, dayEntries]) => {
+          const normalizedEntries = dayEntries.map((entry) => {
+            const identity = buildEntryIdentity(entry);
+
+            return {
+              ...entry,
+              academicYear: academicYearByIdentity.get(identity) ?? 0,
+            };
+          });
+
+          return [day, normalizedEntries];
+        })
+      );
+
+      return [professorName, { by_day: byDay }];
+    })
+  );
+}
+
+const datasets: Record<string, ScheduleDataset> = {
+  '2026-IIC': {
+    period: {
+      id: '2026-IIC',
+      year: '2026',
+      term: 'IIC',
+      label: '2026-IIC',
+    },
+    entries: normalizeScheduleEntries(fullSchedule as RawFullSchedule),
+    professorSchedules: {},
+  },
+};
+
+for (const dataset of Object.values(datasets)) {
+  const academicYearByIdentity = buildAcademicYearIndex(dataset.entries);
+  dataset.professorSchedules = normalizeProfessorSchedules(
+    professorSchedulesRaw as RawProfessorSchedules,
+    academicYearByIdentity
+  );
+}
+
+export const schedulePeriods = Object.values(datasets)
+  .map((dataset) => dataset.period)
+  .sort((left, right) => {
+    if (left.year !== right.year) {
+      return Number(right.year) - Number(left.year);
+    }
+
+    return collator.compare(left.term, right.term);
+  });
+
+export const defaultSchedulePeriodId = schedulePeriods[0]?.id ?? '2026-IIC';
+
+export function resolveScheduleDataset(periodId?: string) {
+  if (periodId && datasets[periodId]) {
+    return datasets[periodId];
+  }
+
+  return datasets[defaultSchedulePeriodId];
+}
+
+export function resolveScheduleDatasetByYearTerm(year?: string | null, term?: string | null) {
+  if (!year && !term) {
+    return resolveScheduleDataset();
+  }
+
+  const normalizedYear = (year ?? '').trim();
+  const normalizedTerm = (term ?? '').trim().toUpperCase();
+  const candidateId = `${normalizedYear}-${normalizedTerm}`;
+
+  return resolveScheduleDataset(candidateId);
+}
+
+const defaultDataset = resolveScheduleDataset();
+
+export const semesterLabel = defaultDataset.period.label;
+export const scheduleEntries = defaultDataset.entries;
+export const professorSchedules = defaultDataset.professorSchedules;
 
 const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);
 
 export const dayCodes = dayOrder;
 export const dayNames = dayOrder.map((day) => ({ code: day, label: dayLabels[day] ?? day }));
+export const scheduleBlocks = blockOrder;
 export const majors = uniqueSorted(scheduleEntries.flatMap((entry) => entry.majors));
 export const groups = [...new Set(scheduleEntries.map((entry) => entry.group))].sort((left, right) => left - right);
 export const professorNames = Object.keys(professorSchedules).sort(collator.compare);
 export const subjectNames = uniqueSorted(scheduleEntries.map((entry) => entry.subject));
 export const roomNames = uniqueSorted(scheduleEntries.map((entry) => entry.room));
+export const academicYears = [...new Set(scheduleEntries.map((entry) => entry.academicYear).filter((year) => year > 0))].sort((left, right) => left - right);
+
+export interface ScheduleSection {
+  id: string;
+  subject: string;
+  group: number;
+  professor: string;
+  room: string;
+  majors: string[];
+  academicYears: number[];
+  entries: ScheduleEntry[];
+  days: string[];
+}
+
+export function formatAcademicYear(academicYear: number) {
+  if (academicYear <= 0) {
+    return 'Sin año';
+  }
+
+  return `${academicYear}° año`;
+}
 
 export function formatDay(day: string) {
   return dayLabels[day] ?? day;
@@ -103,6 +267,48 @@ export function sortEntries(entries: ScheduleEntry[]) {
     if (leftGroup !== rightGroup) return leftGroup - rightGroup;
 
     return collator.compare(leftSubject, rightSubject);
+  });
+}
+
+export function buildScheduleSections(entries: ScheduleEntry[]) {
+  const sections = new Map<string, ScheduleSection>();
+
+  for (const entry of entries) {
+    const id = [entry.subject, entry.group, entry.professor, entry.room, String(entry.academicYear)].join('::');
+    const existing = sections.get(id);
+
+    if (existing) {
+      existing.entries.push(entry);
+      existing.days = uniqueSorted([...existing.days, entry.day]);
+      existing.majors = uniqueSorted([...existing.majors, ...entry.majors]);
+      existing.academicYears = [...new Set([...existing.academicYears, entry.academicYear])].sort((left, right) => left - right);
+      continue;
+    }
+
+    sections.set(id, {
+      id,
+      subject: entry.subject,
+      group: entry.group,
+      professor: entry.professor,
+      room: entry.room,
+      majors: [...entry.majors],
+      academicYears: [entry.academicYear],
+      entries: [entry],
+      days: [entry.day],
+    });
+  }
+
+  return [...sections.values()].map((section) => ({
+    ...section,
+    entries: sortEntries(section.entries),
+    days: uniqueSorted(section.days),
+  })).sort((left, right) => {
+    const [leftDay] = getEntrySortKey(left.entries[0]);
+    const [rightDay] = getEntrySortKey(right.entries[0]);
+
+    if (leftDay !== rightDay) return leftDay - rightDay;
+    if (left.subject !== right.subject) return collator.compare(left.subject, right.subject);
+    return left.group - right.group;
   });
 }
 

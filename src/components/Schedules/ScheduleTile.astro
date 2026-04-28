@@ -1,0 +1,103 @@
+---
+import type { ScheduleEntry } from '../../data/schedulesData';
+import { formatAcademicYear, formatBlock, formatDay, getMajorAccent } from '../../data/schedulesData';
+
+interface Props {
+  entry: ScheduleEntry;
+  sectionId: string;
+  label?: string;
+}
+
+const { entry, sectionId, label } = Astro.props;
+const accent = getMajorAccent(entry.majors[0] ?? 'General');
+const title = label ?? entry.subject;
+---
+
+<article
+  class="schedule-tile"
+  data-schedule-tile
+  data-section-id={sectionId}
+  data-major-list={entry.majors.map((major) => major.toLowerCase()).join('|')}
+  data-day={entry.day.toLowerCase()}
+  data-block={entry.start_block}
+  data-professor={entry.professor.toLowerCase()}
+  data-subject={entry.subject.toLowerCase()}
+  data-room={entry.room.toLowerCase()}
+  data-group={String(entry.group)}
+  data-academic-year={String(entry.academicYear)}
+  data-search={`${entry.subject} ${entry.professor} ${entry.room} ${entry.group}`.toLowerCase()}
+  style={`--tile-accent: ${accent};`}
+>
+  <div class="tile-head">
+    <p>{formatDay(entry.day)}</p>
+    <span>{formatBlock(entry.start_block)}</span>
+  </div>
+
+  <strong>{title}</strong>
+
+  <div class="tile-meta">
+    <span>G{entry.group}</span>
+    <span>{entry.room}</span>
+    <span>{formatAcademicYear(entry.academicYear)}</span>
+  </div>
+
+  <p class="tile-professor">{entry.professor}</p>
+</article>
+
+<style>
+  .schedule-tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--tile-accent) 28%, var(--color-border));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--tile-accent) 8%, var(--color-surface) 92%), var(--color-surface));
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
+  }
+
+  .tile-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  strong {
+    font-size: var(--font-size-sm);
+    line-height: 1.25;
+  }
+
+  .tile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tile-meta span,
+  .tile-professor {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-soft);
+  }
+
+  .tile-meta span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.45rem;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--tile-accent) 12%, transparent);
+  }
+
+  .tile-professor {
+    margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+</style>

@@ -1,167 +1,267 @@
 ---
 import AppLayout from '../../../../layouts/AppLayout.astro';
-import ScheduleEntryCard from '../../../../components/Schedules/ScheduleEntryCard.astro';
-import { getScheduleSummary, groupProfessorEntriesByDay, professorNames, semesterLabel, getProfessorEntries } from '../../../../data/schedulesData';
+import ScheduleTile from '../../../../components/Schedules/ScheduleTile.astro';
+import {
+  dayNames,
+  getScheduleSummary,
+  resolveScheduleDatasetByYearTerm,
+  scheduleBlocks,
+  schedulePeriods,
+} from '../../../../data/schedulesData';
 
-const search = '';
-const selectedProfessor = professorNames[0] ?? '';
-const filteredProfessors = professorNames;
-const professorEntries = getProfessorEntries(selectedProfessor);
-const summary = getScheduleSummary(professorEntries);
-const professorPanels = filteredProfessors.map((name) => ({
-  name,
-  entries: getProfessorEntries(name),
-  byDay: groupProfessorEntriesByDay(name),
-}));
+const yearParam = Astro.url.searchParams.get('year');
+const termParam = Astro.url.searchParams.get('term');
+const dataset = resolveScheduleDatasetByYearTerm(yearParam, termParam);
+const semesterLabel = dataset.period.label;
+const scheduleEntries = dataset.entries;
+const professorSchedules = dataset.professorSchedules;
+const professorNames = Object.keys(professorSchedules).sort(new Intl.Collator('es', { sensitivity: 'base' }).compare);
+
+const getProfessorEntries = (professorName: string) => {
+  const professor = professorSchedules[professorName];
+
+  if (!professor) {
+    return [];
+  }
+
+  return dayNames.flatMap(({ code }) => professor.by_day[code] ?? []);
+};
+
+const activeDays = dayNames.filter((day) => scheduleEntries.some((entry) => entry.day === day.code));
+const initialProfessor = professorNames[0] ?? '';
+const initialEntries = getProfessorEntries(initialProfessor);
+const summary = getScheduleSummary(scheduleEntries);
+const activeSummary = getScheduleSummary(initialEntries);
 ---
 
-<AppLayout title={`Horarios de Profesores | ${semesterLabel}`} description="Vista de horarios para profesores, con búsqueda por nombre y resumen de carga semanal.">
-  <section class="section schedule-hero">
+<AppLayout title={`Horarios de Profesores | ${semesterLabel}`} description="Vista compacta de horarios para profesores, con búsqueda por nombre y grilla por bloques.">
+  <section class="section schedule-hero" data-initial-professor={initialProfessor}>
     <div class="container hero-grid">
-      <div>
+      <div class="hero-copy">
         <p class="eyebrow">Vista de profesores</p>
-        <h1 class="hero-title">Busca un docente y revisa su semana completa.</h1>
+        <h1 class="hero-title">Busca un docente y revisa su carga semanal en una sola grilla.</h1>
         <p class="hero-text text-soft">
-          La vista docente concentra materias, aulas y bloques para entender la carga semanal y detectar materias repetidas o franjas más cargadas.
+          El catálogo lateral reduce la lista de docentes y la vista principal se mantiene enfocada solo en la persona seleccionada.
         </p>
       </div>
 
-      <div class="card summary-card">
-        <div>
-          <p class="summary-label">Profesor seleccionado</p>
-          <strong id="professor-name">{selectedProfessor || 'Sin selección'}</strong>
+      <div class="card hero-panel">
+        <div class="panel-top">
+          <span class="panel-tag">Resumen del periodo</span>
+          <strong>{semesterLabel}</strong>
         </div>
 
-        <div class="summary-grid">
-          <div>
-            <span>Clases</span>
-            <strong id="professor-classes">{summary.totalEntries}</strong>
-          </div>
-          <div>
-            <span>Días</span>
-            <strong id="professor-days">{groupProfessorEntriesByDay(selectedProfessor).length}</strong>
-          </div>
-          <div>
-            <span>Materias</span>
-            <strong id="professor-subjects">{summary.totalSubjects}</strong>
-          </div>
-          <div>
-            <span>Aulas</span>
-            <strong id="professor-rooms">{summary.totalRooms}</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section pt-0">
-    <div class="container">
-      <div class="filters card">
-        <label>
-          <span>Buscar por nombre</span>
-          <input id="professor-search" type="search" name="q" placeholder="Ej. María Isabel Silva" value={search} list="professor-list" />
+        <label class="period-picker">
+          <span>Periodo</span>
+          <select id="period-select">
+            {schedulePeriods.map((period) => (
+              <option value={period.id} selected={period.id === dataset.period.id}>{period.label}</option>
+            ))}
+          </select>
         </label>
 
-        <datalist id="professor-list">
-          {professorNames.map((name) => <option value={name} />)}
-        </datalist>
+        <div class="panel-grid">
+          <div>
+            <span>Total de clases</span>
+            <strong>{summary.totalEntries}</strong>
+          </div>
+          <div>
+            <span>Profesor activo</span>
+            <strong id="active-professor-name">{initialProfessor}</strong>
+          </div>
+          <div>
+            <span>Sesiones activas</span>
+            <strong id="active-session-count">{activeSummary.totalEntries}</strong>
+          </div>
+          <div>
+            <span>Materias activas</span>
+            <strong id="active-subject-count">{activeSummary.totalSubjects}</strong>
+          </div>
+        </div>
 
-        <div class="search-hint text-soft">Escribe parte del nombre para reducir la lista de docentes disponibles.</div>
+        <p class="panel-note text-soft">
+          Los horarios provienen de PDFs oficiales de la universidad y el hub solo los organiza para lectura rápida.
+        </p>
       </div>
     </div>
   </section>
 
   <section class="section pt-0">
-    <div class="container professor-list">
-      {professorPanels.map((professor) => (
-        <article
-          class="card professor-panel"
-          data-professor-panel
-          data-professor={professor.name.toLowerCase()}
-          data-classes={professor.entries.length}
-          data-days={professor.byDay.length}
-          data-subjects={new Set(professor.entries.map((entry) => entry.subject)).size}
-          data-rooms={new Set(professor.entries.map((entry) => entry.room)).size}
-        >
-          <div class="professor-head">
-            <div>
-              <p class="summary-label">Docente</p>
-              <h2>{professor.name}</h2>
-            </div>
-
-            <div class="professor-stats">
-              <span>{professor.entries.length} clases</span>
-              <span>{professor.byDay.length} días</span>
-            </div>
+    <div class="container dashboard-grid">
+      <aside class="catalog card">
+        <div class="catalog-head">
+          <div>
+            <p class="eyebrow">Catálogo</p>
+            <h2>Docentes</h2>
           </div>
+          <p class="catalog-count text-soft"><span id="visible-professor-count">{professorNames.length}</span> disponibles</p>
+        </div>
 
-          <div class="professor-days">
-            {professor.byDay.map((dayGroup) => (
-              <details open>
-                <summary>
-                  <strong>{dayGroup.day}</strong>
-                  <span>{dayGroup.entries.length} clases</span>
-                </summary>
+        <label class="search-box">
+          <span class="sr-only">Buscar profesor</span>
+          <input id="professor-search" type="search" placeholder="Buscar por nombre" />
+        </label>
 
-                <div class="professor-entries">
-                  {dayGroup.entries.map((entry) => <ScheduleEntryCard entry={entry} compact />)}
+        <div class="catalog-list" data-professor-list>
+          {professorNames.map((name) => {
+            const entries = getProfessorEntries(name);
+            const days = new Set(entries.map((entry) => entry.day)).size;
+            const subjects = new Set(entries.map((entry) => entry.subject)).size;
+
+            return (
+              <button
+                type="button"
+                class:list={['section-card', { 'is-selected': name === initialProfessor }]}
+                data-professor-button
+                data-professor={name}
+                data-search={name.toLowerCase()}
+                aria-pressed={name === initialProfessor}
+              >
+                <div class="section-card-top">
+                  <div>
+                    <p class="section-chip">{days} días · {subjects} materias</p>
+                    <h3>{name}</h3>
+                  </div>
+                  <span class="section-check">{entries.length} sesiones</span>
                 </div>
-              </details>
+
+                <div class="section-meta">
+                  <span>{entries.length} clases</span>
+                  <span>{days} días</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </aside>
+
+      <main class="timeline card">
+        <div class="timeline-head">
+          <div>
+            <p class="eyebrow">Grilla</p>
+            <h2>Horario activo</h2>
+          </div>
+          <p class="text-soft">Solo se muestra el docente seleccionado.</p>
+        </div>
+
+        <div class="timeline-scroll">
+          <div class="timeline-grid" style={`grid-template-columns: 7.5rem repeat(${activeDays.length}, minmax(16rem, 1fr));`}>
+            <div class="timeline-corner">Hora</div>
+            {activeDays.map((day) => <div class="timeline-day">{day.label}</div>)}
+
+            {scheduleBlocks.map((block) => (
+              <>
+                <div class="timeline-time">{block}</div>
+                {activeDays.map((day) => {
+                  const tilesForCell = professorNames.flatMap((name) =>
+                    getProfessorEntries(name)
+                      .filter((entry) => entry.day === day.code && entry.start_block === block)
+                      .map((entry) => ({ entry, professorName: name }))
+                  );
+
+                  return (
+                    <div class="timeline-cell" data-timeline-cell data-day={day.code.toLowerCase()} data-block={block}>
+                      {tilesForCell.map(({ entry, professorName }) => (
+                        <ScheduleTile entry={entry} sectionId={professorName} label={entry.subject} />
+                      ))}
+                    </div>
+                  );
+                })}
+              </>
             ))}
           </div>
-        </article>
-      ))}
-
-      {!professorPanels.length && (
-        <div class="card empty-state">
-          <h3>No encontramos coincidencias.</h3>
-          <p class="text-soft">Intenta otra parte del nombre del profesor para volver a mostrar resultados.</p>
         </div>
-      )}
+
+        <div class="timeline-empty" id="timeline-empty" hidden>
+          <h3>No hay horarios para mostrar.</h3>
+          <p class="text-soft">Selecciona un docente del catálogo lateral.</p>
+        </div>
+      </main>
     </div>
   </section>
 
   <script is:inline>
+    const initialProfessor = document.querySelector('[data-initial-professor]')?.dataset.initialProfessor ?? '';
+    const professorButtons = [...document.querySelectorAll('[data-professor-button]')];
+    const tiles = [...document.querySelectorAll('[data-schedule-tile]')];
     const searchInput = document.getElementById('professor-search');
-    const panels = [...document.querySelectorAll('[data-professor-panel]')];
-    const summaryName = document.getElementById('professor-name');
-    const summaryClasses = document.getElementById('professor-classes');
-    const summaryDays = document.getElementById('professor-days');
-    const summarySubjects = document.getElementById('professor-subjects');
-    const summaryRooms = document.getElementById('professor-rooms');
+    const visibleProfessorCount = document.getElementById('visible-professor-count');
+    const activeProfessorName = document.getElementById('active-professor-name');
+    const activeSessionCount = document.getElementById('active-session-count');
+    const activeSubjectCount = document.getElementById('active-subject-count');
+    const timelineEmpty = document.getElementById('timeline-empty');
+    const periodSelect = document.getElementById('period-select');
 
-    const applySearch = () => {
+    const state = {
+      professor: initialProfessor,
+    };
+
+    const updateSummary = () => {
+      const selectedTiles = tiles.filter((tile) => tile.dataset.sectionId === state.professor);
+      const subjects = new Set(selectedTiles.map((tile) => tile.dataset.subject ?? ''));
+
+      activeProfessorName.textContent = state.professor || 'Sin selección';
+      activeSessionCount.textContent = String(selectedTiles.length);
+      activeSubjectCount.textContent = String(subjects.size);
+      timelineEmpty.hidden = Boolean(state.professor);
+    };
+
+    const applyState = () => {
       const query = searchInput?.value.trim().toLowerCase() ?? '';
-      let firstVisiblePanel = null;
+      const visibleButtons = [];
 
-      panels.forEach((panel) => {
-        const professor = panel.dataset.professor ?? '';
-        const isVisible = query.length === 0 || professor.includes(query);
+      professorButtons.forEach((button) => {
+        const name = button.dataset.professor ?? '';
+        const matches = query.length === 0 || name.toLowerCase().includes(query);
 
-        panel.hidden = !isVisible;
+        button.hidden = !matches;
 
-        if (isVisible && !firstVisiblePanel) {
-          firstVisiblePanel = panel;
+        if (matches) {
+          visibleButtons.push(button);
         }
       });
 
-      if (firstVisiblePanel) {
-        summaryName.textContent = firstVisiblePanel.dataset.professor?.replace(/\b\w/g, (letter) => letter.toUpperCase()) ?? 'Sin selección';
-        summaryClasses.textContent = firstVisiblePanel.dataset.classes ?? '0';
-        summaryDays.textContent = firstVisiblePanel.dataset.days ?? '0';
-        summarySubjects.textContent = firstVisiblePanel.dataset.subjects ?? '0';
-        summaryRooms.textContent = firstVisiblePanel.dataset.rooms ?? '0';
-      } else {
-        summaryName.textContent = 'Sin selección';
-        summaryClasses.textContent = '0';
-        summaryDays.textContent = '0';
-        summarySubjects.textContent = '0';
-        summaryRooms.textContent = '0';
+      const hasCurrentVisible = visibleButtons.some((button) => (button.dataset.professor ?? '') === state.professor);
+
+      if (!hasCurrentVisible) {
+        state.professor = visibleButtons[0]?.dataset.professor ?? '';
       }
+
+      professorButtons.forEach((button) => {
+        const selected = (button.dataset.professor ?? '') === state.professor;
+        button.classList.toggle('is-selected', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+
+      tiles.forEach((tile) => {
+        tile.hidden = tile.dataset.sectionId !== state.professor;
+      });
+
+      visibleProfessorCount.textContent = String(professorButtons.filter((button) => !button.hidden).length);
+      updateSummary();
     };
 
-    searchInput?.addEventListener('input', applySearch);
-    applySearch();
+    const selectProfessor = (name) => {
+      state.professor = name;
+      applyState();
+    };
+
+    professorButtons.forEach((button) => {
+      button.addEventListener('click', () => selectProfessor(button.dataset.professor ?? initialProfessor));
+    });
+
+    searchInput?.addEventListener('input', applyState);
+
+    periodSelect?.addEventListener('change', () => {
+      const selected = periodSelect.value;
+      const [year, term] = selected.split('-');
+      const nextUrl = new URL(window.location.href);
+      nextUrl.searchParams.set('year', year ?? '');
+      nextUrl.searchParams.set('term', term ?? '');
+      window.location.assign(nextUrl.toString());
+    });
+
+    selectProfessor(initialProfessor);
   </script>
 </AppLayout>
 
@@ -177,74 +277,105 @@ const professorPanels = filteredProfessors.map((name) => ({
     align-items: stretch;
   }
 
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
   .eyebrow,
-  .summary-label {
+  .panel-tag,
+  .section-chip,
+  .timeline-day,
+  .timeline-corner,
+  .timeline-time {
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
+  }
+
+  .eyebrow,
+  .panel-tag,
+  .section-chip {
     color: var(--color-accent);
   }
 
+  .timeline-day,
+  .timeline-corner,
+  .timeline-time {
+    color: var(--color-text-muted);
+  }
+
   .hero-title {
-    margin: var(--space-3) 0;
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    max-width: 14ch;
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 4.4rem);
+    max-width: 12ch;
   }
 
   .hero-text {
-    max-width: 60ch;
+    max-width: 58ch;
     font-size: var(--font-size-lg);
   }
 
-  .summary-card {
+  .hero-panel,
+  .catalog,
+  .timeline {
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--space-4);
   }
 
-  .summary-grid {
+  .panel-top,
+  .catalog-head,
+  .timeline-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .panel-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-4);
   }
 
-  .summary-grid div {
+  .panel-grid div {
     padding: var(--space-4);
     border-radius: var(--radius-md);
     background: var(--color-surface-muted);
   }
 
-  .summary-grid span {
+  .panel-grid span {
     display: block;
     margin-bottom: var(--space-1);
+    color: var(--color-text-muted);
     font-size: var(--font-size-xs);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-text-muted);
   }
 
-  .summary-grid strong,
-  .summary-card strong {
+  .panel-grid strong {
     font-size: var(--font-size-2xl);
   }
 
-  .filters {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.6fr);
+    gap: var(--space-4);
+    align-items: start;
   }
 
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-soft);
+  .catalog {
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 110px);
   }
 
-  input[type='search'] {
+  .search-box input {
     width: 100%;
     min-height: 48px;
     padding: 0 var(--space-3);
@@ -254,84 +385,161 @@ const professorPanels = filteredProfessors.map((name) => ({
     color: var(--color-text);
   }
 
-  .professor-list {
+  .period-picker {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-1);
   }
 
-  .professor-panel {
+  .period-picker span {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .period-picker select {
+    min-height: 40px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: 0 var(--space-2);
+  }
+
+  .catalog-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--space-3);
+    overflow: auto;
+    padding-right: var(--space-2);
   }
 
-  .professor-head {
+  .section-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .section-card.is-selected {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 8%, var(--color-surface) 92%), var(--color-surface));
+  }
+
+  .section-card-top {
     display: flex;
     justify-content: space-between;
-    gap: var(--space-4);
+    gap: var(--space-3);
     align-items: flex-start;
   }
 
-  .professor-head h2 {
-    margin: var(--space-2) 0 0;
+  .section-card h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
   }
 
-  .professor-stats {
+  .section-check,
+  .catalog-count {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .section-meta {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
   }
 
-  .professor-stats span {
-    padding: 0.35rem 0.75rem;
+  .section-meta span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.55rem;
     border-radius: var(--radius-full);
     background: var(--color-surface-muted);
     color: var(--color-text-soft);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
   }
 
-  .professor-days {
+  .timeline-scroll {
+    overflow: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
+
+  .timeline-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--color-border);
+    min-width: 100%;
+  }
+
+  .timeline-grid > div {
+    background: var(--color-surface);
+  }
+
+  .timeline-corner,
+  .timeline-day,
+  .timeline-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3);
+    background: var(--color-surface-muted);
+  }
+
+  .timeline-cell {
+    min-height: 9.5rem;
+    padding: var(--space-2);
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-2);
   }
 
-  .professor-days summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-4);
-    cursor: pointer;
+  .timeline-cell:empty {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-muted) 60%, transparent), var(--color-surface));
   }
 
-  .professor-days summary span {
-    color: var(--color-text-muted);
+  .timeline-empty {
+    padding: var(--space-8);
+    text-align: center;
   }
 
-  .professor-entries {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-    margin-top: var(--space-4);
-  }
-
-  .empty-state h3 {
+  .timeline-empty h3 {
     margin-bottom: var(--space-2);
   }
 
-  @media (max-width: 900px) {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 1100px) {
     .hero-grid,
-    .professor-head,
-    .summary-grid,
-    .professor-entries {
+    .dashboard-grid {
       grid-template-columns: 1fr;
-      display: grid;
     }
 
-    .hero-grid {
-      gap: var(--space-4);
+    .catalog {
+      position: static;
+      max-height: none;
     }
   }
 </style>
