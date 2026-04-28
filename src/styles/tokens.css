@@ -35,7 +35,9 @@
   --space-5: 1.5rem;  /* 24px */
   --space-6: 2rem;    /* 32px */
   --space-8: 3rem;    /* 48px */
+  --space-10: 4rem;   /* 64px */
   --space-12: 4.5rem; /* 72px */
+  --space-16: 6rem;   /* 96px */
 
   /* Radius Scale */
   --radius-sm: 0.375rem;

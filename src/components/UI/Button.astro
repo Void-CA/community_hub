@@ -106,11 +106,12 @@ const sizeClasses = {
   .btn-lg {
     padding: var(--space-4) var(--space-10);
     font-size: var(--font-size-base);
+    min-width: 200px;
   }
 
   @media (max-width: 640px) {
     .btn {
-      width: 100%;
+      /* Remove forced width: 100% to let containers decide */
     }
   }
 </style>
