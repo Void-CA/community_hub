@@ -1,0 +1,158 @@
+---
+import type { Tool } from '../../lib/models';
+
+interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+const { title, description, href, status, label } = tool;
+
+const isActive = status === 'active' || status === 'experimental';
+const isInactive = status === 'inactive';
+
+const CardTag = isActive ? 'a' : 'div';
+---
+
+<CardTag 
+  href={isActive ? href : undefined} 
+  class:list={[
+    'card tool-card',
+    { 'tool-card-inactive': isInactive },
+    { 'tool-card-experimental': status === 'experimental' }
+  ]}
+>
+  <div class="tool-content">
+    <div class="tool-header">
+      <div class="title-group">
+        <h3>{title}</h3>
+        {label && <span class="badge" data-status={status}>{label}</span>}
+      </div>
+      
+      {isActive && (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      )}
+    </div>
+    
+    <p class="tool-description">{description}</p>
+    
+    {isActive && (
+      <div class="tool-footer">
+        <span class="cta-text">Usar herramienta</span>
+      </div>
+    )}
+  </div>
+</CardTag>
+
+<style>
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    min-height: 180px;
+  }
+
+  .tool-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: var(--space-4);
+  }
+
+  .tool-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .title-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    line-height: 1.2;
+  }
+
+  .tool-description {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-soft);
+    line-height: 1.5;
+  }
+
+  .badge {
+    display: inline-flex;
+    padding: var(--space-1) var(--space-2);
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    width: fit-content;
+    border: 1px solid transparent;
+  }
+
+  .badge[data-status="experimental"] {
+    background-color: var(--accent-50);
+    color: var(--accent-600);
+    border-color: var(--accent-500);
+  }
+
+  .badge[data-status="inactive"] {
+    background-color: var(--neutral-100);
+    color: var(--neutral-500);
+    border-color: var(--neutral-200);
+  }
+
+  .tool-footer {
+    margin-top: auto;
+  }
+
+  .cta-text {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: transform 0.2s ease;
+  }
+
+  .tool-card:hover .cta-text {
+    transform: translateX(4px);
+  }
+
+  .arrow-icon {
+    color: var(--color-primary);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.2s ease;
+  }
+
+  .tool-card:hover .arrow-icon {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Inactive State */
+  .tool-card-inactive {
+    opacity: 0.7;
+    cursor: default;
+    background-color: var(--color-surface-muted);
+    border-style: dashed;
+  }
+
+  .tool-card-inactive:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--color-border);
+  }
+
+  .tool-card-inactive h3 {
+    color: var(--color-text-muted);
+  }
+</style>

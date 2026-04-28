@@ -1,0 +1,58 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<section class="tool-section section pt-0">
+  <div class="category-header">
+    <h2 class="category-title">{title}</h2>
+    {description && <p class="category-description">{description}</p>}
+  </div>
+  
+  <div class="grid grid-cols-2">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .tool-section {
+    padding-bottom: var(--space-12);
+  }
+
+  .category-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .category-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-2);
+    position: relative;
+    display: inline-block;
+  }
+
+  .category-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40px;
+    height: 4px;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-full);
+  }
+
+  .category-description {
+    color: var(--color-text-soft);
+    font-size: var(--font-size-base);
+  }
+
+  @media (max-width: 768px) {
+    .category-title {
+      font-size: var(--font-size-xl);
+    }
+  }
+</style>

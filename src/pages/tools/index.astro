@@ -1,48 +1,49 @@
 ---
 import AppLayout from '../../layouts/AppLayout.astro';
+import ToolCard from '../../components/Tools/ToolCard.astro';
+import ToolSection from '../../components/Tools/ToolSection.astro';
+import { tools } from '../../data/tools';
+
+// Grouping tools by category
+const categories = [...new Set(tools.map(t => t.category || 'Otros'))];
 ---
 
 <AppLayout title="Herramientas">
   <section class="section">
-    <div class="container text-center">
-      <h1>Herramientas</h1>
-      <p class="text-soft">Utilidades diseñadas para resolver problemas concretos del día a día académico.</p>
+    <div class="container text-center hero-content">
+      <h1 class="page-title">Catálogo de Herramientas</h1>
+      <p class="text-soft page-subtitle">
+        Utilidades diseñadas para resolver problemas concretos del día a día académico y técnico.
+      </p>
     </div>
   </section>
 
-  <section class="section pt-0">
-    <div class="container">
-      <div class="grid grid-cols-2">
-        <a href="/tools/parser-horarios" class="card">
-          <h3>Parser de Horarios</h3>
-          <p>Convierte texto de horarios en una vista estructurada lista para usar.</p>
-          <span class="card-cta">Usar herramienta</span>
-        </a>
-        <div class="card">
-          <h3 class="text-muted">Calculadora de Promedio (Próximamente)</h3>
-          <p>Gestiona tus notas de forma sencilla.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="container">
+    {categories.map(category => (
+      <ToolSection 
+        title={category}
+      >
+        {tools
+          .filter(t => (t.category || 'Otros') === category)
+          .map(tool => <ToolCard tool={tool} />)
+        }
+      </ToolSection>
+    ))}
+  </div>
 </AppLayout>
 
 <style>
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
   }
 
-  .card-cta {
-    margin-top: auto;
-    display: inline-flex;
-    width: fit-content;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-full);
-    background-color: var(--brand-50);
-    color: var(--color-primary);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
+  .page-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .page-subtitle {
+    font-size: var(--font-size-lg);
   }
 </style>
