@@ -1,5 +1,5 @@
 ---
-import AppLayout from '@/layouts/AppLayout.astro';
+import AppLayout from "@/layouts/AppLayout.astro";
 import {
   academicYears,
   buildScheduleSections,
@@ -9,83 +9,112 @@ import {
   scheduleBlocks,
   schedulePeriods,
   findValidPath,
-} from '@/lib/schedules';
-import StudentScheduleCatalog from '@/features/schedules/components/composition/StudentScheduleCatalog.astro';
-import StudentScheduleFilters from '@/features/schedules/components/composition/StudentScheduleFilters.astro';
-import StudentScheduleTimeline from '@/features/schedules/components/composition/StudentScheduleTimeline.astro';
+} from "@/lib/schedules";
+import StudentScheduleCatalog from "@/features/schedules/components/composition/StudentScheduleCatalog.astro";
+import StudentScheduleFilters from "@/features/schedules/components/composition/StudentScheduleFilters.astro";
+import StudentScheduleTimeline from "@/features/schedules/components/composition/StudentScheduleTimeline.astro";
+import Badge from "@/components/UI/Badge.astro";
 
-const yearParam = Astro.url.searchParams.get('year');
-const termParam = Astro.url.searchParams.get('term');
+const yearParam = Astro.url.searchParams.get("year");
+const termParam = Astro.url.searchParams.get("term");
 const dataset = resolveScheduleDatasetByYearTerm(yearParam, termParam);
 const semesterLabel = dataset.period.label;
 const scheduleEntries = dataset.entries;
-const periodMajors = [...new Set(scheduleEntries.flatMap((entry) => entry.majors))].sort(new Intl.Collator('es', { sensitivity: 'base' }).compare);
-const periodYears = [...new Set(scheduleEntries.map((entry) => entry.academicYear).filter((year) => year > 0))].sort((left, right) => left - right);
+const periodMajors = [
+  ...new Set(scheduleEntries.flatMap((entry) => entry.majors)),
+].sort(new Intl.Collator("es", { sensitivity: "base" }).compare);
+const periodYears = [
+  ...new Set(
+    scheduleEntries
+      .map((entry) => entry.academicYear)
+      .filter((year) => year > 0),
+  ),
+].sort((left, right) => left - right);
 const allSections = buildScheduleSections(scheduleEntries);
-const activeDays = dayNames.filter((day) => scheduleEntries.some((entry) => entry.day === day.code));
-const initialMajor = periodMajors.includes('ICE') ? 'ICE' : periodMajors[0] ?? 'all';
+const activeDays = dayNames.filter((day) =>
+  scheduleEntries.some((entry) => entry.day === day.code),
+);
+const initialMajor = periodMajors.includes("ICE")
+  ? "ICE"
+  : (periodMajors[0] ?? "all");
 const initialYear = periodYears[0] ?? academicYears[0] ?? 0;
-const initialSections = allSections.filter((section) =>
-  section.majors.includes(initialMajor) && (initialYear <= 0 || section.academicYears.includes(initialYear))
+const initialSections = allSections.filter(
+  (section) =>
+    section.majors.includes(initialMajor) &&
+    (initialYear <= 0 || section.academicYears.includes(initialYear)),
 );
 const summary = getScheduleSummary(scheduleEntries);
 
 const suggestedPath = findValidPath(initialSections);
 const integrityError = suggestedPath === null;
+
+const activeSummary = {
+  totalEntries: initialSections.reduce(
+    (total, section) => total + section.entries.length,
+    0,
+  ),
+  totalSections: initialSections.length,
+};
 ---
 
-<AppLayout title={`Horarios de Estudiantes | ${semesterLabel}`} description="Vista compacta de horarios para estudiantes, con selector de carrera y grilla por bloques.">
-  <section class="section schedule-hero" 
-    data-initial-major={initialMajor} 
+<AppLayout
+  title={`Horarios de Estudiantes | ${semesterLabel}`}
+  description="Vista compacta de horarios para estudiantes, con selector de carrera y grilla por bloques."
+>
+  <header
+    class="stats-banner"
+    data-initial-major={initialMajor}
     data-initial-year={String(initialYear)}
     data-integrity-error={String(integrityError)}
   >
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Vista de estudiantes</p>
-        <h1 class="hero-title">Selecciona carrera y año para ver solo lo que toca.</h1>
-        <p class="hero-text text-soft">Cada clase ahora indica si es de 1°, 2°, 3° o 4° año.</p>
+    <div class="container stats-container">
+      <div class="stats-header">
+        <p class="eyebrow">Vista de Estudiantes</p>
+        <h2>{semesterLabel}</h2>
       </div>
 
-      <div class="card hero-panel">
-        <div class="panel-top">
-          <span class="panel-tag">Periodo activo</span>
-          <strong>{semesterLabel}</strong>
+      <div class="stats-group">
+        <div class="stat-item">
+          <span>Carrera activa</span>
+          <Badge variant="primary" id="active-major-badge">{initialMajor}</Badge
+          >
         </div>
+        <div class="stat-item">
+          <span>Año Académico</span>
+          <Badge variant="muted" id="active-year-badge"
+            >{initialYear}° Año</Badge
+          >
+        </div>
+        <div class="stat-item">
+          <span>Secciones</span>
+          <Badge variant="muted" id="selected-section-count"
+            >{activeSummary.totalSections}</Badge
+          >
+        </div>
+        <div class="stat-item">
+          <span>Sesiones / Sem</span>
+          <Badge variant="muted" id="selected-session-count"
+            >{activeSummary.totalEntries}</Badge
+          >
+        </div>
+      </div>
 
-        <div class="panel-grid">
-          <div>
-            <span>Total de clases</span>
-            <strong>{summary.totalEntries}</strong>
-          </div>
-          <div>
-            <span>Secciones visibles</span>
-            <strong id="selected-section-count">{initialSections.length}</strong>
-          </div>
-          <div>
-            <span>Sesiones activas</span>
-            <strong id="selected-session-count">{initialSections.reduce((total, section) => total + section.entries.length, 0)}</strong>
-          </div>
-          <div>
-            <span>Profesores activos</span>
-            <strong id="selected-professor-count">{new Set(initialSections.map((section) => section.professor)).size}</strong>
-          </div>
-        </div>
+      <div class="stats-actions">
+        <StudentScheduleFilters
+          schedulePeriods={schedulePeriods}
+          activePeriodId={dataset.period.id}
+          periodMajors={periodMajors}
+          initialMajor={initialMajor}
+          periodYears={periodYears}
+          initialYear={initialYear}
+          variant="compact"
+        />
       </div>
     </div>
-  </section>
-
-  <StudentScheduleFilters
-    schedulePeriods={schedulePeriods}
-    activePeriodId={dataset.period.id}
-    periodMajors={periodMajors}
-    initialMajor={initialMajor}
-    periodYears={periodYears}
-    initialYear={initialYear}
-  />
+  </header>
 
   <section class="section pt-0">
-    <div class="container dashboard-grid">
+    <div class="container dashboard-grid" id="main-dashboard">
       <StudentScheduleCatalog
         allSections={allSections}
         initialMajor={initialMajor}
@@ -93,14 +122,28 @@ const integrityError = suggestedPath === null;
         initialVisibleSections={initialSections.length}
       />
 
-      <StudentScheduleTimeline activeDays={activeDays} scheduleBlocks={scheduleBlocks} allSections={allSections} />
+      <StudentScheduleTimeline
+        activeDays={activeDays}
+        scheduleBlocks={scheduleBlocks}
+        allSections={allSections}
+      />
     </div>
   </section>
 
   <script type="module">
-    import { initStudentScheduleState } from '/src/features/schedules/state/studentScheduleState.ts';
-
+    import { initStudentScheduleState } from "/src/features/schedules/state/studentScheduleState.ts";
     initStudentScheduleState();
+
+    // Sincronización de Zen Mode
+    const zenToggle = document.getElementById("zen-mode-toggle");
+    const dashboard = document.getElementById("main-dashboard");
+
+    zenToggle?.addEventListener("click", () => {
+      dashboard?.classList.toggle("is-zen");
+      zenToggle.textContent = dashboard?.classList.contains("is-zen")
+        ? "Ver Catálogo"
+        : "Vista dedicada";
+    });
   </script>
 </AppLayout>
 
@@ -109,6 +152,50 @@ const integrityError = suggestedPath === null;
   .dashboard-grid {
     display: grid;
     gap: var(--space-4);
+  }
+
+  /* Stats Banner */
+  .stats-banner {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-4) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  }
+
+  .stats-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .stats-header h2 {
+    font-size: var(--font-size-xl);
+    margin: 0;
+  }
+
+  .stats-group {
+    display: flex;
+    gap: var(--space-8);
+    flex: 1;
+    justify-content: center;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .stat-item span {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
   }
 
   .hero-grid {

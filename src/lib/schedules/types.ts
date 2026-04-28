@@ -14,6 +14,22 @@ export interface ProfessorSchedule {
   by_day: Record<string, ScheduleEntry[]>;
 }
 
+export interface Encuentro {
+  dia: string;
+  inicio: string;
+  final: string;
+  salon: string;
+}
+
+// Icon Intent contract for Data-Driven UI
+export type IconIntent = 'student' | 'professor' | 'conflict' | 'room' | 'time' | 'arrow' | 'search' | 'info';
+
+export interface ViewAction {
+  label: string;
+  href: string;
+  intent: IconIntent;
+}
+
 export interface SchedulePeriod {
   id: string;
   year: string;

@@ -3,25 +3,9 @@ import { filterEntries } from './filters';
 import { buildTimelineCellIndex } from './cells';
 import { detectConflicts, findValidPath } from './engine';
 import { getScheduleSummary } from './summary';
-import type {
-  ProfessorSchedule,
-  RawFullSchedule,
-  RawProfessorSchedules,
-  RawProfessorSchedule,
-  RawScheduleEntry,
-  ScheduleDataset,
-  ScheduleEntry,
-  SchedulePeriod,
-  ScheduleSection,
-} from './types';
+import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel, ICON_MAP } from './constants';
 
-import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel } from './constants';
-
-const blockOrder = scheduleSlots.map(s => s.label);
-
-const majorAccents = ['#4f46e5', '#0f766e', '#b45309', '#be123c', '#7c3aed', '#0284c7', '#15803d', '#c2410c'];
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
-
 const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);
 
 export {
@@ -34,23 +18,14 @@ export {
   resolveScheduleDatasetByYearTerm,
   scheduleDatasets,
   schedulePeriodCatalog,
+  ICON_MAP
 };
 
-export type {
-  ProfessorSchedule,
-  RawFullSchedule,
-  RawProfessorSchedules,
-  RawProfessorSchedule,
-  RawScheduleEntry,
-  ScheduleDataset,
-  ScheduleEntry,
-  SchedulePeriod,
-  ScheduleSection,
-};
+export * from './types';
 
 export const dayCodes = dayOrder;
 export const dayNames = dayOrder.map((day) => ({ code: day, label: dayLabels[day] ?? day }));
-export const scheduleBlocks = scheduleSlots; // Exporting the whole objects now
+export const scheduleBlocks = scheduleSlots;
 export const schedulePeriods = schedulePeriodCatalog;
 export const defaultSchedulePeriodId = schedulePeriods[0]?.id ?? '2026-IIC';
 

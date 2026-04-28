@@ -10,6 +10,7 @@ interface Props {
   initialMajor: string;
   periodYears: number[];
   initialYear: number;
+  variant?: "default" | "compact";
 }
 
 const {
@@ -19,11 +20,12 @@ const {
   initialMajor,
   periodYears,
   initialYear,
+  variant = "default",
 } = Astro.props;
 ---
 
-<section class="section pt-0">
-  <Card class="container filter-strip" padding="md">
+<section class:list={[{ "section pt-0": variant !== "compact" }]}>
+  <Card class:list={["container filter-strip", { "is-compact": variant === "compact" }]} padding="md">
     <label class="period-picker">
       <span>Periodo</span>
       <select id="period-select">
@@ -99,6 +101,17 @@ const {
     z-index: 100;
     margin-bottom: var(--space-6);
     box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+  }
+
+  .filter-strip.is-compact {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    position: static;
+    margin-bottom: 0;
+    gap: var(--space-4);
   }
 
   .period-picker {
@@ -138,6 +151,11 @@ const {
     text-transform: uppercase;
     color: var(--color-text-soft);
     margin: 0;
+  }
+
+  .is-compact .eyebrow {
+    color: var(--color-accent);
+    opacity: 0.8;
   }
 
   .major-buttons,
