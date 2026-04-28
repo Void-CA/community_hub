@@ -109,8 +109,28 @@ const summary = getScheduleSummary(scheduleEntries);
   }
 
   .dashboard-grid {
+    display: grid;
     grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.6fr);
+    gap: var(--space-4);
     align-items: start;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Zen Mode */
+  .dashboard-grid.is-zen {
+    grid-template-columns: 0px 1fr;
+    gap: 0;
+  }
+
+  .dashboard-grid.is-zen :global(.catalog) {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    margin-right: -320px;
+  }
+
+  .dashboard-grid.is-zen :global(.timeline) {
+    grid-column: 1 / -1;
   }
 
   .hero-copy,

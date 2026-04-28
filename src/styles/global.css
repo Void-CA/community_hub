@@ -71,3 +71,6 @@ ul, ol {
   white-space: nowrap;
   border-width: 0;
 }
+[hidden] {
+  display: none !important;
+}

@@ -138,20 +138,23 @@ const activeSummary = getScheduleSummary(initialEntries);
       <main class="timeline card">
         <div class="timeline-head">
           <div>
-            <p class="eyebrow">Grilla</p>
-            <h2>Horario activo</h2>
+            <p class="eyebrow">Visualización</p>
+            <h2>Grilla Semanal</h2>
           </div>
-          <p class="text-soft">Solo se muestra el docente seleccionado.</p>
+          <div class="timeline-actions">
+            <p class="text-soft">Solo se muestra el docente seleccionado.</p>
+            <button id="zen-mode-toggle" class="zen-button">Vista dedicada</button>
+          </div>
         </div>
 
         <div class="timeline-scroll">
-          <div class="timeline-grid" style={`grid-template-columns: 7.5rem repeat(${activeDays.length}, minmax(16rem, 1fr));`}>
-            <div class="timeline-corner">Hora</div>
-            {activeDays.map((day) => <div class="timeline-day">{day.label}</div>)}
+          <div class="timeline-grid" style={`grid-template-columns: 5rem repeat(${activeDays.length}, minmax(12rem, 1fr));`}>
+            <div class="timeline-corner"></div>
+            {activeDays.map((day) => <div class="timeline-day"><span>{day.label}</span></div>)}
 
             {scheduleBlocks.map((block) => (
               <>
-                <div class="timeline-time">{block}</div>
+                <div class="timeline-time"><span>{block}</span></div>
                 {activeDays.map((day) => {
                   const tilesForCell = professorNames.flatMap((name) =>
                     getProfessorEntries(name)
@@ -191,6 +194,10 @@ const activeSummary = getScheduleSummary(initialEntries);
     const activeSubjectCount = document.getElementById('active-subject-count');
     const timelineEmpty = document.getElementById('timeline-empty');
     const periodSelect = document.getElementById('period-select');
+    
+    // Zen Mode
+    const zenToggle = document.getElementById('zen-mode-toggle');
+    const dashboard = document.querySelector('.dashboard-grid');
 
     const state = {
       professor: initialProfessor,
@@ -223,7 +230,7 @@ const activeSummary = getScheduleSummary(initialEntries);
 
       const hasCurrentVisible = visibleButtons.some((button) => (button.dataset.professor ?? '') === state.professor);
 
-      if (!hasCurrentVisible) {
+      if (!hasCurrentVisible && visibleButtons.length > 0) {
         state.professor = visibleButtons[0]?.dataset.professor ?? '';
       }
 
@@ -251,6 +258,13 @@ const activeSummary = getScheduleSummary(initialEntries);
     });
 
     searchInput?.addEventListener('input', applyState);
+
+    zenToggle?.addEventListener('click', () => {
+      dashboard?.classList.toggle('is-zen');
+      zenToggle.classList.toggle('is-active');
+      const isZen = dashboard?.classList.contains('is-zen');
+      zenToggle.textContent = isZen ? 'Ver catálogo' : 'Vista dedicada';
+    });
 
     periodSelect?.addEventListener('change', () => {
       const selected = periodSelect.value;
@@ -285,28 +299,13 @@ const activeSummary = getScheduleSummary(initialEntries);
   }
 
   .eyebrow,
-  .panel-tag,
-  .section-chip,
-  .timeline-day,
-  .timeline-corner,
-  .timeline-time {
+  .panel-tag {
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
-  }
-
-  .eyebrow,
-  .panel-tag,
-  .section-chip {
     color: var(--color-accent);
-  }
-
-  .timeline-day,
-  .timeline-corner,
-  .timeline-time {
-    color: var(--color-text-muted);
   }
 
   .hero-title {
@@ -334,7 +333,30 @@ const activeSummary = getScheduleSummary(initialEntries);
     display: flex;
     justify-content: space-between;
     gap: var(--space-4);
-    align-items: flex-start;
+    align-items: flex-end;
+  }
+
+  .timeline-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .zen-button {
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .zen-button:hover, .zen-button.is-active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
   }
 
   .panel-grid {
@@ -367,12 +389,31 @@ const activeSummary = getScheduleSummary(initialEntries);
     grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.6fr);
     gap: var(--space-4);
     align-items: start;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Zen Mode */
+  .dashboard-grid.is-zen {
+    grid-template-columns: 0px 1fr;
+    gap: 0;
+  }
+
+  .dashboard-grid.is-zen .catalog {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    margin-right: -320px;
+  }
+
+  .dashboard-grid.is-zen .timeline {
+    grid-column: 1 / -1;
   }
 
   .catalog {
     position: sticky;
-    top: 80px;
-    max-height: calc(100vh - 110px);
+    top: 2rem;
+    max-height: calc(100vh - 4rem);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .search-box input {
@@ -411,7 +452,7 @@ const activeSummary = getScheduleSummary(initialEntries);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-    overflow: auto;
+    overflow-y: auto;
     padding-right: var(--space-2);
   }
 
@@ -475,6 +516,9 @@ const activeSummary = getScheduleSummary(initialEntries);
     overflow: auto;
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    position: relative;
+    max-height: 80vh;
   }
 
   .timeline-grid {
@@ -488,26 +532,75 @@ const activeSummary = getScheduleSummary(initialEntries);
     background: var(--color-surface);
   }
 
-  .timeline-corner,
-  .timeline-day,
-  .timeline-time {
+  .timeline-corner {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    background: var(--color-surface-muted) !important;
+  }
+
+  .timeline-day {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--space-3);
-    background: var(--color-surface-muted);
+    background: var(--color-surface-muted) !important;
+    border-bottom: 2px solid var(--color-primary);
+  }
+
+  .timeline-day span {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  .timeline-time {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2);
+    background: var(--color-surface-muted) !important;
+    border-right: 1px solid var(--color-border);
+  }
+
+  .timeline-time span {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+  }
+
+  .schedule-tile[hidden] {
+    display: none !important;
   }
 
   .timeline-cell {
-    min-height: 9.5rem;
-    padding: var(--space-2);
+    min-height: 6rem;
+    padding: 2px;
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 2px;
   }
 
   .timeline-cell:empty {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-muted) 60%, transparent), var(--color-surface));
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      color-mix(in srgb, var(--color-surface-muted) 40%, transparent) 10px,
+      color-mix(in srgb, var(--color-surface-muted) 40%, transparent) 20px
+    );
   }
 
   .timeline-empty {
@@ -540,6 +633,11 @@ const activeSummary = getScheduleSummary(initialEntries);
     .catalog {
       position: static;
       max-height: none;
+    }
+
+    .timeline-time span {
+      writing-mode: horizontal-tb;
+      transform: none;
     }
   }
 </style>

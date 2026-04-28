@@ -1,51 +1,82 @@
 ---
-import AppLayout from '../../../layouts/AppLayout.astro';
-import { semesterLabel, groups, scheduleEntries, getScheduleSummary } from '../../../lib/schedules';
+import AppLayout from "../../../layouts/AppLayout.astro";
+import {
+  semesterLabel,
+  groups,
+  scheduleEntries,
+  getScheduleSummary,
+} from "../../../lib/schedules";
 
 const summary = getScheduleSummary(scheduleEntries);
 
 const spotlightItems = [
   {
-    title: 'Ver horarios de estudiantes',
-    description: 'Consulta por carrera, grupo y día para entender rápidamente la carga académica.',
-    href: '/campus/schedules/students',
-    label: 'Vista de estudiantes',
+    title: "Ver horarios de estudiantes",
+    description:
+      "Consulta por carrera, grupo y día para entender rápidamente la carga académica.",
+    href: "/campus/schedules/students",
+    label: "Vista de estudiantes",
   },
   {
-    title: 'Ver horarios de profesores',
-    description: 'Busca a un docente y revisa su semana, materias y distribución de carga.',
-    href: '/campus/schedules/professors',
-    label: 'Vista de docentes',
+    title: "Ver horarios de profesores",
+    description:
+      "Busca a un docente y revisa su semana, materias y distribución de carga.",
+    href: "/campus/schedules/professors",
+    label: "Vista de docentes",
   },
   {
-    title: 'Explorar insights',
-    description: 'Analiza carreras, aulas, bloques críticos y el tamaño general del dataset.',
-    href: '/campus/schedules/insights',
-    label: 'Análisis del sistema',
+    title: "Explorar insights",
+    description:
+      "Analiza carreras, aulas, bloques críticos y el tamaño general del dataset.",
+    href: "/campus/schedules/insights",
+    label: "Análisis del sistema",
   },
 ];
 
 const semesterCards = [
-  { title: semesterLabel, description: 'Cuatrimestre activo con horarios procesados desde PDFs oficiales.', active: true },
-  { title: 'Próximo cuatrimestre', description: 'Espacio reservado para futuras cargas de horarios.', active: false },
-  { title: 'Archivo histórico', description: 'Estructura preparada para guardar periodos anteriores.', active: false },
+  {
+    title: semesterLabel,
+    description:
+      "Cuatrimestre activo con horarios procesados desde PDFs oficiales.",
+    active: true,
+  },
+  {
+    title: "Próximo cuatrimestre",
+    description: "Espacio reservado para futuras cargas de horarios.",
+    active: false,
+  },
+  {
+    title: "Archivo histórico",
+    description: "Estructura preparada para guardar periodos anteriores.",
+    active: false,
+  },
 ];
 ---
 
-<AppLayout title={`Horarios Académicos | ${semesterLabel}`} description="Sistema de consulta de horarios académicos procesados por el Community Hub.">
+<AppLayout
+  title={`Horarios Académicos | ${semesterLabel}`}
+  description="Sistema de consulta de horarios académicos procesados por el Community Hub."
+>
   <section class="section schedule-hero">
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Sistema de Horarios Académicos</p>
-        <h1 class="hero-title">Horarios claros, consultables y listos para usar.</h1>
+        <h1 class="hero-title">
+          Horarios claros, consultables y listos para usar.
+        </h1>
         <p class="hero-text text-soft">
-          Centralizamos los PDFs oficiales de la universidad en una estructura digital que permite leer horarios por día,
-          carrera o profesor sin perder tiempo descifrando tablas.
+          Centralizamos los PDFs oficiales de la universidad en una estructura
+          digital que permite leer horarios por día, carrera o profesor sin
+          perder tiempo descifrando tablas.
         </p>
 
         <div class="hero-actions">
-          <a class="hero-button primary" href="/campus/schedules/students">Ver estudiantes</a>
-          <a class="hero-button secondary" href="/campus/schedules/professors">Ver profesores</a>
+          <a class="hero-button primary" href="/campus/schedules/students"
+            >Ver estudiantes</a
+          >
+          <a class="hero-button secondary" href="/campus/schedules/professors"
+            >Ver profesores</a
+          >
         </div>
       </div>
 
@@ -75,34 +106,9 @@ const semesterCards = [
         </div>
 
         <p class="panel-note text-soft">
-          Fuente: PDFs oficiales de la universidad, procesados por el Community Hub. Este sitio no sustituye al sistema oficial.
+          Fuente: PDFs oficiales de la universidad, procesados por el Community
+          Hub. Este sitio no sustituye al sistema oficial.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section pt-0">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Selecciona un periodo</p>
-          <h2>Selector de cuatrimestre</h2>
-        </div>
-        <p class="section-copy text-soft">
-          El periodo activo está disponible ahora; los demás espacios quedan listos para histórico y futuras cargas.
-        </p>
-      </div>
-
-      <div class="grid semester-grid">
-        {semesterCards.map((item) => (
-          <div class:list={['card semester-card', { 'semester-card-active': item.active }]}>
-            <div class="semester-card-header">
-              <span>{item.active ? 'Activo' : 'Pendiente'}</span>
-              <strong>{item.title}</strong>
-            </div>
-            <p class="text-soft">{item.description}</p>
-          </div>
-        ))}
       </div>
     </div>
   </section>
@@ -117,14 +123,16 @@ const semesterCards = [
       </div>
 
       <div class="grid access-grid">
-        {spotlightItems.map((item) => (
-          <a class="card access-card" href={item.href}>
-            <p class="access-label">{item.label}</p>
-            <h3>{item.title}</h3>
-            <p class="text-soft">{item.description}</p>
-            <span class="access-cta">Abrir vista</span>
-          </a>
-        ))}
+        {
+          spotlightItems.map((item) => (
+            <a class="card access-card" href={item.href}>
+              <p class="access-label">{item.label}</p>
+              <h3>{item.title}</h3>
+              <p class="text-soft">{item.description}</p>
+              <span class="access-cta">Abrir vista</span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -138,8 +146,9 @@ const semesterCards = [
         </div>
 
         <p class="text-soft">
-          Los horarios se procesan a partir de PDFs oficiales de la universidad para mejorar su lectura y navegación.
-          El hub organiza la información, pero no reemplaza el sistema académico institucional.
+          Los horarios se procesan a partir de PDFs oficiales de la universidad
+          para mejorar su lectura y navegación. El hub organiza la información,
+          pero no reemplaza el sistema académico institucional.
         </p>
       </div>
     </div>

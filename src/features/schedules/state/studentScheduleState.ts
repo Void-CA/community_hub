@@ -27,6 +27,10 @@ export function initStudentScheduleState() {
   const selectedSessionCount = document.getElementById('selected-session-count');
   const selectedProfessorCount = document.getElementById('selected-professor-count');
 
+  // Zen Mode toggle
+  const zenToggle = document.getElementById('zen-mode-toggle');
+  const dashboard = document.querySelector('.dashboard-grid');
+
   const state: State = {
     major: initialMajor,
     year: initialYear,
@@ -39,33 +43,41 @@ export function initStudentScheduleState() {
     const query = searchInput?.value.trim().toLowerCase() ?? '';
     const search = button.dataset.search ?? '';
 
-    return majors.includes(state.major.toLowerCase()) && years.includes(state.year) && (query.length === 0 || search.includes(query));
+    const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
+    const matchesYear = state.year === '0' || years.includes(state.year);
+    const matchesSearch = query.length === 0 || search.includes(query);
+
+    return matchesMajor && matchesYear && matchesSearch;
   };
 
-  const getActiveIds = () => new Set(
-    sectionButtons
-      .filter((button) => !button.hidden && state.selectedIds.has(button.dataset.sectionId ?? ''))
-      .map((button) => button.dataset.sectionId ?? '')
-  );
-
   const updateSummary = () => {
-    const activeIds = getActiveIds();
-    const selectedTiles = tiles.filter((tile) => activeIds.has(tile.dataset.sectionId ?? ''));
+    const selectedTiles = tiles.filter((tile) => state.selectedIds.has(tile.dataset.sectionId ?? ''));
     const selectedProfessors = new Set(selectedTiles.map((tile) => tile.dataset.professor ?? ''));
 
-    if (selectedSectionCount) selectedSectionCount.textContent = String(activeIds.size);
+    if (selectedSectionCount) selectedSectionCount.textContent = String(state.selectedIds.size);
     if (selectedSessionCount) selectedSessionCount.textContent = String(selectedTiles.length);
     if (selectedProfessorCount) selectedProfessorCount.textContent = String(selectedProfessors.size);
+  };
+
+  const applyVisibility = () => {
+    let visibleCount = 0;
+    sectionButtons.forEach((button) => {
+      const visible = isSectionVisible(button);
+      button.hidden = !visible;
+      if (visible) visibleCount++;
+    });
+
+    if (visibleSectionCount) {
+      visibleSectionCount.textContent = String(visibleCount);
+    }
   };
 
   const applySelectionState = () => {
     sectionButtons.forEach((button) => {
       const sectionId = button.dataset.sectionId ?? '';
       const selected = state.selectedIds.has(sectionId);
-      const visible = isSectionVisible(button);
       const check = button.querySelector('.section-check');
 
-      button.hidden = !visible;
       button.classList.toggle('is-selected', selected);
       button.setAttribute('aria-pressed', String(selected));
 
@@ -74,46 +86,52 @@ export function initStudentScheduleState() {
       }
     });
 
-    const activeIds = getActiveIds();
-
     tiles.forEach((tile) => {
-      tile.hidden = !activeIds.has(tile.dataset.sectionId ?? '');
+      tile.hidden = !state.selectedIds.has(tile.dataset.sectionId ?? '');
     });
-
-    if (visibleSectionCount) {
-      visibleSectionCount.textContent = String(sectionButtons.filter((button) => !button.hidden).length);
-    }
 
     updateSummary();
   };
 
-  const refreshSelection = () => {
-    state.selectedIds = new Set(
-      sectionButtons
-        .filter((button) => {
-          const majors = button.dataset.majorList?.split('|') ?? [];
-          const years = button.dataset.yearList?.split('|') ?? [];
-          return majors.includes(state.major.toLowerCase()) && years.includes(state.year);
-        })
-        .map((button) => button.dataset.sectionId ?? '')
-    );
+  const refreshSelectionByPreset = () => {
+    // Only auto-select if we are filtering by a specific major/year
+    if (state.major !== 'all' || state.year !== '0') {
+      state.selectedIds = new Set(
+        sectionButtons
+          .filter((button) => {
+            const majors = button.dataset.majorList?.split('|') ?? [];
+            const years = button.dataset.yearList?.split('|') ?? [];
+            const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
+            const matchesYear = state.year === '0' || years.includes(state.year);
+            return matchesMajor && matchesYear;
+          })
+          .map((button) => button.dataset.sectionId ?? '')
+      );
+    }
 
+    applyVisibility();
     applySelectionState();
   };
 
   majorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      state.major = button.dataset.major ?? state.major;
+      const nextMajor = button.dataset.major ?? state.major;
+      if (state.major === nextMajor) return;
+      
+      state.major = nextMajor;
       majorButtons.forEach((candidate) => candidate.classList.toggle('is-active', candidate === button));
-      refreshSelection();
+      refreshSelectionByPreset();
     });
   });
 
   yearButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      state.year = button.dataset.year ?? state.year;
+      const nextYear = button.dataset.year ?? state.year;
+      if (state.year === nextYear) return;
+
+      state.year = nextYear;
       yearButtons.forEach((candidate) => candidate.classList.toggle('is-active', candidate === button));
-      refreshSelection();
+      refreshSelectionByPreset();
     });
   });
 
@@ -130,7 +148,14 @@ export function initStudentScheduleState() {
     });
   });
 
-  searchInput?.addEventListener('input', applySelectionState);
+  searchInput?.addEventListener('input', applyVisibility);
+
+  zenToggle?.addEventListener('click', () => {
+    dashboard?.classList.toggle('is-zen');
+    zenToggle.classList.toggle('is-active');
+    const isZen = dashboard?.classList.contains('is-zen');
+    zenToggle.textContent = isZen ? 'Ver catálogo' : 'Vista dedicada';
+  });
 
   periodSelect?.addEventListener('change', () => {
     const selected = periodSelect.value;
@@ -141,5 +166,6 @@ export function initStudentScheduleState() {
     window.location.assign(nextUrl.toString());
   });
 
-  refreshSelection();
+  // Initial setup
+  refreshSelectionByPreset();
 }

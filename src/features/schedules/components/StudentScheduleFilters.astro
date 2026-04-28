@@ -44,3 +44,106 @@ const { schedulePeriods, activePeriodId, periodMajors, initialMajor, periodYears
     </div>
   </div>
 </section>
+
+<style>
+  .filter-strip {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-8);
+    align-items: center;
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    position: sticky;
+    top: 1rem;
+    z-index: 100;
+    margin-bottom: var(--space-6);
+    box-shadow: var(--shadow-md);
+  }
+
+  .period-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: var(--space-6);
+    border-right: 1px solid var(--color-border);
+  }
+
+  .period-picker span {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+  }
+
+  .period-picker select {
+    border: none;
+    background: transparent;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+    margin: 0;
+  }
+
+  .major-buttons,
+  .year-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .major-button,
+  .year-button {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .major-button:hover,
+  .year-button:hover {
+    border-color: var(--color-primary);
+    background: var(--color-surface);
+  }
+
+  .major-button.is-active,
+  .year-button.is-active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 30%, transparent);
+  }
+
+  @media (max-width: 1024px) {
+    .filter-strip {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    
+    .period-picker {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+      padding-right: 0;
+      padding-bottom: var(--space-2);
+    }
+  }
+</style>
