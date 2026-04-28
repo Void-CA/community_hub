@@ -18,6 +18,7 @@ export function buildTimelineCellIndex(sections: ScheduleSection[], conflicts?: 
       if (startIndex === -1) continue;
 
       const rangeEnd = endIndex === -1 ? startIndex : endIndex;
+      const rowSpan = rangeEnd - startIndex + 1;
 
       for (let i = startIndex; i <= rangeEnd; i++) {
         const label = academicLabels[i];
@@ -26,19 +27,18 @@ export function buildTimelineCellIndex(sections: ScheduleSection[], conflicts?: 
         const key = `${entry.day}::${label}`;
         const bucket = index.get(key) ?? [];
         
-        // Check if this specific entry in this block has a conflict
-        const hasConflict = sectionConflicts.some(c => {
-          // Simplification: if the section has any conflict, we flag it.
-          // Better: check if the conflict happens in this specific block/day.
-          return true; 
-        });
-
-        bucket.push({ 
-          entry, 
-          sectionId: section.id,
-          hasConflict: sectionConflicts.length > 0,
-          conflictWith: sectionConflicts.map(c => c.groups.find(id => id !== section.id)!)
-        });
+        // Only add the tile data if it's the first block of the range
+        // This allows the UI to use 'grid-row: span N'
+        if (i === startIndex) {
+          bucket.push({ 
+            entry, 
+            sectionId: section.id,
+            hasConflict: sectionConflicts.length > 0,
+            conflictWith: sectionConflicts.map(c => c.groups.find(id => id !== section.id)!),
+            rowSpan
+          });
+        }
+        
         index.set(key, bucket);
       }
     }

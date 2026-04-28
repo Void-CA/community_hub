@@ -9,9 +9,10 @@ interface Props {
   label?: string;
   hasConflict?: boolean;
   conflictWith?: string[];
+  style?: string;
 }
 
-const { entry, sectionId, label, hasConflict = false, conflictWith = [] } = Astro.props;
+const { entry, sectionId, label, hasConflict = false, conflictWith = [], style: extraStyle = '' } = Astro.props;
 const accent = getMajorAccent(entry.majors[0] ?? 'General');
 const title = label ?? entry.subject;
 ---
@@ -31,7 +32,7 @@ const title = label ?? entry.subject;
   data-group={String(entry.group)}
   data-academic-year={String(entry.academicYear)}
   data-search={`${entry.subject} ${entry.professor} ${entry.room} ${entry.group}`.toLowerCase()}
-  style={`--tile-accent: ${accent};`}
+  style={`--tile-accent: ${accent}; ${extraStyle}`}
 >
   <div class="tile-head">
     <p>{formatDay(entry.day)}</p>
@@ -39,14 +40,16 @@ const title = label ?? entry.subject;
   </div>
 
   <strong>{title}</strong>
-
-  <div class="tile-meta">
-    <Badge size="xs" style={`background: color-mix(in srgb, var(--tile-accent) 10%, var(--color-surface-muted));`}>G{entry.group}</Badge>
-    <Badge size="xs" style={`background: color-mix(in srgb, var(--tile-accent) 10%, var(--color-surface-muted));`}>{entry.room}</Badge>
-    <Badge size="xs" style={`background: color-mix(in srgb, var(--tile-accent) 10%, var(--color-surface-muted));`}>{formatAcademicYear(entry.academicYear)}</Badge>
+  
+  <div class="tile-badges">
+    <Badge size="xs" variant="muted">G{entry.group}</Badge>
+    <Badge size="xs" variant="muted">{formatAcademicYear(entry.academicYear)}</Badge>
   </div>
 
-  <p class="tile-professor">{entry.professor}</p>
+  <div class="tile-footer">
+    <span class="tile-room">{entry.room}</span>
+    <p class="tile-professor">{entry.professor}</p>
+  </div>
 </article>
 
 <style>
@@ -117,19 +120,37 @@ const title = label ?? entry.subject;
     margin-bottom: 2px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3; /* Increased for multi-block tiles */
     overflow: hidden;
+    padding-right: var(--space-8); /* Space for badges */
   }
 
-  .tile-meta {
+  .tile-badges {
+    position: absolute;
+    top: 4px;
+    right: 4px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-end;
+  }
+
+  .tile-footer {
     margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .tile-room {
+    font-size: 9px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
   }
 
   .tile-professor {
     margin: 0;
+    font-size: 10px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;

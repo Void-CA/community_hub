@@ -1,7 +1,7 @@
 import { scheduleDatasets, schedulePeriodCatalog, getScheduleDataset, resolveScheduleDatasetByYearTerm } from './loadDataset';
 import { filterEntries } from './filters';
 import { buildTimelineCellIndex } from './cells';
-import { detectConflicts } from './engine';
+import { detectConflicts, findValidPath } from './engine';
 import { getScheduleSummary } from './summary';
 import type {
   ProfessorSchedule,

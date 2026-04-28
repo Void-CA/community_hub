@@ -56,6 +56,7 @@ export interface TimelineCellTile {
   sectionId: string;
   hasConflict?: boolean;
   conflictWith?: string[]; // IDs of other sections causing the conflict
+  rowSpan?: number;
 }
 
 export interface Encuentro {

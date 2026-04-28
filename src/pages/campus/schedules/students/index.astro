@@ -8,6 +8,7 @@ import {
   resolveScheduleDatasetByYearTerm,
   scheduleBlocks,
   schedulePeriods,
+  findValidPath,
 } from '@/lib/schedules';
 import StudentScheduleCatalog from '@/features/schedules/components/composition/StudentScheduleCatalog.astro';
 import StudentScheduleFilters from '@/features/schedules/components/composition/StudentScheduleFilters.astro';
@@ -29,7 +30,6 @@ const initialSections = allSections.filter((section) =>
 );
 const summary = getScheduleSummary(scheduleEntries);
 
-import { findValidPath } from '@/lib/schedules';
 const suggestedPath = findValidPath(initialSections);
 const integrityError = suggestedPath === null;
 ---

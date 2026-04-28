@@ -1,7 +1,8 @@
 ---
-import AppLayout from '@/layouts/AppLayout.astro';
-import ScheduleTile from '@/features/schedules/components/domain/ScheduleTile.astro';
-import Card from '@/components/UI/Card.astro';
+import AppLayout from "@/layouts/AppLayout.astro";
+import ScheduleTile from "@/features/schedules/components/domain/ScheduleTile.astro";
+import Card from "@/components/UI/Card.astro";
+import Badge from "@/components/UI/Badge.astro";
 import {
   dayNames,
   getScheduleSummary,
@@ -9,15 +10,17 @@ import {
   scheduleBlocks,
   schedulePeriods,
   getBlockIndex,
-} from '@/lib/schedules';
+} from "@/lib/schedules";
 
-const yearParam = Astro.url.searchParams.get('year');
-const termParam = Astro.url.searchParams.get('term');
+const yearParam = Astro.url.searchParams.get("year");
+const termParam = Astro.url.searchParams.get("term");
 const dataset = resolveScheduleDatasetByYearTerm(yearParam, termParam);
 const semesterLabel = dataset.period.label;
 const scheduleEntries = dataset.entries;
 const professorSchedules = dataset.professorSchedules;
-const professorNames = Object.keys(professorSchedules).sort(new Intl.Collator('es', { sensitivity: 'base' }).compare);
+const professorNames = Object.keys(professorSchedules).sort(
+  new Intl.Collator("es", { sensitivity: "base" }).compare,
+);
 
 const getProfessorEntries = (professorName: string) => {
   const professor = professorSchedules[professorName];
@@ -37,71 +40,84 @@ const getProfessorTilesForCell = (dayCode: string, blockLabel: string) => {
       .filter((entry) => {
         if (entry.day !== dayCode) return false;
         const start = getBlockIndex(entry.start_block);
-        const end = getBlockIndex(entry.end_block);
-        return current >= start && current <= end;
+        return current === start;
       })
-      .map((entry) => ({ entry, professorName: name }))
+      .map((entry) => {
+        const start = getBlockIndex(entry.start_block);
+        const end = getBlockIndex(entry.end_block);
+        return { entry, professorName: name, rowSpan: end - start + 1 };
+      }),
   );
 };
 
-const activeDays = dayNames.filter((day) => scheduleEntries.some((entry) => entry.day === day.code));
-const initialProfessor = professorNames[0] ?? '';
+const isBlockOccupied = (blockLabel: string) => {
+  const current = getBlockIndex(blockLabel);
+  return professorNames.some((name) =>
+    getProfessorEntries(name).some((entry) => {
+      const start = getBlockIndex(entry.start_block);
+      const end = getBlockIndex(entry.end_block);
+      return current >= start && current <= end;
+    }),
+  );
+};
+
+const activeDays = dayNames.filter((day) =>
+  scheduleEntries.some((entry) => entry.day === day.code),
+);
+const initialProfessor = professorNames[0] ?? "";
 const initialEntries = getProfessorEntries(initialProfessor);
 const summary = getScheduleSummary(scheduleEntries);
 const activeSummary = getScheduleSummary(initialEntries);
 ---
 
-<AppLayout title={`Horarios de Profesores | ${semesterLabel}`} description="Vista compacta de horarios para profesores, con búsqueda por nombre y grilla por bloques.">
-  <section class="section schedule-hero" data-initial-professor={initialProfessor}>
-    <div class="container hero-grid">
-      <div class="hero-copy">
+<AppLayout
+  title={`Horarios de Profesores | ${semesterLabel}`}
+  description="Vista compacta de horarios para profesores, con búsqueda por nombre y grilla por bloques."
+>
+  <header class="stats-banner">
+    <div class="container stats-container">
+      <div class="stats-header">
         <p class="eyebrow">Vista de profesores</p>
-        <h1 class="hero-title">Busca un docente y revisa su carga semanal en una sola grilla.</h1>
-        <p class="hero-text text-soft">
-          El catálogo lateral reduce la lista de docentes y la vista principal se mantiene enfocada solo en la persona seleccionada.
-        </p>
+        <h2>{semesterLabel}</h2>
       </div>
 
-      <Card class="hero-panel" padding="lg">
-        <div class="panel-top">
-          <span class="panel-tag">Resumen del periodo</span>
-          <strong>{semesterLabel}</strong>
+      <div class="stats-group">
+        <div class="stat-item">
+          <span>Clases totales</span>
+          <Badge variant="muted">{summary.totalEntries}</Badge>
         </div>
+        <div class="stat-item">
+          <span>Docente activo</span>
+          <Badge variant="primary" id="active-professor-badge"
+            >{initialProfessor}</Badge
+          >
+        </div>
+        <div class="stat-item">
+          <span>Sesiones</span>
+          <Badge variant="muted" id="active-session-badge"
+            >{activeSummary.totalEntries}</Badge
+          >
+        </div>
+      </div>
 
-        <label class="period-picker">
-          <span>Periodo</span>
+      <div class="stats-actions">
+        <label class="period-picker-compact">
           <select id="period-select">
-            {schedulePeriods.map((period) => (
-              <option value={period.id} selected={period.id === dataset.period.id}>{period.label}</option>
-            ))}
+            {
+              schedulePeriods.map((period) => (
+                <option
+                  value={period.id}
+                  selected={period.id === dataset.period.id}
+                >
+                  {period.label}
+                </option>
+              ))
+            }
           </select>
         </label>
-
-        <div class="panel-grid">
-          <div>
-            <span>Total de clases</span>
-            <strong>{summary.totalEntries}</strong>
-          </div>
-          <div>
-            <span>Profesor activo</span>
-            <strong id="active-professor-name">{initialProfessor}</strong>
-          </div>
-          <div>
-            <span>Sesiones activas</span>
-            <strong id="active-session-count">{activeSummary.totalEntries}</strong>
-          </div>
-          <div>
-            <span>Materias activas</span>
-            <strong id="active-subject-count">{activeSummary.totalSubjects}</strong>
-          </div>
-        </div>
-
-        <p class="panel-note text-soft">
-          Los horarios provienen de PDFs oficiales de la universidad y el hub solo los organiza para lectura rápida.
-        </p>
-      </Card>
+      </div>
     </div>
-  </section>
+  </header>
 
   <section class="section pt-0">
     <div class="container dashboard-grid">
@@ -111,44 +127,68 @@ const activeSummary = getScheduleSummary(initialEntries);
             <p class="eyebrow">Catálogo</p>
             <h2>Docentes</h2>
           </div>
-          <p class="catalog-count text-soft"><span id="visible-professor-count">{professorNames.length}</span> disponibles</p>
+          <p class="catalog-count text-soft">
+            <span id="visible-professor-count">{professorNames.length}</span> disponibles
+          </p>
         </div>
 
         <label class="search-box">
           <span class="sr-only">Buscar profesor</span>
-          <input id="professor-search" type="search" placeholder="Buscar por nombre" />
+          <input
+            id="professor-search"
+            type="search"
+            placeholder="Buscar por nombre"
+          />
         </label>
 
         <div class="catalog-list" data-professor-list>
-          {professorNames.map((name) => {
-            const entries = getProfessorEntries(name);
-            const days = new Set(entries.map((entry) => entry.day)).size;
-            const subjects = new Set(entries.map((entry) => entry.subject)).size;
+          {
+            professorNames.map((name) => {
+              const entries = getProfessorEntries(name);
+              const days = new Set(entries.map((entry) => entry.day)).size;
+              const subjects = new Set(entries.map((entry) => entry.subject))
+                .size;
 
-            return (
-              <button
-                type="button"
-                class:list={['section-card', { 'is-selected': name === initialProfessor }]}
-                data-professor-button
-                data-professor={name}
-                data-search={name.toLowerCase()}
-                aria-pressed={name === initialProfessor}
-              >
-                <div class="section-card-top">
-                  <div>
-                    <p class="section-chip">{days} días · {subjects} materias</p>
-                    <h3>{name}</h3>
+              return (
+                <button
+                  type="button"
+                  class:list={[
+                    "section-card",
+                    { "is-selected": name === initialProfessor },
+                  ]}
+                  data-professor-button
+                  data-professor={name}
+                  data-search={name.toLowerCase()}
+                  aria-pressed={name === initialProfessor}
+                >
+                  <div class="section-card-top">
+                    <div>
+                      <h3>{name}</h3>
+                      <p class="section-subtitle">
+                        {subjects} materias en {days} días
+                      </p>
+                    </div>
+                    <div class="workload-indicator">
+                      {["L", "M", "X", "J", "V"].map((code) => {
+                        const count = entries.filter(
+                          (e) => e.day === code,
+                        ).length;
+                        return (
+                          <span
+                            class:list={[
+                              "workload-dot",
+                              { "has-load": count > 0, "high-load": count > 3 },
+                            ]}
+                            title={`${count} sesiones`}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
-                  <span class="section-check">{entries.length} sesiones</span>
-                </div>
-
-                <div class="section-meta">
-                  <span>{entries.length} clases</span>
-                  <span>{days} días</span>
-                </div>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })
+          }
         </div>
       </Card>
 
@@ -160,42 +200,86 @@ const activeSummary = getScheduleSummary(initialEntries);
           </div>
           <div class="timeline-actions">
             <p class="text-soft">Solo se muestra el docente seleccionado.</p>
-            <button id="zen-mode-toggle" class="zen-button">Vista dedicada</button>
+            <button id="zen-mode-toggle" class="zen-button"
+              >Vista dedicada</button
+            >
           </div>
         </div>
 
         <div class="timeline-scroll">
-          <div class="timeline-grid" style={`grid-template-columns: 5rem repeat(${activeDays.length}, minmax(12rem, 1fr));`}>
+          <div
+            class="timeline-grid"
+            style={`grid-template-columns: 5rem repeat(${activeDays.length}, minmax(12rem, 1fr));`}
+          >
             <div class="timeline-corner"></div>
-            {activeDays.map((day) => <div class="timeline-day"><span>{day.label}</span></div>)}
+            {
+              activeDays.map((day) => (
+                <div class="timeline-day">
+                  <span>{day.label}</span>
+                </div>
+              ))
+            }
 
-            {scheduleBlocks.map((block) => {
-              const isBreak = block.type === 'break';
-              
-              return (
-                <Fragment>
-                  <div class:list={['timeline-time', { 'is-break': isBreak }]}>
-                    <span class="slot-label">{block.label || ''}</span>
-                    <span class="slot-range">{block.range}</span>
-                  </div>
-                  {activeDays.map((day) => {
-                    const tilesForCell = getProfessorTilesForCell(day.code, block.label);
+            {
+              scheduleBlocks.map((block) => {
+                const isBreak = block.type === "break";
+                const occupied = isBlockOccupied(block.label);
 
-                    return (
-                      <div class:list={['timeline-cell', { 'is-break': isBreak }]}>
-                        {isBreak ? (
-                          <span class="break-label">{block.label}</span>
-                        ) : (
-                          tilesForCell.map(({ entry, professorName }) => (
-                            <ScheduleTile entry={entry} sectionId={professorName} label={entry.subject} />
-                          ))
-                        )}
-                      </div>
-                    );
-                  })}
-                </Fragment>
-              );
-            })}
+                return (
+                  <Fragment>
+                    <div
+                      class:list={[
+                        "timeline-time",
+                        {
+                          "is-break": isBreak,
+                          "is-empty": isBreak && !occupied,
+                        },
+                      ]}
+                    >
+                      <span class="slot-label">{block.label || ""}</span>
+                      <span class="slot-range">{block.range}</span>
+                    </div>
+                    {activeDays.map((day) => {
+                      const tilesForCell = getProfessorTilesForCell(
+                        day.code,
+                        block.label,
+                      );
+
+                      return (
+                        <div
+                          class:list={[
+                            "timeline-cell",
+                            {
+                              "is-break": isBreak,
+                              "is-empty": isBreak && !occupied,
+                            },
+                          ]}
+                        >
+                          {isBreak && !occupied ? (
+                            <span class="break-label">{block.label}</span>
+                          ) : (
+                            tilesForCell.map(
+                              ({ entry, professorName, rowSpan }) => (
+                                <ScheduleTile
+                                  entry={entry}
+                                  sectionId={professorName}
+                                  label={entry.subject}
+                                  style={
+                                    rowSpan && rowSpan > 1
+                                      ? `grid-row: span ${rowSpan}; height: calc(${rowSpan} * (var(--cell-height) + 1px) - 1px);`
+                                      : ""
+                                  }
+                                />
+                              ),
+                            )
+                          )}
+                        </div>
+                      );
+                    })}
+                  </Fragment>
+                );
+              })
+            }
           </div>
         </div>
 
@@ -208,42 +292,55 @@ const activeSummary = getScheduleSummary(initialEntries);
   </section>
 
   <script is:inline>
-    const initialProfessor = document.querySelector('[data-initial-professor]')?.dataset.initialProfessor ?? '';
-    const professorButtons = [...document.querySelectorAll('[data-professor-button]')];
-    const tiles = [...document.querySelectorAll('[data-schedule-tile]')];
-    const searchInput = document.getElementById('professor-search');
-    const visibleProfessorCount = document.getElementById('visible-professor-count');
-    const activeProfessorName = document.getElementById('active-professor-name');
-    const activeSessionCount = document.getElementById('active-session-count');
-    const activeSubjectCount = document.getElementById('active-subject-count');
-    const timelineEmpty = document.getElementById('timeline-empty');
-    const periodSelect = document.getElementById('period-select');
-    
+    const initialProfessor =
+      document.querySelector("[data-initial-professor]")?.dataset
+        .initialProfessor ?? "";
+    const professorButtons = [
+      ...document.querySelectorAll("[data-professor-button]"),
+    ];
+    const tiles = [...document.querySelectorAll("[data-schedule-tile]")];
+    const searchInput = document.getElementById("professor-search");
+    const visibleProfessorCount = document.getElementById(
+      "visible-professor-count",
+    );
+    const activeProfessorName = document.getElementById(
+      "active-professor-name",
+    );
+    const activeSessionCount = document.getElementById("active-session-count");
+    const activeSubjectCount = document.getElementById("active-subject-count");
+    const timelineEmpty = document.getElementById("timeline-empty");
+    const periodSelect = document.getElementById("period-select");
+
     // Zen Mode
-    const zenToggle = document.getElementById('zen-mode-toggle');
-    const dashboard = document.querySelector('.dashboard-grid');
+    const zenToggle = document.getElementById("zen-mode-toggle");
+    const dashboard = document.querySelector(".dashboard-grid");
 
     const state = {
       professor: initialProfessor,
     };
 
     const updateSummary = () => {
-      const selectedTiles = tiles.filter((tile) => tile.dataset.sectionId === state.professor);
-      const subjects = new Set(selectedTiles.map((tile) => tile.dataset.subject ?? ''));
+      const selectedTiles = tiles.filter(
+        (tile) => tile.dataset.sectionId === state.professor,
+      );
+      const subjects = new Set(
+        selectedTiles.map((tile) => tile.dataset.subject ?? ""),
+      );
 
-      activeProfessorName.textContent = state.professor || 'Sin selección';
+      activeProfessorName.textContent = state.professor || "Sin selección";
       activeSessionCount.textContent = String(selectedTiles.length);
       activeSubjectCount.textContent = String(subjects.size);
       timelineEmpty.hidden = Boolean(state.professor);
     };
 
     const applyState = () => {
-      const query = searchInput?.value.trim().toLowerCase() ?? '';
+      const query = searchInput?.value.trim().toLowerCase() ?? "";
       const visibleButtons = [];
 
       professorButtons.forEach((button) => {
-        const name = button.dataset.professor ?? '';
-        const matches = query.length === 0 || name.toLowerCase().includes(query);
+        const name = button.dataset.professor ?? "";
+        const matches =
+          query.length === 0 || name.toLowerCase().includes(query);
 
         button.hidden = !matches;
 
@@ -252,23 +349,27 @@ const activeSummary = getScheduleSummary(initialEntries);
         }
       });
 
-      const hasCurrentVisible = visibleButtons.some((button) => (button.dataset.professor ?? '') === state.professor);
+      const hasCurrentVisible = visibleButtons.some(
+        (button) => (button.dataset.professor ?? "") === state.professor,
+      );
 
       if (!hasCurrentVisible && visibleButtons.length > 0) {
-        state.professor = visibleButtons[0]?.dataset.professor ?? '';
+        state.professor = visibleButtons[0]?.dataset.professor ?? "";
       }
 
       professorButtons.forEach((button) => {
-        const selected = (button.dataset.professor ?? '') === state.professor;
-        button.classList.toggle('is-selected', selected);
-        button.setAttribute('aria-pressed', String(selected));
+        const selected = (button.dataset.professor ?? "") === state.professor;
+        button.classList.toggle("is-selected", selected);
+        button.setAttribute("aria-pressed", String(selected));
       });
 
       tiles.forEach((tile) => {
         tile.hidden = tile.dataset.sectionId !== state.professor;
       });
 
-      visibleProfessorCount.textContent = String(professorButtons.filter((button) => !button.hidden).length);
+      visibleProfessorCount.textContent = String(
+        professorButtons.filter((button) => !button.hidden).length,
+      );
       updateSummary();
     };
 
@@ -278,24 +379,26 @@ const activeSummary = getScheduleSummary(initialEntries);
     };
 
     professorButtons.forEach((button) => {
-      button.addEventListener('click', () => selectProfessor(button.dataset.professor ?? initialProfessor));
+      button.addEventListener("click", () =>
+        selectProfessor(button.dataset.professor ?? initialProfessor),
+      );
     });
 
-    searchInput?.addEventListener('input', applyState);
+    searchInput?.addEventListener("input", applyState);
 
-    zenToggle?.addEventListener('click', () => {
-      dashboard?.classList.toggle('is-zen');
-      zenToggle.classList.toggle('is-active');
-      const isZen = dashboard?.classList.contains('is-zen');
-      zenToggle.textContent = isZen ? 'Ver catálogo' : 'Vista dedicada';
+    zenToggle?.addEventListener("click", () => {
+      dashboard?.classList.toggle("is-zen");
+      zenToggle.classList.toggle("is-active");
+      const isZen = dashboard?.classList.contains("is-zen");
+      zenToggle.textContent = isZen ? "Ver catálogo" : "Vista dedicada";
     });
 
-    periodSelect?.addEventListener('change', () => {
+    periodSelect?.addEventListener("change", () => {
       const selected = periodSelect.value;
-      const [year, term] = selected.split('-');
+      const [year, term] = selected.split("-");
       const nextUrl = new URL(window.location.href);
-      nextUrl.searchParams.set('year', year ?? '');
-      nextUrl.searchParams.set('term', term ?? '');
+      nextUrl.searchParams.set("year", year ?? "");
+      nextUrl.searchParams.set("term", term ?? "");
       window.location.assign(nextUrl.toString());
     });
 
@@ -313,34 +416,6 @@ const activeSummary = getScheduleSummary(initialEntries);
     grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
     gap: var(--space-6);
     align-items: stretch;
-  }
-
-  .hero-copy {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--space-4);
-  }
-
-  .eyebrow,
-  .panel-tag {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-accent);
-  }
-
-  .hero-title {
-    margin: 0;
-    font-size: clamp(2.4rem, 5vw, 4.4rem);
-    max-width: 12ch;
-  }
-
-  .hero-text {
-    max-width: 58ch;
-    font-size: var(--font-size-lg);
   }
 
   .hero-panel,
@@ -377,7 +452,8 @@ const activeSummary = getScheduleSummary(initialEntries);
     transition: all 0.2s ease;
   }
 
-  .zen-button:hover, .zen-button.is-active {
+  .zen-button:hover,
+  .zen-button.is-active {
     background: var(--color-primary);
     color: white;
     border-color: var(--color-primary);
@@ -408,11 +484,67 @@ const activeSummary = getScheduleSummary(initialEntries);
     font-size: var(--font-size-2xl);
   }
 
+  /* Stats Banner */
+  .stats-banner {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-4) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  }
+
+  .stats-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .stats-header h2 {
+    font-size: var(--font-size-xl);
+    margin: 0;
+  }
+
+  .stats-group {
+    display: flex;
+    gap: var(--space-8);
+    flex: 1;
+    justify-content: center;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .stat-item span {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .period-picker-compact select {
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xs);
+    color: var(--color-primary);
+  }
+
   .dashboard-grid {
     display: grid;
-    grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.6fr);
-    gap: var(--space-4);
+    grid-template-columns: 22rem 1fr;
+    gap: var(--space-6);
     align-items: start;
+    max-width: 100% !important;
+    padding: 0 var(--space-6);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -495,8 +627,42 @@ const activeSummary = getScheduleSummary(initialEntries);
 
   .section-card.is-selected {
     border-color: var(--color-primary);
-    box-shadow: var(--shadow-md);
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 8%, var(--color-surface) 92%), var(--color-surface));
+    border-width: 2px;
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-primary) 5%, var(--color-surface) 95%),
+      var(--color-surface)
+    );
+  }
+
+  .section-subtitle {
+    margin: 0;
+    font-size: 11px;
+    color: var(--color-text-soft);
+  }
+
+  .workload-indicator {
+    display: flex;
+    gap: 3px;
+    margin-top: 4px;
+  }
+
+  .workload-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-surface-muted);
+    transition: all 0.2s ease;
+  }
+
+  .workload-dot.has-load {
+    background: var(--color-text-soft);
+  }
+
+  .workload-dot.high-load {
+    background: var(--color-primary);
+    box-shadow: 0 0 4px var(--color-primary);
   }
 
   .section-card-top {
@@ -550,6 +716,7 @@ const activeSummary = getScheduleSummary(initialEntries);
     gap: 1px;
     background: var(--color-border);
     min-width: 100%;
+    --cell-height: 5rem;
   }
 
   .timeline-grid > div {
@@ -599,7 +766,11 @@ const activeSummary = getScheduleSummary(initialEntries);
   }
 
   .timeline-time.is-break {
-    background: color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) !important;
+    background: color-mix(
+      in srgb,
+      var(--color-surface-muted) 80%,
+      var(--color-bg)
+    ) !important;
   }
 
   .slot-label {
@@ -624,11 +795,21 @@ const activeSummary = getScheduleSummary(initialEntries);
   }
 
   .timeline-cell {
-    min-height: 5rem;
+    min-height: var(--cell-height);
     padding: 2px;
     display: flex;
     flex-direction: column;
     gap: 2px;
+  }
+
+  .timeline-time.is-empty,
+  .timeline-cell.is-empty {
+    min-height: 1.5rem !important;
+    max-height: 1.5rem;
+  }
+
+  .timeline-cell.is-empty .break-label {
+    font-size: 8px;
   }
 
   .timeline-cell.is-break {
