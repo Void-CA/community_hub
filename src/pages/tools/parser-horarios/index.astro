@@ -1,77 +1,48 @@
 ---
-import ToolLayout from '../../../layouts/ToolLayout.astro';
+import ToolLayout from "../../../layouts/ToolLayout.astro";
+import Button from "../../../components/UI/Button.astro";
 
-const toolUrl = 'https://wrangler-horarios-voidca.netlify.app/';
+const toolUrl = "https://wrangler-horarios-voidca.netlify.app/";
+
+const previewConfig = {
+  label: "Vista previa integrada",
+  linkLabel: "Abrir en nueva pestaña",
+};
+
+const fallbackConfig = {
+  title: "Abre el parser directamente",
+  description:
+    "Si la vista embebida no carga, puedes usar la herramienta externa sin salir del flujo del hub.",
+  href: toolUrl,
+  hrefLabel: "Abrir herramienta",
+};
 ---
 
 <ToolLayout
   title="Parser de Horarios"
   description="Convierte un horario en texto en una vista estructurada y reutilizable. La herramienta vive dentro del hub y se apoya en la demo externa para el procesamiento."
-  previewLabel="Vista previa integrada"
-  previewLinkLabel="Abrir en nueva pestaña"
-  fallbackTitle="Abre el parser directamente"
-  fallbackDescription="Si la vista embebida no carga, puedes usar la herramienta externa sin salir del flujo del hub."
-  fallbackHref={toolUrl}
-  fallbackHrefLabel="Abrir herramienta"
+  preview={previewConfig}
+  fallback={fallbackConfig}
 >
-  <a slot="actions" href={toolUrl} class="primary-action" target="_blank" rel="noreferrer">
+  <Button
+    slot="actions"
+    href={toolUrl}
+    variant="primary"
+    size="lg"
+    target="_blank"
+    rel="noreferrer"
+  >
     Abrir herramienta
-  </a>
-  <a slot="actions" href="/tools" class="secondary-action">Volver a herramientas</a>
+  </Button>
+
+  <Button slot="actions" href="/tools" variant="secondary" size="lg">
+    Volver a herramientas
+  </Button>
 
   <iframe
     slot="preview"
     title="Parser de Horarios"
     src={toolUrl}
     loading="lazy"
-    referrerpolicy="no-referrer"
-  ></iframe>
+    referrerpolicy="no-referrer"></iframe>
 </ToolLayout>
-
-<style>
-  .primary-action,
-  .secondary-action {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-2) var(--space-6);
-    border-radius: var(--radius-full);
-    font-weight: var(--font-weight-semibold);
-    font-size: var(--font-size-sm);
-    transition: all 0.2s ease;
-  }
-
-  .primary-action {
-    background-color: var(--color-primary);
-    color: white;
-  }
-
-  .primary-action:hover {
-    background-color: var(--color-primary-hover);
-    transform: translateY(-1px);
-  }
-
-  .secondary-action {
-    border: 1px solid var(--color-border);
-    color: var(--color-text-soft);
-    background-color: var(--color-surface);
-  }
-
-  .secondary-action:hover {
-    background-color: var(--color-surface-muted);
-    border-color: var(--color-text-muted);
-  }
-
-  iframe {
-    width: 100%;
-    min-height: 800px;
-    border: none;
-    background: white; /* Iframe content often assumes white background */
-  }
-
-  @media (max-width: 1024px) {
-    iframe {
-      min-height: 640px;
-    }
-  }
-</style>

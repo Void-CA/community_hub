@@ -1,0 +1,116 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  target?: string;
+  rel?: string;
+  [key: string]: any;
+}
+
+const { 
+  href, 
+  variant = 'primary', 
+  size = 'md', 
+  class: className, 
+  target, 
+  rel,
+  ...rest 
+} = Astro.props;
+
+const Element = href ? 'a' : 'button';
+
+const variantClasses = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  ghost: 'btn-ghost'
+};
+
+const sizeClasses = {
+  sm: 'btn-sm',
+  md: 'btn-md',
+  lg: 'btn-lg'
+};
+---
+
+<Element 
+  href={href} 
+  target={target}
+  rel={rel}
+  class:list={['btn', variantClasses[variant], sizeClasses[size], className]}
+  {...rest}
+>
+  <slot />
+</Element>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-bold);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    gap: var(--space-2);
+  }
+
+  /* Variants */
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    border-color: var(--color-border);
+    color: var(--color-text-soft);
+    background-color: var(--color-surface);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-surface-muted);
+    border-color: var(--color-text-muted);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-text-soft);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-surface-muted);
+  }
+
+  /* Sizes */
+  .btn-sm {
+    padding: var(--space-1) var(--space-4);
+    font-size: var(--font-size-xs);
+  }
+
+  .btn-md {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-sm);
+  }
+
+  .btn-lg {
+    padding: var(--space-4) var(--space-10);
+    font-size: var(--font-size-base);
+  }
+
+  @media (max-width: 640px) {
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
