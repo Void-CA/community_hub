@@ -1,0 +1,337 @@
+---
+import AppLayout from '../../../../layouts/AppLayout.astro';
+import ScheduleEntryCard from '../../../../components/Schedules/ScheduleEntryCard.astro';
+import { getScheduleSummary, groupProfessorEntriesByDay, professorNames, semesterLabel, getProfessorEntries } from '../../../../data/schedulesData';
+
+const search = '';
+const selectedProfessor = professorNames[0] ?? '';
+const filteredProfessors = professorNames;
+const professorEntries = getProfessorEntries(selectedProfessor);
+const summary = getScheduleSummary(professorEntries);
+const professorPanels = filteredProfessors.map((name) => ({
+  name,
+  entries: getProfessorEntries(name),
+  byDay: groupProfessorEntriesByDay(name),
+}));
+---
+
+<AppLayout title={`Horarios de Profesores | ${semesterLabel}`} description="Vista de horarios para profesores, con búsqueda por nombre y resumen de carga semanal.">
+  <section class="section schedule-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Vista de profesores</p>
+        <h1 class="hero-title">Busca un docente y revisa su semana completa.</h1>
+        <p class="hero-text text-soft">
+          La vista docente concentra materias, aulas y bloques para entender la carga semanal y detectar materias repetidas o franjas más cargadas.
+        </p>
+      </div>
+
+      <div class="card summary-card">
+        <div>
+          <p class="summary-label">Profesor seleccionado</p>
+          <strong id="professor-name">{selectedProfessor || 'Sin selección'}</strong>
+        </div>
+
+        <div class="summary-grid">
+          <div>
+            <span>Clases</span>
+            <strong id="professor-classes">{summary.totalEntries}</strong>
+          </div>
+          <div>
+            <span>Días</span>
+            <strong id="professor-days">{groupProfessorEntriesByDay(selectedProfessor).length}</strong>
+          </div>
+          <div>
+            <span>Materias</span>
+            <strong id="professor-subjects">{summary.totalSubjects}</strong>
+          </div>
+          <div>
+            <span>Aulas</span>
+            <strong id="professor-rooms">{summary.totalRooms}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="filters card">
+        <label>
+          <span>Buscar por nombre</span>
+          <input id="professor-search" type="search" name="q" placeholder="Ej. María Isabel Silva" value={search} list="professor-list" />
+        </label>
+
+        <datalist id="professor-list">
+          {professorNames.map((name) => <option value={name} />)}
+        </datalist>
+
+        <div class="search-hint text-soft">Escribe parte del nombre para reducir la lista de docentes disponibles.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container professor-list">
+      {professorPanels.map((professor) => (
+        <article
+          class="card professor-panel"
+          data-professor-panel
+          data-professor={professor.name.toLowerCase()}
+          data-classes={professor.entries.length}
+          data-days={professor.byDay.length}
+          data-subjects={new Set(professor.entries.map((entry) => entry.subject)).size}
+          data-rooms={new Set(professor.entries.map((entry) => entry.room)).size}
+        >
+          <div class="professor-head">
+            <div>
+              <p class="summary-label">Docente</p>
+              <h2>{professor.name}</h2>
+            </div>
+
+            <div class="professor-stats">
+              <span>{professor.entries.length} clases</span>
+              <span>{professor.byDay.length} días</span>
+            </div>
+          </div>
+
+          <div class="professor-days">
+            {professor.byDay.map((dayGroup) => (
+              <details open>
+                <summary>
+                  <strong>{dayGroup.day}</strong>
+                  <span>{dayGroup.entries.length} clases</span>
+                </summary>
+
+                <div class="professor-entries">
+                  {dayGroup.entries.map((entry) => <ScheduleEntryCard entry={entry} compact />)}
+                </div>
+              </details>
+            ))}
+          </div>
+        </article>
+      ))}
+
+      {!professorPanels.length && (
+        <div class="card empty-state">
+          <h3>No encontramos coincidencias.</h3>
+          <p class="text-soft">Intenta otra parte del nombre del profesor para volver a mostrar resultados.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <script is:inline>
+    const searchInput = document.getElementById('professor-search');
+    const panels = [...document.querySelectorAll('[data-professor-panel]')];
+    const summaryName = document.getElementById('professor-name');
+    const summaryClasses = document.getElementById('professor-classes');
+    const summaryDays = document.getElementById('professor-days');
+    const summarySubjects = document.getElementById('professor-subjects');
+    const summaryRooms = document.getElementById('professor-rooms');
+
+    const applySearch = () => {
+      const query = searchInput?.value.trim().toLowerCase() ?? '';
+      let firstVisiblePanel = null;
+
+      panels.forEach((panel) => {
+        const professor = panel.dataset.professor ?? '';
+        const isVisible = query.length === 0 || professor.includes(query);
+
+        panel.hidden = !isVisible;
+
+        if (isVisible && !firstVisiblePanel) {
+          firstVisiblePanel = panel;
+        }
+      });
+
+      if (firstVisiblePanel) {
+        summaryName.textContent = firstVisiblePanel.dataset.professor?.replace(/\b\w/g, (letter) => letter.toUpperCase()) ?? 'Sin selección';
+        summaryClasses.textContent = firstVisiblePanel.dataset.classes ?? '0';
+        summaryDays.textContent = firstVisiblePanel.dataset.days ?? '0';
+        summarySubjects.textContent = firstVisiblePanel.dataset.subjects ?? '0';
+        summaryRooms.textContent = firstVisiblePanel.dataset.rooms ?? '0';
+      } else {
+        summaryName.textContent = 'Sin selección';
+        summaryClasses.textContent = '0';
+        summaryDays.textContent = '0';
+        summarySubjects.textContent = '0';
+        summaryRooms.textContent = '0';
+      }
+    };
+
+    searchInput?.addEventListener('input', applySearch);
+    applySearch();
+  </script>
+</AppLayout>
+
+<style>
+  .schedule-hero {
+    padding-bottom: var(--space-8);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: var(--space-6);
+    align-items: stretch;
+  }
+
+  .eyebrow,
+  .summary-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+  }
+
+  .hero-title {
+    margin: var(--space-3) 0;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    max-width: 14ch;
+  }
+
+  .hero-text {
+    max-width: 60ch;
+    font-size: var(--font-size-lg);
+  }
+
+  .summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .summary-grid div {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+  }
+
+  .summary-grid span {
+    display: block;
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .summary-grid strong,
+  .summary-card strong {
+    font-size: var(--font-size-2xl);
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-soft);
+  }
+
+  input[type='search'] {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .professor-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .professor-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .professor-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .professor-head h2 {
+    margin: var(--space-2) 0 0;
+  }
+
+  .professor-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .professor-stats span {
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+    background: var(--color-surface-muted);
+    color: var(--color-text-soft);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .professor-days {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .professor-days summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    cursor: pointer;
+  }
+
+  .professor-days summary span {
+    color: var(--color-text-muted);
+  }
+
+  .professor-entries {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .empty-state h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid,
+    .professor-head,
+    .summary-grid,
+    .professor-entries {
+      grid-template-columns: 1fr;
+      display: grid;
+    }
+
+    .hero-grid {
+      gap: var(--space-4);
+    }
+  }
+</style>

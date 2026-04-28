@@ -1,0 +1,344 @@
+---
+import AppLayout from '../../../layouts/AppLayout.astro';
+import { semesterLabel, groups, scheduleEntries, getScheduleSummary } from '../../../data/schedulesData';
+
+const summary = getScheduleSummary(scheduleEntries);
+
+const spotlightItems = [
+  {
+    title: 'Ver horarios de estudiantes',
+    description: 'Consulta por carrera, grupo y día para entender rápidamente la carga académica.',
+    href: '/campus/schedules/students',
+    label: 'Vista de estudiantes',
+  },
+  {
+    title: 'Ver horarios de profesores',
+    description: 'Busca a un docente y revisa su semana, materias y distribución de carga.',
+    href: '/campus/schedules/professors',
+    label: 'Vista de docentes',
+  },
+  {
+    title: 'Explorar insights',
+    description: 'Analiza carreras, aulas, bloques críticos y el tamaño general del dataset.',
+    href: '/campus/schedules/insights',
+    label: 'Análisis del sistema',
+  },
+];
+
+const semesterCards = [
+  { title: semesterLabel, description: 'Cuatrimestre activo con horarios procesados desde PDFs oficiales.', active: true },
+  { title: 'Próximo cuatrimestre', description: 'Espacio reservado para futuras cargas de horarios.', active: false },
+  { title: 'Archivo histórico', description: 'Estructura preparada para guardar periodos anteriores.', active: false },
+];
+---
+
+<AppLayout title={`Horarios Académicos | ${semesterLabel}`} description="Sistema de consulta de horarios académicos procesados por el Community Hub.">
+  <section class="section schedule-hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Sistema de Horarios Académicos</p>
+        <h1 class="hero-title">Horarios claros, consultables y listos para usar.</h1>
+        <p class="hero-text text-soft">
+          Centralizamos los PDFs oficiales de la universidad en una estructura digital que permite leer horarios por día,
+          carrera o profesor sin perder tiempo descifrando tablas.
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-button primary" href="/campus/schedules/students">Ver estudiantes</a>
+          <a class="hero-button secondary" href="/campus/schedules/professors">Ver profesores</a>
+        </div>
+      </div>
+
+      <div class="card hero-panel">
+        <div class="panel-top">
+          <span class="panel-tag">Datos del periodo</span>
+          <strong>{semesterLabel}</strong>
+        </div>
+
+        <div class="panel-grid">
+          <div>
+            <span>Entradas</span>
+            <strong>{summary.totalEntries}</strong>
+          </div>
+          <div>
+            <span>Profesores</span>
+            <strong>{summary.totalProfessors}</strong>
+          </div>
+          <div>
+            <span>Carreras</span>
+            <strong>{summary.totalMajors}</strong>
+          </div>
+          <div>
+            <span>Grupos</span>
+            <strong>{groups.length}</strong>
+          </div>
+        </div>
+
+        <p class="panel-note text-soft">
+          Fuente: PDFs oficiales de la universidad, procesados por el Community Hub. Este sitio no sustituye al sistema oficial.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selecciona un periodo</p>
+          <h2>Selector de cuatrimestre</h2>
+        </div>
+        <p class="section-copy text-soft">
+          El periodo activo está disponible ahora; los demás espacios quedan listos para histórico y futuras cargas.
+        </p>
+      </div>
+
+      <div class="grid semester-grid">
+        {semesterCards.map((item) => (
+          <div class:list={['card semester-card', { 'semester-card-active': item.active }]}>
+            <div class="semester-card-header">
+              <span>{item.active ? 'Activo' : 'Pendiente'}</span>
+              <strong>{item.title}</strong>
+            </div>
+            <p class="text-soft">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Accesos principales</p>
+          <h2>Explora por tipo de consulta</h2>
+        </div>
+      </div>
+
+      <div class="grid access-grid">
+        {spotlightItems.map((item) => (
+          <a class="card access-card" href={item.href}>
+            <p class="access-label">{item.label}</p>
+            <h3>{item.title}</h3>
+            <p class="text-soft">{item.description}</p>
+            <span class="access-cta">Abrir vista</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="transparency card">
+        <div>
+          <p class="eyebrow">Transparencia</p>
+          <h2>Datos oficiales, presentados por el hub</h2>
+        </div>
+
+        <p class="text-soft">
+          Los horarios se procesan a partir de PDFs oficiales de la universidad para mejorar su lectura y navegación.
+          El hub organiza la información, pero no reemplaza el sistema académico institucional.
+        </p>
+      </div>
+    </div>
+  </section>
+</AppLayout>
+
+<style>
+  .schedule-hero {
+    padding-bottom: var(--space-8);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: var(--space-6);
+    align-items: stretch;
+  }
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  .eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+  }
+
+  .hero-title {
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    max-width: 12ch;
+  }
+
+  .hero-text {
+    max-width: 60ch;
+    font-size: var(--font-size-lg);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .hero-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 var(--space-5);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-semibold);
+    border: 1px solid transparent;
+  }
+
+  .hero-button.primary {
+    background: var(--color-primary);
+    color: var(--color-text-on-brand);
+  }
+
+  .hero-button.secondary {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  .hero-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .panel-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .panel-tag,
+  .semester-card-header span,
+  .access-label {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .panel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .panel-grid div {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+  }
+
+  .panel-grid span {
+    display: block;
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .panel-grid strong {
+    font-size: var(--font-size-2xl);
+  }
+
+  .panel-note {
+    font-size: var(--font-size-sm);
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-6);
+    align-items: end;
+    margin-bottom: var(--space-5);
+  }
+
+  .section-heading h2 {
+    margin-bottom: 0;
+  }
+
+  .section-copy {
+    max-width: 42ch;
+  }
+
+  .semester-grid,
+  .access-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .semester-card,
+  .access-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .semester-card-active {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .semester-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .access-card:hover .access-cta {
+    transform: translateX(4px);
+  }
+
+  .access-cta {
+    margin-top: auto;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    transition: transform 0.2s ease;
+  }
+
+  .transparency {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid,
+    .transparency {
+      grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+      grid-template-columns: 1fr;
+      display: grid;
+    }
+
+    .semester-grid,
+    .access-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

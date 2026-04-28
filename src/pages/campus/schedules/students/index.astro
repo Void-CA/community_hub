@@ -1,0 +1,398 @@
+---
+import AppLayout from '../../../../layouts/AppLayout.astro';
+import ScheduleEntryCard from '../../../../components/Schedules/ScheduleEntryCard.astro';
+import {
+  dayNames,
+  filterEntries,
+  groups,
+  majors,
+  scheduleEntries,
+  semesterLabel,
+  sortEntries,
+  getScheduleSummary,
+} from '../../../../data/schedulesData';
+
+const filters = {
+  major: 'all',
+  group: 'all',
+  day: 'all',
+};
+
+const selectedEntries = filterEntries(scheduleEntries, filters);
+const summary = getScheduleSummary(selectedEntries);
+const dayGroups = dayNames.map(({ code, label }) => ({
+  code,
+  label,
+  entries: sortEntries(selectedEntries.filter((entry) => entry.day === code)),
+}));
+---
+
+<AppLayout title={`Horarios de Estudiantes | ${semesterLabel}`} description="Vista de horarios académicos para estudiantes, con filtros por carrera, grupo y día.">
+  <section class="section schedule-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Vista de estudiantes</p>
+        <h1 class="hero-title">Consulta el horario por día, carrera o grupo.</h1>
+        <p class="hero-text text-soft">
+          La vista de estudiantes organiza cada clase con su profesor, aula y bloque horario para que el horario sea legible en móvil y escritorio.
+        </p>
+      </div>
+
+      <div class="card summary-card">
+        <div>
+          <p class="summary-label">Periodo activo</p>
+          <strong>{semesterLabel}</strong>
+        </div>
+
+        <div class="summary-grid">
+          <div>
+            <span>Clases</span>
+            <strong>{summary.totalEntries}</strong>
+          </div>
+          <div>
+            <span>Profesores</span>
+            <strong>{summary.totalProfessors}</strong>
+          </div>
+          <div>
+            <span>Carreras</span>
+            <strong>{summary.totalMajors}</strong>
+          </div>
+          <div>
+            <span>Aulas</span>
+            <strong>{summary.totalRooms}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="filters card">
+        <div class="filter-row">
+          <label>
+            <span>Carrera</span>
+            <select id="major-filter" name="major">
+              <option value="all">Todas</option>
+              {majors.map((major) => <option value={major}>{major}</option>)}
+            </select>
+          </label>
+
+          <label>
+            <span>Grupo</span>
+            <select id="group-filter" name="group">
+              <option value="all">Todos</option>
+              {groups.map((group) => <option value={String(group)}>{group}</option>)}
+            </select>
+          </label>
+
+          <label>
+            <span>Día</span>
+            <select id="day-filter" name="day">
+              <option value="all">Todos</option>
+              {dayNames.map(({ code, label }) => <option value={code}>{label}</option>)}
+            </select>
+          </label>
+
+          <div class="view-toggle" role="tablist" aria-label="Cambiar vista">
+            <button type="button" class="view-button is-active" data-view-button="day">Por día</button>
+            <button type="button" class="view-button" data-view-button="week">Semanal</button>
+          </div>
+        </div>
+
+        <p class="text-soft filters-note">Los filtros funcionan en el navegador y actualizan ambas vistas sin recargar la página.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0" data-view-panel="day">
+    <div class="container schedule-list">
+      {dayGroups.map((dayGroup) => (
+        <details class="card day-group" open data-day-group data-day={dayGroup.code.toLowerCase()}>
+          <summary>
+            <div>
+              <p class="summary-label">{dayGroup.label}</p>
+              <strong>{dayGroup.entries.length} clases</strong>
+            </div>
+            <span>Colapsar</span>
+          </summary>
+
+          <div class="schedule-grid">
+            {dayGroup.entries.map((entry) => <ScheduleEntryCard entry={entry} compact />)}
+          </div>
+        </details>
+      ))}
+
+      {!selectedEntries.length && (
+        <div class="card empty-state">
+          <h3>No hay clases que coincidan con esos filtros.</h3>
+          <p class="text-soft">Prueba cambiar carrera, grupo o día para volver a mostrar horarios.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section pt-0 is-hidden" data-view-panel="week">
+    <div class="container week-grid">
+      {dayGroups.map((dayGroup) => (
+        <article class="card week-column" data-week-column data-day={dayGroup.code.toLowerCase()}>
+          <div class="week-column-head">
+            <p class="summary-label">{dayGroup.label}</p>
+            <strong>{dayGroup.entries.length} clases</strong>
+          </div>
+
+          <div class="week-column-body">
+            {dayGroup.entries.map((entry) => <ScheduleEntryCard entry={entry} compact />)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <script is:inline>
+    const form = {
+      major: document.getElementById('major-filter'),
+      group: document.getElementById('group-filter'),
+      day: document.getElementById('day-filter'),
+    };
+
+    const buttons = [...document.querySelectorAll('[data-view-button]')];
+    const panels = [...document.querySelectorAll('[data-view-panel]')];
+    const cards = [...document.querySelectorAll('[data-schedule-entry]')];
+    const dayGroups = [...document.querySelectorAll('[data-day-group]')];
+    const weekColumns = [...document.querySelectorAll('[data-week-column]')];
+
+    const applyFilters = () => {
+      const major = form.major?.value ?? 'all';
+      const group = form.group?.value ?? 'all';
+      const day = form.day?.value ?? 'all';
+
+      cards.forEach((card) => {
+        const majors = card.dataset.majors?.split('|') ?? [];
+        const matchesMajor = major === 'all' || majors.includes(major.toLowerCase());
+        const matchesGroup = group === 'all' || card.dataset.group === group;
+        const matchesDay = day === 'all' || card.dataset.day === day.toLowerCase();
+
+        card.hidden = !(matchesMajor && matchesGroup && matchesDay);
+      });
+
+      dayGroups.forEach((groupElement) => {
+        groupElement.hidden = groupElement.querySelectorAll('[data-schedule-entry]:not([hidden])').length === 0;
+      });
+
+      weekColumns.forEach((column) => {
+        column.hidden = column.querySelectorAll('[data-schedule-entry]:not([hidden])').length === 0;
+      });
+    };
+
+    const setView = (view) => {
+      panels.forEach((panel) => {
+        panel.classList.toggle('is-hidden', panel.dataset.viewPanel !== view);
+      });
+
+      buttons.forEach((button) => {
+        button.classList.toggle('is-active', button.dataset.viewButton === view);
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => setView(button.dataset.viewButton));
+    });
+
+    form.major?.addEventListener('change', applyFilters);
+    form.group?.addEventListener('change', applyFilters);
+    form.day?.addEventListener('change', applyFilters);
+
+    applyFilters();
+  </script>
+</AppLayout>
+
+<style>
+  .schedule-hero {
+    padding-bottom: var(--space-8);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: var(--space-6);
+    align-items: stretch;
+  }
+
+  .eyebrow,
+  .summary-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+  }
+
+  .hero-title {
+    margin: var(--space-3) 0;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    max-width: 14ch;
+  }
+
+  .hero-text {
+    max-width: 60ch;
+    font-size: var(--font-size-lg);
+  }
+
+  .summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .summary-grid div {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+  }
+
+  .summary-grid span {
+    display: block;
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .summary-grid strong,
+  .summary-card strong {
+    font-size: var(--font-size-2xl);
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .filter-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-soft);
+  }
+
+  select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .view-toggle {
+    display: inline-flex;
+    gap: var(--space-2);
+    align-self: end;
+  }
+
+  .view-button {
+    min-height: 48px;
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-soft);
+    cursor: pointer;
+  }
+
+  .view-button.is-active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-on-brand);
+  }
+
+  .schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .day-group summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    cursor: pointer;
+  }
+
+  .day-group summary strong,
+  .week-column strong {
+    font-size: var(--font-size-xl);
+  }
+
+  .day-group summary span {
+    color: var(--color-text-muted);
+  }
+
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .week-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .week-column-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .empty-state h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .is-hidden {
+    display: none !important;
+  }
+
+  @media (max-width: 1100px) {
+    .filter-row,
+    .schedule-grid,
+    .week-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .view-toggle {
+      align-self: start;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

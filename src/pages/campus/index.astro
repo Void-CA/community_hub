@@ -4,24 +4,81 @@ import AppLayout from '../../layouts/AppLayout.astro';
 
 <AppLayout title="Campus">
   <section class="section">
-    <div class="container text-center">
-      <h1>Campus</h1>
-      <p class="text-soft">Información relevante sobre el entorno universitario y eventos.</p>
+    <div class="container text-center hero-content">
+      <p class="eyebrow">Campus Hub</p>
+      <h1>Información académica y de vida universitaria en un solo lugar.</h1>
+      <p class="text-soft page-subtitle">
+        Este espacio reúne los módulos del entorno universitario: horarios, calendario, eventos y otras utilidades del campus.
+      </p>
     </div>
   </section>
 
   <section class="section pt-0">
     <div class="container">
       <div class="grid grid-cols-2">
-        <div class="card">
+        <a class="card campus-link primary-link" href="/campus/schedules">
+          <p class="link-label">Nuevo módulo</p>
+          <h3>Sistema de Horarios Académicos</h3>
+          <p>Consulta horarios de estudiantes, profesores e insights desde los PDFs oficiales procesados por el hub.</p>
+          <span>Explorar horarios</span>
+        </a>
+        <div class="card campus-link">
+          <p class="link-label">Próximamente</p>
           <h3>Calendario Escolar</h3>
           <p>Fechas de inicio, exámenes y días feriados.</p>
         </div>
-        <div class="card">
+        <div class="card campus-link">
+          <p class="link-label">Próximamente</p>
           <h3>Eventos Próximos</h3>
           <p>Actividades culturales y deportivas.</p>
+        </div>
+        <div class="card campus-link">
+          <p class="link-label">Conexión</p>
+          <h3>Recursos del Campus</h3>
+          <p>Rutas relacionadas para mantener todo el entorno académico navegable y simple.</p>
         </div>
       </div>
     </div>
   </section>
 </AppLayout>
+
+<style>
+  .hero-content {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .eyebrow,
+  .link-label {
+    margin: 0 0 var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+  }
+
+  .page-subtitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .campus-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    color: inherit;
+    min-height: 100%;
+    text-decoration: none;
+  }
+
+  .primary-link {
+    border-color: var(--color-primary);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 10%, var(--color-surface) 90%), var(--color-surface));
+  }
+
+  .campus-link span {
+    margin-top: auto;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+  }
+</style>
