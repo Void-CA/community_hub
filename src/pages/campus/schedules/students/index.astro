@@ -28,10 +28,18 @@ const initialSections = allSections.filter((section) =>
   section.majors.includes(initialMajor) && (initialYear <= 0 || section.academicYears.includes(initialYear))
 );
 const summary = getScheduleSummary(scheduleEntries);
+
+import { findValidPath } from '@/lib/schedules';
+const suggestedPath = findValidPath(initialSections);
+const integrityError = suggestedPath === null;
 ---
 
 <AppLayout title={`Horarios de Estudiantes | ${semesterLabel}`} description="Vista compacta de horarios para estudiantes, con selector de carrera y grilla por bloques.">
-  <section class="section schedule-hero" data-initial-major={initialMajor} data-initial-year={String(initialYear)}>
+  <section class="section schedule-hero" 
+    data-initial-major={initialMajor} 
+    data-initial-year={String(initialYear)}
+    data-integrity-error={String(integrityError)}
+  >
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Vista de estudiantes</p>

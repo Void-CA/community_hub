@@ -29,6 +29,21 @@ const getProfessorEntries = (professorName: string) => {
   return dayNames.flatMap(({ code }) => professor.by_day[code] ?? []);
 };
 
+const getProfessorTilesForCell = (dayCode: string, blockLabel: string) => {
+  const current = getBlockIndex(blockLabel);
+
+  return professorNames.flatMap((name) =>
+    getProfessorEntries(name)
+      .filter((entry) => {
+        if (entry.day !== dayCode) return false;
+        const start = getBlockIndex(entry.start_block);
+        const end = getBlockIndex(entry.end_block);
+        return current >= start && current <= end;
+      })
+      .map((entry) => ({ entry, professorName: name }))
+  );
+};
+
 const activeDays = dayNames.filter((day) => scheduleEntries.some((entry) => entry.day === day.code));
 const initialProfessor = professorNames[0] ?? '';
 const initialEntries = getProfessorEntries(initialProfessor);
@@ -158,23 +173,13 @@ const activeSummary = getScheduleSummary(initialEntries);
               const isBreak = block.type === 'break';
               
               return (
-                <>
+                <Fragment>
                   <div class:list={['timeline-time', { 'is-break': isBreak }]}>
                     <span class="slot-label">{block.label || ''}</span>
                     <span class="slot-range">{block.range}</span>
                   </div>
                   {activeDays.map((day) => {
-                    const tilesForCell = professorNames.flatMap((name) =>
-                      getProfessorEntries(name)
-                        .filter((entry) => {
-                          if (entry.day !== day.code) return false;
-                          const start = getBlockIndex(entry.start_block);
-                          const end = getBlockIndex(entry.end_block);
-                          const current = getBlockIndex(block.label);
-                          return current >= start && current <= end;
-                        })
-                        .map((entry) => ({ entry, professorName: name }))
-                    );
+                    const tilesForCell = getProfessorTilesForCell(day.code, block.label);
 
                     return (
                       <div class:list={['timeline-cell', { 'is-break': isBreak }]}>
@@ -188,7 +193,7 @@ const activeSummary = getScheduleSummary(initialEntries);
                       </div>
                     );
                   })}
-                </>
+                </Fragment>
               );
             })}
           </div>

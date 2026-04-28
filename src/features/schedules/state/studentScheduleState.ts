@@ -14,6 +14,12 @@ export function initStudentScheduleState() {
   const boot = document.querySelector<HTMLElement>('[data-initial-major]');
   const initialMajor = boot?.dataset.initialMajor ?? 'all';
   const initialYear = boot?.dataset.initialYear ?? '0';
+  const integrityError = boot?.dataset.integrityError === 'true';
+
+  if (integrityError) {
+    console.warn('Integrity Error: No conflict-free path found for this major/year combination.');
+    // We could show a toast or a banner here.
+  }
 
   const majorButtons = toArray<HTMLButtonElement>('[data-major-button]');
   const yearButtons = toArray<HTMLButtonElement>('[data-year-button]');
@@ -86,8 +92,69 @@ export function initStudentScheduleState() {
       }
     });
 
+    const activeTiles = tiles.filter((tile) => state.selectedIds.has(tile.dataset.sectionId ?? ''));
+    
     tiles.forEach((tile) => {
       tile.hidden = !state.selectedIds.has(tile.dataset.sectionId ?? '');
+      tile.classList.remove('has-conflict');
+    });
+
+    // Conflict detection
+    const cellGroups = new Map<string, HTMLElement[]>();
+    activeTiles.forEach((tile) => {
+      const day = tile.dataset.day;
+      const block = tile.dataset.block;
+      const key = `${day}-${block}`;
+      const group = cellGroups.get(key) ?? [];
+      group.push(tile);
+      cellGroups.set(key, group);
+    });
+
+    cellGroups.forEach((group, key) => {
+      const parentCell = group[0]?.parentElement;
+      if (parentCell) {
+        parentCell.classList.toggle('has-multiple', group.length > 1);
+      }
+
+      if (group.length > 1) {
+        group.forEach((tile) => tile.classList.add('has-conflict'));
+      }
+    });
+
+    // Cleanup cells that no longer have multiple tiles
+    toArray<HTMLElement>('.timeline-cell.has-multiple').forEach((cell) => {
+      const visibleChildren = [...cell.children].filter((child) => !(child as HTMLElement).hidden);
+      if (visibleChildren.length <= 1) {
+        cell.classList.remove('has-multiple');
+      }
+    });
+
+    const occupiedSlots = new Set<string>();
+    activeTiles.forEach((tile) => {
+      const day = tile.dataset.day;
+      const block = tile.dataset.block;
+      occupiedSlots.add(`${day}-${block}`);
+    });
+
+    // Catalog compatibility highlighting
+    sectionButtons.forEach((button) => {
+      const sectionId = button.dataset.sectionId ?? '';
+      if (state.selectedIds.has(sectionId)) {
+        button.classList.remove('is-ghosted');
+        return;
+      }
+
+      // We need to check if THIS section conflicts with already selected ones
+      // Since we don't have all entry data on the button easily (except search string),
+      // we might need to look at the tiles associated with this sectionId.
+      const sectionTiles = tiles.filter(t => t.dataset.sectionId === sectionId);
+      const conflictsWithSelection = sectionTiles.some(t => {
+        const key = `${t.dataset.day}-${t.dataset.block}`;
+        return occupiedSlots.has(key);
+      });
+
+      button.classList.toggle('is-ghosted', conflictsWithSelection);
+      button.classList.toggle('is-compatible', !conflictsWithSelection && state.selectedIds.size > 0);
     });
 
     updateSummary();

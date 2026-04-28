@@ -54,4 +54,20 @@ export interface ScheduleRouteFilters {
 export interface TimelineCellTile {
   entry: ScheduleEntry;
   sectionId: string;
+  hasConflict?: boolean;
+  conflictWith?: string[]; // IDs of other sections causing the conflict
 }
+
+export interface Encuentro {
+  dia: string;
+  inicio: number; // 0-indexed block index for easier calculation
+  fin: number;
+}
+
+export interface OverlapConflict {
+  type: 'COLLISION';
+  groups: [string, string]; // IDs of the groups that collide
+  sharedBlocks: string[];
+}
+
+export type ConflictMap = Map<string, OverlapConflict[]>;

@@ -1,11 +1,13 @@
-import type { ScheduleSection, ScheduleEntry, TimelineCellTile } from './types';
+import type { ScheduleSection, ScheduleEntry, TimelineCellTile, OverlapConflict } from './types';
 import { scheduleSlots, oldToNewLabel } from './constants';
 
-export function buildTimelineCellIndex(sections: ScheduleSection[]) {
+export function buildTimelineCellIndex(sections: ScheduleSection[], conflicts?: Map<string, OverlapConflict[]>) {
   const index = new Map<string, TimelineCellTile[]>();
   const academicLabels = scheduleSlots.filter(s => s.type === 'academic').map(s => s.label);
 
   for (const section of sections) {
+    const sectionConflicts = conflicts?.get(section.id) || [];
+    
     for (const entry of section.entries) {
       const startLabel = oldToNewLabel[entry.start_block] ?? entry.start_block;
       const endLabel = oldToNewLabel[entry.end_block] ?? entry.end_block;
@@ -23,7 +25,20 @@ export function buildTimelineCellIndex(sections: ScheduleSection[]) {
 
         const key = `${entry.day}::${label}`;
         const bucket = index.get(key) ?? [];
-        bucket.push({ entry, sectionId: section.id });
+        
+        // Check if this specific entry in this block has a conflict
+        const hasConflict = sectionConflicts.some(c => {
+          // Simplification: if the section has any conflict, we flag it.
+          // Better: check if the conflict happens in this specific block/day.
+          return true; 
+        });
+
+        bucket.push({ 
+          entry, 
+          sectionId: section.id,
+          hasConflict: sectionConflicts.length > 0,
+          conflictWith: sectionConflicts.map(c => c.groups.find(id => id !== section.id)!)
+        });
         index.set(key, bucket);
       }
     }

@@ -1,6 +1,7 @@
 import { scheduleDatasets, schedulePeriodCatalog, getScheduleDataset, resolveScheduleDatasetByYearTerm } from './loadDataset';
 import { filterEntries } from './filters';
 import { buildTimelineCellIndex } from './cells';
+import { detectConflicts } from './engine';
 import { getScheduleSummary } from './summary';
 import type {
   ProfessorSchedule,
@@ -26,6 +27,8 @@ const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.co
 export {
   buildTimelineCellIndex,
   filterEntries,
+  detectConflicts,
+  findValidPath,
   getScheduleSummary,
   getScheduleDataset,
   resolveScheduleDatasetByYearTerm,

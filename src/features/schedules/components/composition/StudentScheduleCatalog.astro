@@ -160,6 +160,18 @@ const { allSections, initialMajor, initialYear, initialVisibleSections } =
     box-shadow: var(--shadow-sm);
   }
 
+  .section-card.is-ghosted {
+    opacity: 0.4;
+    filter: grayscale(0.8);
+    pointer-events: none; /* User shouldn't click if it breaks the schedule, or we can allow it but show warning */
+    cursor: not-allowed;
+  }
+
+  .section-card.is-compatible {
+    border-color: var(--color-success);
+    background: color-mix(in srgb, var(--color-success) 5%, var(--color-surface));
+  }
+
   .section-card-top {
     display: flex;
     justify-content: space-between;

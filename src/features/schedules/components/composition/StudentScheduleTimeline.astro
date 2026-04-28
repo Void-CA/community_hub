@@ -194,6 +194,16 @@ const cellIndex = buildTimelineCellIndex(allSections);
     transition: background-color 0.2s ease;
   }
 
+  .timeline-cell.has-multiple {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .timeline-cell.has-multiple > * {
+    flex: 1;
+    min-width: 0;
+  }
+
   .timeline-cell.is-break {
     background: repeating-linear-gradient(
       -45deg,

@@ -7,17 +7,21 @@ interface Props {
   entry: ScheduleEntry;
   sectionId: string;
   label?: string;
+  hasConflict?: boolean;
+  conflictWith?: string[];
 }
 
-const { entry, sectionId, label } = Astro.props;
+const { entry, sectionId, label, hasConflict = false, conflictWith = [] } = Astro.props;
 const accent = getMajorAccent(entry.majors[0] ?? 'General');
 const title = label ?? entry.subject;
 ---
 
 <article
-  class="schedule-tile"
+  class:list={['schedule-tile', { 'has-conflict': hasConflict }]}
   data-schedule-tile
   data-section-id={sectionId}
+  data-has-conflict={String(hasConflict)}
+  data-conflict-with={conflictWith.join('|')}
   data-major-list={entry.majors.map((major) => major.toLowerCase()).join('|')}
   data-day={entry.day.toLowerCase()}
   data-block={entry.start_block}
@@ -59,6 +63,30 @@ const title = label ?? entry.subject;
     font-size: 11px;
     cursor: default;
     transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .has-conflict {
+    border-color: var(--color-error);
+    border-width: 2px;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      color-mix(in srgb, var(--color-error) 5%, transparent) 10px,
+      color-mix(in srgb, var(--color-error) 5%, transparent) 20px
+    ), var(--color-surface);
+  }
+
+  .has-conflict::after {
+    content: "!";
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    color: var(--color-error);
+    font-weight: var(--font-weight-bold);
+    font-size: 14px;
   }
 
   .schedule-tile[hidden] {
