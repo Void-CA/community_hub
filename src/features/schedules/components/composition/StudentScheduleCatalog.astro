@@ -1,6 +1,8 @@
 ---
-import { formatAcademicYear } from '../../../lib/schedules';
-import type { ScheduleSection } from '../../../lib/schedules';
+import { formatAcademicYear } from "@/lib/schedules";
+import type { ScheduleSection } from "@/lib/schedules";
+import Badge from "@/components/UI/Badge.astro";
+import Card from "@/components/UI/Card.astro";
 
 interface Props {
   allSections: ScheduleSection[];
@@ -9,49 +11,76 @@ interface Props {
   initialVisibleSections: number;
 }
 
-const { allSections, initialMajor, initialYear, initialVisibleSections } = Astro.props;
+const { allSections, initialMajor, initialYear, initialVisibleSections } =
+  Astro.props;
 ---
 
-<aside class="catalog card">
+<Card as="aside" class="catalog" padding="lg">
   <div class="catalog-head">
     <div>
       <p class="eyebrow">Catálogo</p>
       <h2>Materias y grupos</h2>
     </div>
-    <p class="catalog-count text-soft"><span id="visible-section-count">{initialVisibleSections}</span> secciones</p>
+    <p class="catalog-count text-soft">
+      <span id="visible-section-count">{initialVisibleSections}</span> secciones
+    </p>
   </div>
 
   <label class="search-box">
     <span class="sr-only">Buscar</span>
-    <input id="section-search" type="search" placeholder="Buscar materia, profesor o aula" />
+    <input
+      id="section-search"
+      type="search"
+      placeholder="Buscar materia, profesor o aula"
+    />
   </label>
 
   <div class="catalog-list">
-    {allSections.map((section) => (
-      <button
-        type="button"
-        class:list={['section-card', { 'is-selected': section.majors.includes(initialMajor) && (initialYear <= 0 || section.academicYears.includes(initialYear)) }]}
-        data-section-toggle
-        data-section-id={section.id}
-        data-major-list={section.majors.map((major) => major.toLowerCase()).join('|')}
-        data-year-list={section.academicYears.map((year) => String(year)).join('|')}
-        data-search={`${section.subject} ${section.professor} ${section.room} ${section.group}`.toLowerCase()}
-        aria-pressed={section.majors.includes(initialMajor)}
-      >
-        <div class="section-card-top">
-          <h3>{section.subject}</h3>
-          <span class="section-check">Incluida</span>
-        </div>
-        <p class="section-professor">{section.professor}</p>
-        <div class="section-meta">
-          <span>G{section.group}</span>
-          <span>{section.room}</span>
-          <span>{section.academicYears.map((year) => formatAcademicYear(year)).join(' · ')}</span>
-        </div>
-      </button>
-    ))}
+    {
+      allSections.map((section) => (
+        <button
+          type="button"
+          class:list={[
+            "section-card",
+            {
+              "is-selected":
+                section.majors.includes(initialMajor) &&
+                (initialYear <= 0 ||
+                  section.academicYears.includes(initialYear)),
+            },
+          ]}
+          data-section-toggle
+          data-section-id={section.id}
+          data-major-list={section.majors
+            .map((major) => major.toLowerCase())
+            .join("|")}
+          data-year-list={section.academicYears
+            .map((year) => String(year))
+            .join("|")}
+          data-search={`${section.subject} ${section.professor} ${section.room} ${section.group}`.toLowerCase()}
+          aria-pressed={section.majors.includes(initialMajor)}
+        >
+          <div class="section-card-top">
+            <h3>{section.subject}</h3>
+            <Badge class="section-check" variant="primary" size="xs">
+              Incluida
+            </Badge>
+          </div>
+          <p class="section-professor">{section.professor}</p>
+          <div class="section-meta">
+            <Badge size="xs">G{section.group}</Badge>
+            <Badge size="xs">{section.room}</Badge>
+            <Badge size="xs">
+              {section.academicYears
+                .map((year) => formatAcademicYear(year))
+                .join(" · ")}
+            </Badge>
+          </div>
+        </button>
+      ))
+    }
   </div>
-</aside>
+</Card>
 
 <style>
   .catalog {
@@ -89,7 +118,8 @@ const { allSections, initialMajor, initialYear, initialVisibleSections } = Astro
   .search-box input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    box-shadow: 0 0 0 2px
+      color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
   .catalog-list {
@@ -122,7 +152,11 @@ const { allSections, initialMajor, initialYear, initialVisibleSections } = Astro
 
   .section-card.is-selected {
     border-color: var(--color-primary);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, var(--color-surface)), var(--color-surface));
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary) 10%, var(--color-surface)),
+      var(--color-surface)
+    );
     box-shadow: var(--shadow-sm);
   }
 
@@ -140,13 +174,6 @@ const { allSections, initialMajor, initialYear, initialVisibleSections } = Astro
   }
 
   .section-check {
-    font-size: 10px;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    color: var(--color-primary);
-    background: color-mix(in srgb, var(--color-primary) 15%, transparent);
-    padding: 2px 6px;
-    border-radius: var(--radius-full);
     opacity: 0;
     transform: scale(0.8);
     transition: all 0.2s ease;
@@ -168,14 +195,5 @@ const { allSections, initialMajor, initialYear, initialVisibleSections } = Astro
     flex-wrap: wrap;
     gap: var(--space-2);
     margin-top: auto;
-  }
-
-  .section-meta span {
-    font-size: 10px;
-    padding: 2px 6px;
-    background: var(--color-surface-muted);
-    border-radius: var(--radius-sm);
-    color: var(--color-text-muted);
-    font-weight: var(--font-weight-semibold);
   }
 </style>

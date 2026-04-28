@@ -1,6 +1,7 @@
 ---
-import type { ScheduleEntry } from '../../../lib/schedules';
-import { formatAcademicYear, formatBlock, formatDay, getMajorAccent } from '../../../lib/schedules';
+import type { ScheduleEntry } from '@/lib/schedules';
+import { formatAcademicYear, formatBlock, formatDay, getMajorAccent } from '@/lib/schedules';
+import Badge from '@/components/UI/Badge.astro';
 
 interface Props {
   entry: ScheduleEntry;
@@ -36,9 +37,9 @@ const title = label ?? entry.subject;
   <strong>{title}</strong>
 
   <div class="tile-meta">
-    <span>G{entry.group}</span>
-    <span>{entry.room}</span>
-    <span>{formatAcademicYear(entry.academicYear)}</span>
+    <Badge size="xs" style={`background: color-mix(in srgb, var(--tile-accent) 10%, var(--color-surface-muted));`}>G{entry.group}</Badge>
+    <Badge size="xs" style={`background: color-mix(in srgb, var(--tile-accent) 10%, var(--color-surface-muted));`}>{entry.room}</Badge>
+    <Badge size="xs" style={`background: color-mix(in srgb, var(--tile-accent) 10%, var(--color-surface-muted));`}>{formatAcademicYear(entry.academicYear)}</Badge>
   </div>
 
   <p class="tile-professor">{entry.professor}</p>
@@ -97,20 +98,6 @@ const title = label ?? entry.subject;
     flex-wrap: wrap;
     gap: 4px;
     margin-top: auto;
-  }
-
-  .tile-meta span,
-  .tile-professor {
-    font-size: 9px;
-    color: var(--color-text-soft);
-  }
-
-  .tile-meta span {
-    display: inline-flex;
-    align-items: center;
-    padding: 0px 4px;
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--tile-accent) 10%, var(--color-surface-muted));
   }
 
   .tile-professor {

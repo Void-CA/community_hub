@@ -1,6 +1,7 @@
 ---
-import AppLayout from '../../../../layouts/AppLayout.astro';
-import ScheduleTile from '../../../../features/schedules/components/ScheduleTile.astro';
+import AppLayout from '@/layouts/AppLayout.astro';
+import ScheduleTile from '@/features/schedules/components/domain/ScheduleTile.astro';
+import Card from '@/components/UI/Card.astro';
 import {
   dayNames,
   getScheduleSummary,
@@ -8,7 +9,7 @@ import {
   scheduleBlocks,
   schedulePeriods,
   getBlockIndex,
-} from '../../../../lib/schedules';
+} from '@/lib/schedules';
 
 const yearParam = Astro.url.searchParams.get('year');
 const termParam = Astro.url.searchParams.get('term');
@@ -46,7 +47,7 @@ const activeSummary = getScheduleSummary(initialEntries);
         </p>
       </div>
 
-      <div class="card hero-panel">
+      <Card class="hero-panel" padding="lg">
         <div class="panel-top">
           <span class="panel-tag">Resumen del periodo</span>
           <strong>{semesterLabel}</strong>
@@ -83,13 +84,13 @@ const activeSummary = getScheduleSummary(initialEntries);
         <p class="panel-note text-soft">
           Los horarios provienen de PDFs oficiales de la universidad y el hub solo los organiza para lectura rápida.
         </p>
-      </div>
+      </Card>
     </div>
   </section>
 
   <section class="section pt-0">
     <div class="container dashboard-grid">
-      <aside class="catalog card">
+      <Card as="aside" class="catalog" padding="lg">
         <div class="catalog-head">
           <div>
             <p class="eyebrow">Catálogo</p>
@@ -134,9 +135,9 @@ const activeSummary = getScheduleSummary(initialEntries);
             );
           })}
         </div>
-      </aside>
+      </Card>
 
-      <main class="timeline card">
+      <Card as="main" class="timeline" padding="lg">
         <div class="timeline-head">
           <div>
             <p class="eyebrow">Visualización</p>
@@ -197,7 +198,7 @@ const activeSummary = getScheduleSummary(initialEntries);
           <h3>No hay horarios para mostrar.</h3>
           <p class="text-soft">Selecciona un docente del catálogo lateral.</p>
         </div>
-      </main>
+      </Card>
     </div>
   </section>
 

@@ -1,0 +1,64 @@
+---
+interface Props {
+  variant?: 'primary' | 'soft' | 'muted' | 'accent';
+  size?: 'xs' | 'sm' | 'md';
+  class?: string;
+  [key: string]: any;
+}
+
+const { variant = 'soft', size = 'sm', class: className, ...rest } = Astro.props;
+---
+
+<span class:list={['badge', `is-${variant}`, `is-${size}`, className]} {...rest}>
+  <slot />
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* Variants */
+  .is-soft {
+    background: var(--color-surface-muted);
+    color: var(--color-text-soft);
+  }
+
+  .is-primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .is-muted {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .is-accent {
+    background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+    color: var(--color-accent);
+  }
+
+  /* Sizes */
+  .is-xs {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
+
+  .is-sm {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .is-md {
+    font-size: var(--font-size-xs);
+    padding: 4px 8px;
+  }
+</style>

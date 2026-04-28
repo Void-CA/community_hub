@@ -1,0 +1,67 @@
+---
+interface Props {
+  as?: any;
+  variant?: "flat" | "elevated" | "glass" | "bordered";
+  padding?: "none" | "sm" | "md" | "lg";
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  as: Tag = "div",
+  variant = "bordered",
+  padding = "md",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  class:list={["card-atom", `is-${variant}`, `p-${padding}`, className]}
+  {...rest}
+>
+  <slot />
+</Tag>
+
+<style>
+  .card-atom {
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    transition: all 0.2s ease;
+  }
+
+  /* Variants */
+  .is-bordered {
+    border: 1px solid var(--color-border);
+  }
+
+  .is-elevated {
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .is-flat {
+    background: var(--color-surface-muted);
+    border: 1px solid transparent;
+  }
+
+  .is-glass {
+    background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+    backdrop-filter: blur(8px);
+    border: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+  }
+
+  /* Padding */
+  .p-none {
+    padding: 0;
+  }
+  .p-sm {
+    padding: var(--space-2);
+  }
+  .p-md {
+    padding: var(--space-4);
+  }
+  .p-lg {
+    padding: var(--space-6);
+  }
+</style>

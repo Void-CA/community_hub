@@ -1,6 +1,8 @@
 ---
-import type { ScheduleEntry } from '../../../lib/schedules';
-import { formatBlock, formatDay, getMajorAccent } from '../../../lib/schedules';
+import type { ScheduleEntry } from "@/lib/schedules";
+import { formatBlock, formatDay, getMajorAccent } from "@/lib/schedules";
+import Badge from "@/components/UI/Badge.astro";
+import Card from "@/components/UI/Card.astro";
 
 interface Props {
   entry: ScheduleEntry;
@@ -8,20 +10,22 @@ interface Props {
 }
 
 const { entry, compact = false } = Astro.props;
-const primaryMajor = entry.majors[0] ?? 'General';
+const primaryMajor = entry.majors[0] ?? "General";
 const accent = getMajorAccent(primaryMajor);
 ---
 
-<article
-  class:list={['schedule-entry', { 'schedule-entry-compact': compact }]}
+<Card
+  as="article"
+  class:list={["schedule-entry", { "schedule-entry-compact": compact }]}
   data-schedule-entry
   data-day={entry.day.toLowerCase()}
   data-group={String(entry.group)}
-  data-majors={entry.majors.map((major) => major.toLowerCase()).join('|')}
+  data-majors={entry.majors.map((major) => major.toLowerCase()).join("|")}
   data-professor={entry.professor.toLowerCase()}
   data-subject={entry.subject.toLowerCase()}
   data-room={entry.room.toLowerCase()}
   style={`--schedule-accent: ${accent};`}
+  padding="none"
 >
   <div class="schedule-entry-head">
     <div class="schedule-entry-title-group">
@@ -29,7 +33,7 @@ const accent = getMajorAccent(primaryMajor);
       <h3>{entry.subject}</h3>
     </div>
 
-    <span class="schedule-room">{entry.room}</span>
+    <Badge variant="soft" size="sm">{entry.room}</Badge>
   </div>
 
   <div class="schedule-meta">
@@ -40,7 +44,11 @@ const accent = getMajorAccent(primaryMajor);
 
     <div>
       <span>Bloque</span>
-      <strong>{formatBlock(entry.start_block)} - {formatBlock(entry.end_block)}</strong>
+      <strong
+        >{formatBlock(entry.start_block)} - {
+          formatBlock(entry.end_block)
+        }</strong
+      >
     </div>
 
     <div>
@@ -50,9 +58,15 @@ const accent = getMajorAccent(primaryMajor);
   </div>
 
   <div class="schedule-majors">
-    {entry.majors.map((major) => <span>{major}</span>)}
+    {
+      entry.majors.map((major) => (
+        <Badge variant="accent" size="xs">
+          {major}
+        </Badge>
+      ))
+    }
   </div>
-</article>
+</Card>
 
 <style>
   .schedule-entry {
@@ -60,15 +74,16 @@ const accent = getMajorAccent(primaryMajor);
     flex-direction: column;
     gap: var(--space-4);
     padding: var(--space-5);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    background: linear-gradient(180deg, color-mix(in srgb, var(--schedule-accent) 8%, var(--color-surface) 92%), var(--color-surface));
-    box-shadow: var(--shadow-sm);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--schedule-accent) 8%, var(--color-surface) 92%),
+      var(--color-surface)
+    );
     position: relative;
   }
 
   .schedule-entry::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0 auto 0 0;
     width: 4px;
@@ -106,19 +121,6 @@ const accent = getMajorAccent(primaryMajor);
     font-size: var(--font-size-lg);
   }
 
-  .schedule-room {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.3rem 0.6rem;
-    border-radius: var(--radius-full);
-    background: var(--color-surface-muted);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-soft);
-    white-space: nowrap;
-  }
-
   .schedule-meta {
     display: grid;
     gap: var(--space-3);
@@ -148,17 +150,6 @@ const accent = getMajorAccent(primaryMajor);
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-  }
-
-  .schedule-majors span {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.6rem;
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--schedule-accent) 14%, transparent);
-    color: var(--schedule-accent);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
   }
 
   @media (max-width: 720px) {

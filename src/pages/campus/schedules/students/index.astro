@@ -1,5 +1,5 @@
 ---
-import AppLayout from '../../../../layouts/AppLayout.astro';
+import AppLayout from '@/layouts/AppLayout.astro';
 import {
   academicYears,
   buildScheduleSections,
@@ -8,10 +8,10 @@ import {
   resolveScheduleDatasetByYearTerm,
   scheduleBlocks,
   schedulePeriods,
-} from '../../../../lib/schedules';
-import StudentScheduleCatalog from '../../../../features/schedules/components/StudentScheduleCatalog.astro';
-import StudentScheduleFilters from '../../../../features/schedules/components/StudentScheduleFilters.astro';
-import StudentScheduleTimeline from '../../../../features/schedules/components/StudentScheduleTimeline.astro';
+} from '@/lib/schedules';
+import StudentScheduleCatalog from '@/features/schedules/components/composition/StudentScheduleCatalog.astro';
+import StudentScheduleFilters from '@/features/schedules/components/composition/StudentScheduleFilters.astro';
+import StudentScheduleTimeline from '@/features/schedules/components/composition/StudentScheduleTimeline.astro';
 
 const yearParam = Astro.url.searchParams.get('year');
 const termParam = Astro.url.searchParams.get('term');
