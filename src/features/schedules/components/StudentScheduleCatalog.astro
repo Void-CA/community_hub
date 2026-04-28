@@ -1,0 +1,54 @@
+---
+import { formatAcademicYear } from '../../../lib/schedules';
+import type { ScheduleSection } from '../../../lib/schedules';
+
+interface Props {
+  allSections: ScheduleSection[];
+  initialMajor: string;
+  initialYear: number;
+  initialVisibleSections: number;
+}
+
+const { allSections, initialMajor, initialYear, initialVisibleSections } = Astro.props;
+---
+
+<aside class="catalog card">
+  <div class="catalog-head">
+    <div>
+      <p class="eyebrow">Catálogo</p>
+      <h2>Materias y grupos</h2>
+    </div>
+    <p class="catalog-count text-soft"><span id="visible-section-count">{initialVisibleSections}</span> secciones</p>
+  </div>
+
+  <label class="search-box">
+    <span class="sr-only">Buscar</span>
+    <input id="section-search" type="search" placeholder="Buscar materia, profesor o aula" />
+  </label>
+
+  <div class="catalog-list">
+    {allSections.map((section) => (
+      <button
+        type="button"
+        class:list={['section-card', { 'is-selected': section.majors.includes(initialMajor) && (initialYear <= 0 || section.academicYears.includes(initialYear)) }]}
+        data-section-toggle
+        data-section-id={section.id}
+        data-major-list={section.majors.map((major) => major.toLowerCase()).join('|')}
+        data-year-list={section.academicYears.map((year) => String(year)).join('|')}
+        data-search={`${section.subject} ${section.professor} ${section.room} ${section.group}`.toLowerCase()}
+        aria-pressed={section.majors.includes(initialMajor)}
+      >
+        <div class="section-card-top">
+          <h3>{section.subject}</h3>
+          <span class="section-check">Incluida</span>
+        </div>
+        <p class="section-professor">{section.professor}</p>
+        <div class="section-meta">
+          <span>G{section.group}</span>
+          <span>{section.room}</span>
+          <span>{section.academicYears.map((year) => formatAcademicYear(year)).join(' · ')}</span>
+        </div>
+      </button>
+    ))}
+  </div>
+</aside>

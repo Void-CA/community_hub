@@ -1,0 +1,46 @@
+---
+import { formatAcademicYear } from '../../../lib/schedules';
+import type { SchedulePeriod } from '../../../lib/schedules';
+
+interface Props {
+  schedulePeriods: SchedulePeriod[];
+  activePeriodId: string;
+  periodMajors: string[];
+  initialMajor: string;
+  periodYears: number[];
+  initialYear: number;
+}
+
+const { schedulePeriods, activePeriodId, periodMajors, initialMajor, periodYears, initialYear } = Astro.props;
+---
+
+<section class="section pt-0">
+  <div class="container filter-strip card">
+    <label class="period-picker">
+      <span>Periodo</span>
+      <select id="period-select">
+        {schedulePeriods.map((period) => (
+          <option value={period.id} selected={period.id === activePeriodId}>{period.label}</option>
+        ))}
+      </select>
+    </label>
+
+    <div class="filter-group">
+      <p class="eyebrow">Carrera</p>
+      <div class="major-buttons" role="tablist" aria-label="Seleccionar carrera">
+        {periodMajors.map((major) => (
+          <button type="button" class:list={['major-button', { 'is-active': major === initialMajor }]} data-major-button data-major={major}>{major}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <p class="eyebrow">Año</p>
+      <div class="year-buttons" role="tablist" aria-label="Seleccionar año">
+        {periodYears.map((year) => (
+          <button type="button" class:list={['year-button', { 'is-active': year === initialYear }]} data-year-button data-year={String(year)}>{formatAcademicYear(year)}</button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

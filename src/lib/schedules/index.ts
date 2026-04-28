@@ -1,41 +1,18 @@
-import fullSchedule from './schedules/2026/IIC/full_schedule.json';
-import professorSchedulesRaw from './schedules/2026/IIC/professors_schedules.json';
-
-export interface ScheduleEntry {
-  day: string;
-  start_block: string;
-  end_block: string;
-  subject: string;
-  majors: string[];
-  group: number;
-  professor: string;
-  room: string;
-  academicYear: number;
-}
-
-export interface ProfessorSchedule {
-  by_day: Record<string, ScheduleEntry[]>;
-}
-
-export interface SchedulePeriod {
-  id: string;
-  year: string;
-  term: string;
-  label: string;
-}
-
-export interface ScheduleDataset {
-  period: SchedulePeriod;
-  entries: ScheduleEntry[];
-  professorSchedules: Record<string, ProfessorSchedule>;
-}
-
-type RawScheduleEntry = Omit<ScheduleEntry, 'academicYear'>;
-type RawFullSchedule = Record<string, RawScheduleEntry[]> | RawScheduleEntry[];
-type RawProfessorSchedule = {
-  by_day: Record<string, RawScheduleEntry[]>;
-};
-type RawProfessorSchedules = Record<string, RawProfessorSchedule>;
+import { scheduleDatasets, schedulePeriodCatalog, getScheduleDataset, resolveScheduleDatasetByYearTerm } from './loadDataset';
+import { filterEntries } from './filters';
+import { buildTimelineCellIndex } from './cells';
+import { getScheduleSummary } from './summary';
+import type {
+  ProfessorSchedule,
+  RawFullSchedule,
+  RawProfessorSchedules,
+  RawProfessorSchedule,
+  RawScheduleEntry,
+  ScheduleDataset,
+  ScheduleEntry,
+  SchedulePeriod,
+  ScheduleSection,
+} from './types';
 
 const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const dayLabels: Record<string, string> = {
@@ -81,154 +58,47 @@ const blockLabels: Record<string, string> = {
 const majorAccents = ['#4f46e5', '#0f766e', '#b45309', '#be123c', '#7c3aed', '#0284c7', '#15803d', '#c2410c'];
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
 
-function buildEntryIdentity(entry: RawScheduleEntry) {
-  const majors = [...entry.majors].sort(collator.compare).join('|');
-  return [entry.day, entry.start_block, entry.end_block, entry.subject, String(entry.group), entry.professor, entry.room, majors].join('::');
-}
+const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);
 
-function normalizeScheduleEntries(rawSchedule: RawFullSchedule) {
-  if (Array.isArray(rawSchedule)) {
-    return rawSchedule.map((entry) => ({ ...entry, academicYear: 0 }));
-  }
-
-  const result: ScheduleEntry[] = [];
-
-  for (const [yearKey, yearEntries] of Object.entries(rawSchedule)) {
-    const academicYear = Number(yearKey);
-
-    for (const entry of yearEntries) {
-      result.push({
-        ...entry,
-        academicYear: Number.isNaN(academicYear) ? 0 : academicYear,
-      });
-    }
-  }
-
-  return result;
-}
-
-function buildAcademicYearIndex(entries: ScheduleEntry[]) {
-  const index = new Map<string, number>();
-
-  for (const entry of entries) {
-    const identity = buildEntryIdentity(entry);
-
-    if (!index.has(identity)) {
-      index.set(identity, entry.academicYear);
-    }
-  }
-
-  return index;
-}
-
-function normalizeProfessorSchedules(
-  rawSchedules: RawProfessorSchedules,
-  academicYearByIdentity: Map<string, number>
-) {
-  return Object.fromEntries(
-    Object.entries(rawSchedules).map(([professorName, professorSchedule]) => {
-      const byDay = Object.fromEntries(
-        Object.entries(professorSchedule.by_day).map(([day, dayEntries]) => {
-          const normalizedEntries = dayEntries.map((entry) => {
-            const identity = buildEntryIdentity(entry);
-
-            return {
-              ...entry,
-              academicYear: academicYearByIdentity.get(identity) ?? 0,
-            };
-          });
-
-          return [day, normalizedEntries];
-        })
-      );
-
-      return [professorName, { by_day: byDay }];
-    })
-  );
-}
-
-const datasets: Record<string, ScheduleDataset> = {
-  '2026-IIC': {
-    period: {
-      id: '2026-IIC',
-      year: '2026',
-      term: 'IIC',
-      label: '2026-IIC',
-    },
-    entries: normalizeScheduleEntries(fullSchedule as RawFullSchedule),
-    professorSchedules: {},
-  },
+export {
+  buildTimelineCellIndex,
+  filterEntries,
+  getScheduleSummary,
+  getScheduleDataset,
+  resolveScheduleDatasetByYearTerm,
+  scheduleDatasets,
+  schedulePeriodCatalog,
 };
 
-for (const dataset of Object.values(datasets)) {
-  const academicYearByIdentity = buildAcademicYearIndex(dataset.entries);
-  dataset.professorSchedules = normalizeProfessorSchedules(
-    professorSchedulesRaw as RawProfessorSchedules,
-    academicYearByIdentity
-  );
-}
-
-export const schedulePeriods = Object.values(datasets)
-  .map((dataset) => dataset.period)
-  .sort((left, right) => {
-    if (left.year !== right.year) {
-      return Number(right.year) - Number(left.year);
-    }
-
-    return collator.compare(left.term, right.term);
-  });
-
-export const defaultSchedulePeriodId = schedulePeriods[0]?.id ?? '2026-IIC';
-
-export function resolveScheduleDataset(periodId?: string) {
-  if (periodId && datasets[periodId]) {
-    return datasets[periodId];
-  }
-
-  return datasets[defaultSchedulePeriodId];
-}
-
-export function resolveScheduleDatasetByYearTerm(year?: string | null, term?: string | null) {
-  if (!year && !term) {
-    return resolveScheduleDataset();
-  }
-
-  const normalizedYear = (year ?? '').trim();
-  const normalizedTerm = (term ?? '').trim().toUpperCase();
-  const candidateId = `${normalizedYear}-${normalizedTerm}`;
-
-  return resolveScheduleDataset(candidateId);
-}
-
-const defaultDataset = resolveScheduleDataset();
-
-export const semesterLabel = defaultDataset.period.label;
-export const scheduleEntries = defaultDataset.entries;
-export const professorSchedules = defaultDataset.professorSchedules;
-
-const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);
+export type {
+  ProfessorSchedule,
+  RawFullSchedule,
+  RawProfessorSchedules,
+  RawProfessorSchedule,
+  RawScheduleEntry,
+  ScheduleDataset,
+  ScheduleEntry,
+  SchedulePeriod,
+  ScheduleSection,
+};
 
 export const dayCodes = dayOrder;
 export const dayNames = dayOrder.map((day) => ({ code: day, label: dayLabels[day] ?? day }));
 export const scheduleBlocks = blockOrder;
+export const schedulePeriods = schedulePeriodCatalog;
+export const defaultSchedulePeriodId = schedulePeriods[0]?.id ?? '2026-IIC';
+
+const defaultDataset = getScheduleDataset();
+
+export const semesterLabel = defaultDataset.period.label;
+export const scheduleEntries = defaultDataset.entries;
+export const professorSchedules = defaultDataset.professorSchedules;
 export const majors = uniqueSorted(scheduleEntries.flatMap((entry) => entry.majors));
 export const groups = [...new Set(scheduleEntries.map((entry) => entry.group))].sort((left, right) => left - right);
 export const professorNames = Object.keys(professorSchedules).sort(collator.compare);
 export const subjectNames = uniqueSorted(scheduleEntries.map((entry) => entry.subject));
 export const roomNames = uniqueSorted(scheduleEntries.map((entry) => entry.room));
 export const academicYears = [...new Set(scheduleEntries.map((entry) => entry.academicYear).filter((year) => year > 0))].sort((left, right) => left - right);
-
-export interface ScheduleSection {
-  id: string;
-  subject: string;
-  group: number;
-  professor: string;
-  room: string;
-  majors: string[];
-  academicYears: number[];
-  entries: ScheduleEntry[];
-  days: string[];
-}
 
 export function formatAcademicYear(academicYear: number) {
   if (academicYear <= 0) {
@@ -356,29 +226,4 @@ export function getMajorAccent(major: string) {
   }
 
   return majorAccents[Math.abs(hash) % majorAccents.length];
-}
-
-export function filterEntries(entries: ScheduleEntry[], filters: { major?: string; group?: string; day?: string }) {
-  return entries.filter((entry) => {
-    const matchesMajor = !filters.major || filters.major === 'all' || entry.majors.some((major) => major === filters.major);
-    const matchesGroup = !filters.group || filters.group === 'all' || String(entry.group) === filters.group;
-    const matchesDay = !filters.day || filters.day === 'all' || entry.day === filters.day;
-
-    return matchesMajor && matchesGroup && matchesDay;
-  });
-}
-
-export function getScheduleSummary(entries: ScheduleEntry[]) {
-  const professors = uniqueSorted(entries.map((entry) => entry.professor));
-  const subjects = uniqueSorted(entries.map((entry) => entry.subject));
-  const rooms = uniqueSorted(entries.map((entry) => entry.room));
-  const majorsUsed = uniqueSorted(entries.flatMap((entry) => entry.majors));
-
-  return {
-    totalEntries: entries.length,
-    totalProfessors: professors.length,
-    totalSubjects: subjects.length,
-    totalRooms: rooms.length,
-    totalMajors: majorsUsed.length,
-  };
 }

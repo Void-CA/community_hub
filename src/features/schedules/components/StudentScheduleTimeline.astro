@@ -1,0 +1,45 @@
+---
+import ScheduleTile from './ScheduleTile.astro';
+import { formatBlock, buildTimelineCellIndex } from '../../../lib/schedules';
+import type { ScheduleSection } from '../../../lib/schedules';
+
+interface DayItem {
+  code: string;
+  label: string;
+}
+
+interface Props {
+  activeDays: DayItem[];
+  scheduleBlocks: string[];
+  allSections: ScheduleSection[];
+}
+
+const { activeDays, scheduleBlocks, allSections } = Astro.props;
+const cellIndex = buildTimelineCellIndex(allSections);
+---
+
+<main class="timeline card">
+  <div class="timeline-scroll">
+    <div class="timeline-grid" style={`grid-template-columns: 6rem repeat(${activeDays.length}, minmax(12.5rem, 1fr));`}>
+      <div class="timeline-corner">Hora</div>
+      {activeDays.map((day) => <div class="timeline-day">{day.label}</div>)}
+
+      {scheduleBlocks.map((block) => (
+        <>
+          <div class="timeline-time">{formatBlock(block)}</div>
+          {activeDays.map((day) => {
+            const tilesForCell = cellIndex.get(`${day.code}::${block}`) ?? [];
+
+            return (
+              <div class="timeline-cell">
+                {tilesForCell.map(({ entry, sectionId }) => (
+                  <ScheduleTile entry={entry} sectionId={sectionId} label={entry.subject} />
+                ))}
+              </div>
+            );
+          })}
+        </>
+      ))}
+    </div>
+  </div>
+</main>

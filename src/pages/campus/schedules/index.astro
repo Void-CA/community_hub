@@ -1,6 +1,6 @@
 ---
 import AppLayout from '../../../layouts/AppLayout.astro';
-import { semesterLabel, groups, scheduleEntries, getScheduleSummary } from '../../../data/schedulesData';
+import { semesterLabel, groups, scheduleEntries, getScheduleSummary } from '../../../lib/schedules';
 
 const summary = getScheduleSummary(scheduleEntries);
 

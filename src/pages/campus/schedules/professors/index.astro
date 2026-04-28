@@ -1,13 +1,13 @@
 ---
 import AppLayout from '../../../../layouts/AppLayout.astro';
-import ScheduleTile from '../../../../components/Schedules/ScheduleTile.astro';
+import ScheduleTile from '../../../../features/schedules/components/ScheduleTile.astro';
 import {
   dayNames,
   getScheduleSummary,
   resolveScheduleDatasetByYearTerm,
   scheduleBlocks,
   schedulePeriods,
-} from '../../../../data/schedulesData';
+} from '../../../../lib/schedules';
 
 const yearParam = Astro.url.searchParams.get('year');
 const termParam = Astro.url.searchParams.get('term');
