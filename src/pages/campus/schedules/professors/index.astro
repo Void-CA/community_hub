@@ -7,6 +7,7 @@ import {
   resolveScheduleDatasetByYearTerm,
   scheduleBlocks,
   schedulePeriods,
+  getBlockIndex,
 } from '../../../../lib/schedules';
 
 const yearParam = Astro.url.searchParams.get('year');
@@ -152,26 +153,43 @@ const activeSummary = getScheduleSummary(initialEntries);
             <div class="timeline-corner"></div>
             {activeDays.map((day) => <div class="timeline-day"><span>{day.label}</span></div>)}
 
-            {scheduleBlocks.map((block) => (
-              <>
-                <div class="timeline-time"><span>{block}</span></div>
-                {activeDays.map((day) => {
-                  const tilesForCell = professorNames.flatMap((name) =>
-                    getProfessorEntries(name)
-                      .filter((entry) => entry.day === day.code && entry.start_block === block)
-                      .map((entry) => ({ entry, professorName: name }))
-                  );
+            {scheduleBlocks.map((block) => {
+              const isBreak = block.type === 'break';
+              
+              return (
+                <>
+                  <div class:list={['timeline-time', { 'is-break': isBreak }]}>
+                    <span class="slot-label">{block.label || ''}</span>
+                    <span class="slot-range">{block.range}</span>
+                  </div>
+                  {activeDays.map((day) => {
+                    const tilesForCell = professorNames.flatMap((name) =>
+                      getProfessorEntries(name)
+                        .filter((entry) => {
+                          if (entry.day !== day.code) return false;
+                          const start = getBlockIndex(entry.start_block);
+                          const end = getBlockIndex(entry.end_block);
+                          const current = getBlockIndex(block.label);
+                          return current >= start && current <= end;
+                        })
+                        .map((entry) => ({ entry, professorName: name }))
+                    );
 
-                  return (
-                    <div class="timeline-cell" data-timeline-cell data-day={day.code.toLowerCase()} data-block={block}>
-                      {tilesForCell.map(({ entry, professorName }) => (
-                        <ScheduleTile entry={entry} sectionId={professorName} label={entry.subject} />
-                      ))}
-                    </div>
-                  );
-                })}
-              </>
-            ))}
+                    return (
+                      <div class:list={['timeline-cell', { 'is-break': isBreak }]}>
+                        {isBreak ? (
+                          <span class="break-label">{block.label}</span>
+                        ) : (
+                          tilesForCell.map(({ entry, professorName }) => (
+                            <ScheduleTile entry={entry} sectionId={professorName} label={entry.subject} />
+                          ))
+                        )}
+                      </div>
+                    );
+                  })}
+                </>
+              );
+            })}
           </div>
         </div>
 
@@ -565,20 +583,34 @@ const activeSummary = getScheduleSummary(initialEntries);
     left: 0;
     z-index: 10;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-2);
+    padding: var(--space-1);
     background: var(--color-surface-muted) !important;
     border-right: 1px solid var(--color-border);
+    gap: 2px;
   }
 
-  .timeline-time span {
-    font-size: 10px;
+  .timeline-time.is-break {
+    background: color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) !important;
+  }
+
+  .slot-label {
+    font-size: 9px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    opacity: 0.7;
+  }
+
+  .slot-range {
+    font-size: 9px;
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     color: var(--color-text-soft);
     writing-mode: vertical-lr;
     transform: rotate(180deg);
+    white-space: nowrap;
   }
 
   .schedule-tile[hidden] {
@@ -586,11 +618,34 @@ const activeSummary = getScheduleSummary(initialEntries);
   }
 
   .timeline-cell {
-    min-height: 6rem;
+    min-height: 5rem;
     padding: 2px;
     display: flex;
     flex-direction: column;
     gap: 2px;
+  }
+
+  .timeline-cell.is-break {
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 5px,
+      color-mix(in srgb, var(--color-surface-muted) 30%, transparent) 5px,
+      color-mix(in srgb, var(--color-surface-muted) 30%, transparent) 10px
+    ) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+  }
+
+  .break-label {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    opacity: 0.4;
   }
 
   .timeline-cell:empty {

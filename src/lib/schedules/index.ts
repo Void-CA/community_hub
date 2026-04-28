@@ -14,46 +14,9 @@ import type {
   ScheduleSection,
 } from './types';
 
-const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const dayLabels: Record<string, string> = {
-  Monday: 'Lunes',
-  Tuesday: 'Martes',
-  Wednesday: 'Miércoles',
-  Thursday: 'Jueves',
-  Friday: 'Viernes',
-  Saturday: 'Sábado',
-  Sunday: 'Domingo',
-};
+import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel } from './constants';
 
-const blockOrder = [
-  'Morning1',
-  'Morning2',
-  'Morning3',
-  'Morning4',
-  'Afternoon1',
-  'Afternoon2',
-  'Afternoon3',
-  'Afternoon4',
-  'Evening1',
-  'Evening2',
-  'Evening3',
-  'Evening4',
-];
-
-const blockLabels: Record<string, string> = {
-  Morning1: 'Mañana 1',
-  Morning2: 'Mañana 2',
-  Morning3: 'Mañana 3',
-  Morning4: 'Mañana 4',
-  Afternoon1: 'Tarde 1',
-  Afternoon2: 'Tarde 2',
-  Afternoon3: 'Tarde 3',
-  Afternoon4: 'Tarde 4',
-  Evening1: 'Noche 1',
-  Evening2: 'Noche 2',
-  Evening3: 'Noche 3',
-  Evening4: 'Noche 4',
-};
+const blockOrder = scheduleSlots.map(s => s.label);
 
 const majorAccents = ['#4f46e5', '#0f766e', '#b45309', '#be123c', '#7c3aed', '#0284c7', '#15803d', '#c2410c'];
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
@@ -84,7 +47,7 @@ export type {
 
 export const dayCodes = dayOrder;
 export const dayNames = dayOrder.map((day) => ({ code: day, label: dayLabels[day] ?? day }));
-export const scheduleBlocks = blockOrder;
+export const scheduleBlocks = scheduleSlots; // Exporting the whole objects now
 export const schedulePeriods = schedulePeriodCatalog;
 export const defaultSchedulePeriodId = schedulePeriods[0]?.id ?? '2026-IIC';
 
@@ -113,13 +76,16 @@ export function formatDay(day: string) {
 }
 
 export function formatBlock(block: string) {
-  return blockLabels[block] ?? block.replace(/([a-z]+)(\d+)/i, '$1 $2');
+  const normalized = oldToNewLabel[block] ?? block;
+  const slot = scheduleSlots.find((s) => s.label === normalized);
+  return slot ? slot.range : block;
 }
 
 export function getBlockIndex(block: string) {
-  const index = blockOrder.indexOf(block);
+  const normalized = oldToNewLabel[block] ?? block;
+  const index = scheduleSlots.findIndex((s) => s.label === normalized);
 
-  return index === -1 ? blockOrder.length : index;
+  return index === -1 ? scheduleSlots.length : index;
 }
 
 export function getEntrySortKey(entry: ScheduleEntry): [number, number, number, number, string] {
