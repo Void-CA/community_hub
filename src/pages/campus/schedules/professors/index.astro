@@ -50,23 +50,28 @@ const activeSummary = getScheduleSummary(initialEntries);
     currentPeriodId={dataset.period.id}
   />
 
-  <section class="section pt-0">
+  <section class="dashboard-section">
     <div
-      class="container dashboard-grid"
+      class="container-fluid dashboard-layout"
       data-initial-professor={initialProfessor}
+      id="main-dashboard"
     >
-      <ProfessorCatalog
-        professorNames={professorNames}
-        professorSchedules={professorSchedules}
-        initialProfessor={initialProfessor}
-      />
+      <div class="dashboard-explorer">
+        <ProfessorCatalog
+          professorNames={professorNames}
+          professorSchedules={professorSchedules}
+          initialProfessor={initialProfessor}
+        />
+      </div>
 
-      <ProfessorWeeklyGrid
-        activeDays={activeDays}
-        scheduleBlocks={scheduleBlocks}
-        professorSchedules={professorSchedules}
-        professorNames={professorNames}
-      />
+      <div class="dashboard-timeline">
+        <ProfessorWeeklyGrid
+          activeDays={activeDays}
+          scheduleBlocks={scheduleBlocks}
+          professorSchedules={professorSchedules}
+          professorNames={professorNames}
+        />
+      </div>
     </div>
   </section>
 
@@ -84,35 +89,38 @@ const activeSummary = getScheduleSummary(initialEntries);
 </AppLayout>
 
 <style>
-  .dashboard-grid {
+  .container-fluid {
+    max-width: 100%;
+    padding: 0 var(--space-4);
+  }
+
+  .dashboard-section {
+    padding: var(--space-4) 0;
+  }
+
+  .dashboard-layout {
     display: grid;
-    grid-template-columns: 22rem 1fr;
-    gap: var(--space-6);
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-4);
     align-items: start;
-    max-width: 100% !important;
-    padding: 0 var(--space-6);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Zen Mode */
-  .dashboard-grid.is-zen {
+  .dashboard-layout.is-zen {
     grid-template-columns: 0px 1fr;
     gap: 0;
   }
 
-  .dashboard-grid.is-zen :global(.catalog) {
+  .dashboard-layout.is-zen .dashboard-explorer {
     transform: translateX(-100%);
     opacity: 0;
     pointer-events: none;
     margin-right: -320px;
   }
 
-  .dashboard-grid.is-zen :global(.timeline) {
-    grid-column: 1 / -1;
-  }
-
-  @media (max-width: 1100px) {
-    .dashboard-grid {
+  @media (max-width: 1200px) {
+    .dashboard-layout {
       grid-template-columns: 1fr;
     }
   }

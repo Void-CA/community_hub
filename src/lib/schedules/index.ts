@@ -163,8 +163,8 @@ export function groupProfessorEntriesByDay(professorName: string) {
     .filter((group) => group.entries.length > 0);
 }
 
-export function getMajorAccent(major: string) {
-  const normalized = major.trim().toLowerCase();
+export function getSubjectColor(subject: string) {
+  const normalized = subject.trim().toLowerCase();
   let hash = 0;
 
   for (const character of normalized) {
@@ -172,4 +172,40 @@ export function getMajorAccent(major: string) {
   }
 
   return majorAccents[Math.abs(hash) % majorAccents.length];
+}
+
+export function getProfessorAlias(name: string) {
+  if (!name) return "";
+  const parts = name.trim().split(/\s+/);
+  if (parts.length <= 2) return name;
+  
+  // Format: "P. Lastname" or "First Last"
+  const first = parts[0];
+  const last = parts[parts.length - 1];
+  
+  if (first?.toLowerCase().startsWith('prof')) {
+    return `Prof. ${last}`;
+  }
+  
+  return `${first} ${last}`;
+}
+
+export function filterScheduleSections(
+  sections: ScheduleSection[],
+  filters: { major?: string; year?: string; search?: string }
+) {
+  const query = filters.search?.trim().toLowerCase() ?? "";
+  
+  return sections.filter((section) => {
+    const matchesMajor = !filters.major || filters.major === "all" || 
+      section.majors.some(m => m.toLowerCase() === filters.major?.toLowerCase());
+      
+    const matchesYear = !filters.year || filters.year === "0" || 
+      section.academicYears.some(y => String(y) === filters.year);
+      
+    const matchesSearch = !query || 
+      [section.subject, section.professor, section.room].some(s => s.toLowerCase().includes(query));
+
+    return matchesMajor && matchesYear && matchesSearch;
+  });
 }

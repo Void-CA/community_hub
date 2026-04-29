@@ -18,10 +18,9 @@ export function initStudentScheduleState() {
 
   if (integrityError) {
     console.warn('Integrity Error: No conflict-free path found for this major/year combination.');
-    // We could show a toast or a banner here.
   }
 
-  const majorButtons = toArray<HTMLButtonElement>('[data-major-button]');
+  const majorSelect = document.getElementById('major-select') as HTMLSelectElement | null;
   const yearButtons = toArray<HTMLButtonElement>('[data-year-button]');
   const sectionButtons = toArray<SectionButton>('[data-section-toggle]');
   const tiles = toArray<HTMLElement>('[data-schedule-tile]');
@@ -31,11 +30,6 @@ export function initStudentScheduleState() {
   const visibleSectionCount = document.getElementById('visible-section-count');
   const selectedSectionCount = document.getElementById('selected-section-count');
   const selectedSessionCount = document.getElementById('selected-session-count');
-  const selectedProfessorCount = document.getElementById('selected-professor-count');
-
-  // Zen Mode toggle
-  const zenToggle = document.getElementById('zen-mode-toggle');
-  const dashboard = document.querySelector('.dashboard-grid');
 
   const state: State = {
     major: initialMajor,
@@ -58,11 +52,8 @@ export function initStudentScheduleState() {
 
   const updateSummary = () => {
     const selectedTiles = tiles.filter((tile) => state.selectedIds.has(tile.dataset.sectionId ?? ''));
-    const selectedProfessors = new Set(selectedTiles.map((tile) => tile.dataset.professor ?? ''));
-
     if (selectedSectionCount) selectedSectionCount.textContent = String(state.selectedIds.size);
     if (selectedSessionCount) selectedSessionCount.textContent = String(selectedTiles.length);
-    if (selectedProfessorCount) selectedProfessorCount.textContent = String(selectedProfessors.size);
   };
 
   const applyVisibility = () => {
@@ -94,14 +85,12 @@ export function initStudentScheduleState() {
     sectionButtons.forEach((button) => {
       const sectionId = button.dataset.sectionId ?? '';
       const selected = state.selectedIds.has(sectionId);
-      const check = button.querySelector('.section-check');
-
       button.classList.toggle('is-selected', selected);
       button.setAttribute('aria-pressed', String(selected));
     });
 
     const activeTiles = tiles.filter((tile) => state.selectedIds.has(tile.dataset.sectionId ?? ''));
-
+    
     tiles.forEach((tile) => {
       tile.hidden = !state.selectedIds.has(tile.dataset.sectionId ?? '');
       tile.classList.remove('has-conflict');
@@ -118,18 +107,17 @@ export function initStudentScheduleState() {
       cellGroups.set(key, group);
     });
 
-    cellGroups.forEach((group, key) => {
+    cellGroups.forEach((group) => {
       const parentCell = group[0]?.parentElement;
       if (parentCell) {
         parentCell.classList.toggle('has-multiple', group.length > 1);
       }
-
       if (group.length > 1) {
         group.forEach((tile) => tile.classList.add('has-conflict'));
       }
     });
 
-    // Cleanup cells that no longer have multiple tiles
+    // Cleanup cells
     toArray<HTMLElement>('.timeline-cell.has-multiple').forEach((cell) => {
       const visibleChildren = [...cell.children].filter((child) => !(child as HTMLElement).hidden);
       if (visibleChildren.length <= 1) {
@@ -144,7 +132,7 @@ export function initStudentScheduleState() {
       occupiedSlots.add(`${day}-${block}`);
     });
 
-    // Catalog compatibility highlighting
+    // Catalog compatibility
     sectionButtons.forEach((button) => {
       const sectionId = button.dataset.sectionId ?? '';
       if (state.selectedIds.has(sectionId)) {
@@ -152,9 +140,6 @@ export function initStudentScheduleState() {
         return;
       }
 
-      // We need to check if THIS section conflicts with already selected ones
-      // Since we don't have all entry data on the button easily (except search string),
-      // we might need to look at the tiles associated with this sectionId.
       const sectionTiles = tiles.filter(t => t.dataset.sectionId === sectionId);
       const conflictsWithSelection = sectionTiles.some(t => {
         const key = `${t.dataset.day}-${t.dataset.block}`;
@@ -168,30 +153,79 @@ export function initStudentScheduleState() {
     updateSummary();
   };
 
-  // Only auto-select if we are filtering by a specific major/year
-  if (state.major !== 'all' || state.year !== '0') {
-    const subjectSelected = new Set<string>();
-    state.selectedIds = new Set(
-      sectionButtons
-        .filter((button) => {
-          const majors = button.dataset.majorList?.split('|') ?? [];
-          const years = button.dataset.yearList?.split('|') ?? [];
-          const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
-          const matchesYear = state.year === '0' || years.includes(state.year);
+  const refreshSelectionByPreset = () => {
+    if (state.major !== 'all' || state.year !== '0') {
+      const subjectSelected = new Set<string>();
+      state.selectedIds = new Set(
+        sectionButtons
+          .filter((button) => {
+            const majors = button.dataset.majorList?.split('|') ?? [];
+            const years = button.dataset.yearList?.split('|') ?? [];
+            const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
+            const matchesYear = state.year === '0' || years.includes(state.year);
+            
+            if (!matchesMajor || !matchesYear) return false;
 
-          if (!matchesMajor || !matchesYear) return false;
+            const subject = button.dataset.subject ?? '';
+            if (subjectSelected.has(subject)) return false;
+            
+            subjectSelected.add(subject);
+            return true;
+          })
+          .map((button) => button.dataset.sectionId ?? '')
+      );
+    }
 
-          // Only pick the first group we encounter for each subject (usually G1 due to sorting)
-          const subject = button.dataset.subject ?? '';
-          if (subjectSelected.has(subject)) return false;
+    applyVisibility();
+    applySelectionState();
+  };
 
-          subjectSelected.add(subject);
-          return true;
-        })
-        .map((button) => button.dataset.sectionId ?? '')
-    );
-  }
+  majorSelect?.addEventListener('change', () => {
+    state.major = majorSelect.value;
+    refreshSelectionByPreset();
+  });
 
-  applyVisibility();
-  applySelectionState();
-};
+  yearButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const nextYear = button.dataset.year ?? state.year;
+      if (state.year === nextYear) return;
+      state.year = nextYear;
+      yearButtons.forEach((candidate) => candidate.classList.toggle('is-active', candidate === button));
+      refreshSelectionByPreset();
+    });
+  });
+
+  sectionButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const sectionId = button.dataset.sectionId ?? '';
+      const subject = button.dataset.subject ?? '';
+
+      if (state.selectedIds.has(sectionId)) {
+        state.selectedIds.delete(sectionId);
+      } else {
+        sectionButtons.forEach((other) => {
+          if (other.dataset.subject === subject && other !== button) {
+            state.selectedIds.delete(other.dataset.sectionId ?? '');
+          }
+        });
+        state.selectedIds.add(sectionId);
+      }
+
+      applySelectionState();
+    });
+  });
+
+  searchInput?.addEventListener('input', applyVisibility);
+
+  periodSelect?.addEventListener('change', () => {
+    const selected = periodSelect.value;
+    const [year, term] = selected.split('-');
+    const nextUrl = new URL(window.location.href);
+    nextUrl.searchParams.set('year', year ?? '');
+    nextUrl.searchParams.set('term', term ?? '');
+    window.location.assign(nextUrl.toString());
+  });
+
+  // Initial setup
+  refreshSelectionByPreset();
+}

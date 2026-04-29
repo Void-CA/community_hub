@@ -62,69 +62,33 @@ const activeSummary = {
   title={`Horarios de Estudiantes | ${semesterLabel}`}
   description="Vista compacta de horarios para estudiantes, con selector de carrera y grilla por bloques."
 >
-  <header
-    class="stats-banner"
-    data-initial-major={initialMajor}
-    data-initial-year={String(initialYear)}
-    data-integrity-error={String(integrityError)}
-  >
-    <div class="container stats-container">
-      <div class="stats-header">
-        <p class="eyebrow">Vista de Estudiantes</p>
-        <h2>{semesterLabel}</h2>
-      </div>
+  <StudentScheduleFilters
+    schedulePeriods={schedulePeriods}
+    activePeriodId={dataset.period.id}
+    periodMajors={periodMajors}
+    initialMajor={initialMajor}
+    periodYears={periodYears}
+    initialYear={initialYear}
+  />
 
-      <div class="stats-group">
-        <div class="stat-item">
-          <DynamicIcon intent="student" size={14} class="text-primary" />
-          <span>Carrera activa</span>
-          <Badge variant="primary" id="active-major-badge">{initialMajor}</Badge>
-        </div>
-        <div class="stat-item">
-          <DynamicIcon intent="time" size={14} class="text-primary" />
-          <span>Año Académico</span>
-          <Badge variant="muted" id="active-year-badge">{initialYear}° Año</Badge>
-        </div>
-        <div class="stat-item">
-          <DynamicIcon intent="info" size={14} class="text-primary" />
-          <span>Secciones</span>
-          <Badge variant="muted" id="selected-section-count">{activeSummary.totalSections}</Badge>
-        </div>
-        <div class="stat-item">
-          <DynamicIcon intent="professor" size={14} class="text-primary" />
-          <span>Sesiones / Sem</span>
-          <Badge variant="muted" id="selected-session-count">{activeSummary.totalEntries}</Badge>
-        </div>
-      </div>
-
-      <div class="stats-actions">
-        <StudentScheduleFilters
-          schedulePeriods={schedulePeriods}
-          activePeriodId={dataset.period.id}
-          periodMajors={periodMajors}
+  <section class="dashboard-section" data-initial-major={initialMajor} data-initial-year={String(initialYear)}>
+    <div class="container-fluid dashboard-layout" id="main-dashboard">
+      <div class="dashboard-explorer">
+        <StudentScheduleCatalog
+          allSections={allSections}
           initialMajor={initialMajor}
-          periodYears={periodYears}
           initialYear={initialYear}
-          variant="compact"
+          initialVisibleSections={initialSections.length}
         />
       </div>
-    </div>
-  </header>
 
-  <section class="section pt-0">
-    <div class="container dashboard-grid" id="main-dashboard">
-      <StudentScheduleCatalog
-        allSections={allSections}
-        initialMajor={initialMajor}
-        initialYear={initialYear}
-        initialVisibleSections={initialSections.length}
-      />
-
-      <StudentScheduleTimeline
-        activeDays={activeDays}
-        scheduleBlocks={scheduleBlocks}
-        allSections={allSections}
-      />
+      <div class="dashboard-timeline">
+        <StudentScheduleTimeline
+          activeDays={activeDays}
+          scheduleBlocks={scheduleBlocks}
+          allSections={allSections}
+        />
+      </div>
     </div>
   </section>
 
@@ -147,141 +111,47 @@ const activeSummary = {
 
 <style>
   .hero-grid,
-  .dashboard-grid {
+  .container-fluid {
+    max-width: 100%;
+    padding: 0 var(--space-4);
+  }
+
+  .dashboard-section {
+    padding: var(--space-4) 0;
+  }
+
+  .dashboard-layout {
     display: grid;
-    gap: var(--space-4);
-  }
-
-  /* Stats Banner */
-  .stats-banner {
-    background: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--space-2) 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(12px);
-    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
-  }
-
-  .stats-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-8);
-  }
-
-  .stats-header h2 {
-    font-size: var(--font-size-xl);
-    margin: 0;
-  }
-
-  .stats-group {
-    display: flex;
-    gap: var(--space-8);
-    flex: 1;
-    justify-content: center;
-  }
-
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .stat-item span {
-    font-size: 10px;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-
-  .hero-grid {
-    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-    align-items: stretch;
-  }
-
-  .dashboard-grid {
-    display: grid;
-    grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.6fr);
+    grid-template-columns: 280px 1fr;
     gap: var(--space-4);
     align-items: start;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Zen Mode */
-  .dashboard-grid.is-zen {
+  .dashboard-layout.is-zen {
     grid-template-columns: 0px 1fr;
     gap: 0;
   }
 
-  .dashboard-grid.is-zen :global(.catalog) {
+  .dashboard-layout.is-zen .dashboard-explorer {
     transform: translateX(-100%);
     opacity: 0;
     pointer-events: none;
-    margin-right: -320px;
+    margin-right: -280px;
   }
 
-  .dashboard-grid.is-zen :global(.timeline) {
-    grid-column: 1 / -1;
-  }
-
-  .hero-copy,
-  .hero-panel {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .panel-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-  }
-
-  .panel-grid div {
-    padding: var(--space-4);
-    border-radius: var(--radius-md);
-    background: var(--color-surface-muted);
-  }
-
-  .panel-grid span {
-    display: block;
-    margin-bottom: var(--space-1);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .hero-title,
-  .eyebrow,
-  .panel-tag {
-    margin: 0;
-  }
-
-  .eyebrow,
-  .panel-tag {
+  .eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.12em;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
     color: var(--color-accent);
+    margin-bottom: var(--space-1);
   }
 
-  .hero-title {
-    font-size: clamp(2rem, 4vw, 3.4rem);
-    max-width: 14ch;
-  }
-
-  .hero-text {
-    max-width: 56ch;
-    font-size: var(--font-size-base);
-  }
-
-  @media (max-width: 1100px) {
-    .hero-grid,
-    .dashboard-grid {
+  @media (max-width: 1200px) {
+    .dashboard-layout {
       grid-template-columns: 1fr;
     }
   }

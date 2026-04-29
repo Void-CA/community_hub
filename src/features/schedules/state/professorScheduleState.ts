@@ -17,7 +17,7 @@ export function initProfessorScheduleState() {
 
   // Zen Mode toggle
   const zenToggle = document.getElementById('zen-mode-toggle');
-  const dashboard = document.querySelector('.dashboard-grid');
+  const dashboard = document.querySelector('.dashboard-layout');
 
   const state = {
     professor: initialProfessor,

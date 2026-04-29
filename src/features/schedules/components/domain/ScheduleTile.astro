@@ -1,6 +1,6 @@
 ---
 import type { ScheduleEntry } from '@/lib/schedules';
-import { formatAcademicYear, formatBlock, formatDay, getMajorAccent } from '@/lib/schedules';
+import { formatAcademicYear, formatBlock, formatDay, getSubjectColor, getProfessorAlias } from '@/lib/schedules';
 import Badge from '@/components/UI/Badge.astro';
 
 interface Props {
@@ -13,54 +13,48 @@ interface Props {
 }
 
 const { entry, sectionId, label, hasConflict = false, conflictWith = [], style: extraStyle = '' } = Astro.props;
-const accent = getMajorAccent(entry.majors[0] ?? 'General');
+const accentColor = getSubjectColor(entry.subject);
 const title = label ?? entry.subject;
+const professorAlias = getProfessorAlias(entry.professor);
 ---
 
 <article
   class:list={['schedule-tile', { 'has-conflict': hasConflict }]}
   data-schedule-tile
   data-section-id={sectionId}
-  data-has-conflict={String(hasConflict)}
-  data-conflict-with={conflictWith.join('|')}
-  data-major-list={entry.majors.map((major) => major.toLowerCase()).join('|')}
-  data-day={entry.day.toLowerCase()}
-  data-block={entry.start_block}
   data-professor={entry.professor.toLowerCase()}
   data-subject={entry.subject.toLowerCase()}
-  data-room={entry.room.toLowerCase()}
-  data-group={String(entry.group)}
-  data-academic-year={String(entry.academicYear)}
-  data-search={`${entry.subject} ${entry.professor} ${entry.room} ${entry.group}`.toLowerCase()}
-  style={`--tile-accent: ${accent}; ${extraStyle}`}
+  data-day={entry.day.toLowerCase()}
+  data-block={entry.start_block}
+  style={`--tile-accent: ${accentColor}; ${extraStyle}`}
 >
-  <div class="tile-head">
-    <p>{formatDay(entry.day)}</p>
-    <span>{formatBlock(entry.start_block).split(' - ')[0]} - {formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entry.end_block).split(' - ')[0]}</span>
+  <div class="tile-content">
+    <div class="tile-header">
+      <strong>{title}</strong>
+    </div>
+    
+    <div class="tile-meta">
+      <span class="tile-room">{entry.room}</span>
+      <span class="meta-separator">·</span>
+      <span class="tile-group">G{entry.group}</span>
+    </div>
+
+    <div class="tile-footer">
+      <p class="tile-professor">{professorAlias}</p>
+    </div>
   </div>
 
-  <strong>{title}</strong>
-  
-  <div class="tile-badges">
-    <Badge size="xs" variant="muted">G{entry.group}</Badge>
-    <Badge size="xs" variant="muted">{formatAcademicYear(entry.academicYear)}</Badge>
-  </div>
-
-  <div class="tile-footer">
-    <span class="tile-room">{entry.room}</span>
-    <p class="tile-professor">{entry.professor}</p>
-  </div>
+  {hasConflict && <div class="conflict-indicator">!</div>}
 </article>
 
 <style>
   .schedule-tile {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--radius-sm);
-    border: 1px solid color-mix(in srgb, var(--tile-accent) 20%, var(--color-border));
-    background: linear-gradient(180deg, color-mix(in srgb, var(--tile-accent) 5%, var(--color-surface) 95%), var(--color-surface));
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--tile-accent);
+    background: var(--color-surface);
     box-shadow: var(--shadow-sm);
     min-width: 0;
     font-size: 11px;
@@ -68,93 +62,83 @@ const title = label ?? entry.subject;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
-  }
-
-  .has-conflict {
-    border-color: var(--color-error);
-    border-width: 2px;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      color-mix(in srgb, var(--color-error) 5%, transparent) 10px,
-      color-mix(in srgb, var(--color-error) 5%, transparent) 20px
-    ), var(--color-surface);
-  }
-
-  .has-conflict::after {
-    content: "!";
-    position: absolute;
-    top: 2px;
-    right: 4px;
-    color: var(--color-error);
-    font-weight: var(--font-weight-bold);
-    font-size: 14px;
-  }
-
-  .schedule-tile[hidden] {
-    display: none !important;
+    height: 100%;
+    border-top: 1px solid var(--color-border-soft);
+    border-right: 1px solid var(--color-border-soft);
+    border-bottom: 1px solid var(--color-border-soft);
   }
 
   .schedule-tile:hover {
-    border-color: var(--tile-accent);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
     z-index: 10;
   }
 
-  .tile-head {
+  .tile-content {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-1);
-    color: var(--color-text-muted);
-    font-size: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    flex-direction: column;
+    height: 100%;
+    gap: 2px;
   }
 
   strong {
     font-size: 10px;
-    line-height: 1.1;
-    margin-bottom: 2px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; /* Increased for multi-block tiles */
+    -webkit-line-clamp: 2;
     overflow: hidden;
-    padding-right: var(--space-8); /* Space for badges */
+    color: var(--color-text);
   }
 
-  .tile-badges {
-    position: absolute;
-    top: 4px;
-    right: 4px;
+  .tile-meta {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-    align-items: flex-end;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-soft);
+  }
+
+  .meta-separator {
+    opacity: 0.5;
+  }
+
+  .tile-room {
+    color: var(--tile-accent);
+    font-weight: var(--font-weight-bold);
   }
 
   .tile-footer {
     margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  .tile-room {
-    font-size: 9px;
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary);
+    padding-top: 4px;
   }
 
   .tile-professor {
     margin: 0;
-    font-size: 10px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    font-size: 9px;
+    color: var(--color-text-muted);
+    white-space: nowrap;
     overflow: hidden;
-    opacity: 0.8;
+    text-overflow: ellipsis;
+  }
+
+  .has-conflict {
+    border-color: var(--color-error);
+    background: color-mix(in srgb, var(--color-error) 5%, var(--color-surface));
+  }
+
+  .conflict-indicator {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    color: var(--color-error);
+    font-weight: var(--font-weight-bold);
+    font-size: 12px;
+  }
+
+  .schedule-tile[hidden] {
+    display: none !important;
   }
 </style>
