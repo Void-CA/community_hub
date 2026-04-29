@@ -69,26 +69,70 @@
   --color-border: var(--neutral-200);
   --color-border-soft: var(--neutral-100);
 
-  /* Typography (Base) */
-  --font-family-sans: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-family-heading: 'Outfit Variable', var(--font-family-sans);
+  /* Font Sizes */
+  --font-size-2xs: 0.625rem;    /* 10px — badges, micro labels */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-md: 1.0625rem;   /* 17px — catalog names */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 2rem;       /* 32px */
+  --font-size-4xl: 3rem;       /* 48px */
 
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
-  --font-size-4xl: 3rem;
-
+  /* Font Weights */
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* Typography (Base) */
+  --font-family-sans: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-heading: 'Outfit Variable', var(--font-family-sans);
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  /* Semantic Font Sizes */
+  --font-size-tiny: 0.5625rem;   /* 9px — extreme micro labels */
+  --font-size-micro: 0.5rem;     /* 8px — conflict badges */
+
+  /* Status Colors */
+  --color-error: #ef4444;
+  --color-error-soft: #fef2f2;
+  --color-success: #22c55e;
+  --color-success-soft: #f0fdf4;
+  --color-warning: #f59e0b;
+  --color-warning-soft: #fffbeb;
+
+  /* Border Widths */
+  --border-width-sm: 1px;
+  --border-width-md: 2px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Focus Ring */
+  --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-primary) 20%, transparent);
+  --focus-ring-lg: 0 0 0 4px color-mix(in srgb, var(--color-primary) 15%, transparent);
 
   /* Layout */
   --container-width: 1200px;
+  --navbar-height: 64px;
+  --toolbar-height: 56px;
+
+  /* Schedules Domain Tokens */
+  --cell-height: 5.8rem;
+  --tile-padding: 0.6rem;
+  --tile-gap: 0.4rem;
+  --timeline-grid-gap: 1px;
+  --tile-border-accent: 5px;
+  --break-stripe-size: 4px;
+  --workload-dot-size: 6px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -106,5 +150,12 @@
 
     --color-border: var(--neutral-800);
     --color-border-soft: var(--neutral-900);
+
+    --color-error: #f87171;
+    --color-error-soft: #450a0a;
+    --color-success: #4ade80;
+    --color-success-soft: #052e16;
+    --color-warning: #fbbf24;
+    --color-warning-soft: #451a03;
   }
 }

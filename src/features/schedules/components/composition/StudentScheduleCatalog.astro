@@ -43,7 +43,9 @@ const groupedSubjects = groupSectionsBySubject(allSections);
         <div class="subject-group" data-subject-container>
           <div class="subject-info">
             <h3>{subject.subject}</h3>
-            <span class="option-count">{subject.options.length} grupos</span>
+            <span class="option-count">
+              {subject.options.length} {subject.options.length === 1 ? "grupo" : "grupos"}
+            </span>
           </div>
           
           <div class="group-selector">
@@ -109,20 +111,19 @@ const groupedSubjects = groupSectionsBySubject(allSections);
 
   .search-box input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-sm) solid var(--color-border);
     background: var(--color-bg);
     color: var(--color-text);
     font-size: var(--font-size-sm);
-    transition: border-color 0.2s ease;
+    transition: border-color var(--transition-base);
   }
 
   .search-box input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px
-      color-mix(in srgb, var(--color-primary) 20%, transparent);
+    box-shadow: var(--focus-ring);
   }
 
   .catalog-list {
@@ -172,7 +173,7 @@ const groupedSubjects = groupSectionsBySubject(allSections);
   }
 
   .option-count {
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     font-weight: var(--font-weight-bold);
     color: var(--color-text-muted);
     background: var(--color-surface-muted);

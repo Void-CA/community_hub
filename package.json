@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "ulsa-community-hub",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -9,11 +9,17 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint:css": "stylelint \"src/**/*.{css,astro}\""
   },
   "dependencies": {
     "@lucide/astro": "^1.12.0",
     "astro": "^6.1.9",
     "lucide-astro": "^0.556.0"
+  },
+  "devDependencies": {
+    "stylelint": "^17.9.1",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.1"
   }
 }

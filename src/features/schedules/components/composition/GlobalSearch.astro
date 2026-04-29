@@ -94,7 +94,7 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
     position: relative;
     width: 100%;
     max-width: 600px;
-    margin: 2rem auto;
+    margin: var(--space-8) auto;
   }
 
   .search-input-wrapper {
@@ -106,20 +106,20 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
   input {
     width: 100%;
     height: 3.5rem;
-    padding: 0 1.5rem 0 3.5rem;
+    padding: 0 var(--space-6) 0 3.5rem;
     background: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: var(--border-width-md) solid var(--color-border);
     border-radius: var(--radius-full);
     font-size: var(--font-size-lg);
     color: var(--color-text);
     box-shadow: var(--shadow-md);
-    transition: all 0.2s ease;
+    transition: all var(--transition-base);
   }
 
   input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 15%, transparent), var(--shadow-lg);
+    box-shadow: var(--focus-ring-lg), var(--shadow-lg);
   }
 
   .search-icon {
@@ -131,7 +131,7 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
 
   .search-results {
     position: absolute;
-    top: calc(100% + 0.5rem);
+    top: calc(100% + var(--space-2));
     left: 0;
     right: 0;
     z-index: 100;
@@ -151,11 +151,11 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1rem;
+    padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-md);
     color: var(--color-text);
     text-decoration: none;
-    transition: background 0.2s ease;
+    transition: background var(--transition-base);
   }
 
   .search-result-item:hover {
@@ -168,7 +168,7 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
   }
 
   .result-badge {
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     padding: 2px 8px;

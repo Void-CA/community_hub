@@ -1,4 +1,8 @@
 /* Modern CSS Reset */
+@import './tokens.css';
+@import './layout.css';
+@import './utilities.css';
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -8,12 +12,12 @@
 }
 
 body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family-sans);
   font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
 }
 
 img, picture, video, canvas, svg {
@@ -31,10 +35,10 @@ p, h1, h2, h3, h4, h5, h6 {
 
 /* Typography Base */
 h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text);
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-bold);
   line-height: 1.1;
-  color: var(--color-text);
 }
 
 h1 { font-size: var(--font-size-4xl); margin-bottom: var(--space-6); }
@@ -61,15 +65,15 @@ ul, ol {
 .text-center { text-align: center; }
 
 .sr-only {
-  position: absolute;
-  width: 1px;
+  border-width: 0;
+  clip: rect(0, 0, 0, 0);
   height: 1px;
-  padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  padding: 0;
+  position: absolute;
   white-space: nowrap;
-  border-width: 0;
+  width: 1px;
 }
 [hidden] {
   display: none !important;

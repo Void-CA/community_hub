@@ -90,7 +90,8 @@ export function buildScheduleSections(entries: ScheduleEntry[]) {
   const sections = new Map<string, ScheduleSection>();
 
   for (const entry of entries) {
-    const id = [entry.subject, entry.group, entry.professor, entry.room, String(entry.academicYear)].join('::');
+    // A section is defined by subject and group number.
+    const id = `${entry.subject}::G${entry.group}`;
     const existing = sections.get(id);
 
     if (existing) {
@@ -98,6 +99,17 @@ export function buildScheduleSections(entries: ScheduleEntry[]) {
       existing.days = uniqueSorted([...existing.days, entry.day]);
       existing.majors = uniqueSorted([...existing.majors, ...entry.majors]);
       existing.academicYears = [...new Set([...existing.academicYears, entry.academicYear])].sort((left, right) => left - right);
+      
+      // Update representative professor and room if they are different
+      const currentProfs = existing.professor.split(' / ');
+      if (!currentProfs.includes(entry.professor)) {
+        existing.professor = [...currentProfs, entry.professor].join(' / ');
+      }
+      
+      const currentRooms = existing.room.split(' / ');
+      if (!currentRooms.includes(entry.room)) {
+        existing.room = [...currentRooms, entry.room].join(' / ');
+      }
       continue;
     }
 

@@ -87,11 +87,11 @@ const generalItems: LegendItem[] = [
     background: repeating-linear-gradient(
       -45deg,
       var(--color-border),
-      var(--color-border) 2px,
-      transparent 2px,
-      transparent 4px
+      var(--color-border) var(--break-stripe-size),
+      transparent var(--break-stripe-size),
+      transparent calc(var(--break-stripe-size) * 2)
     );
-    border: 1px solid var(--color-border);
+    border: var(--border-width-sm) solid var(--color-border);
   }
 
   .legend-info {
@@ -107,7 +107,7 @@ const generalItems: LegendItem[] = [
   }
 
   .legend-desc {
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     color: var(--color-text-muted);
     line-height: 1.3;
   }

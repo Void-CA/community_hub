@@ -114,11 +114,9 @@ const {
     gap: 2px;
   }
 
-  .flex-1 { flex: 1; }
-
   .toolbar-label span,
   .toolbar-hint {
-    font-size: 9px;
+    font-size: var(--font-size-tiny);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -128,7 +126,7 @@ const {
   .toolbar-select {
     appearance: none;
     background: var(--color-surface-muted);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-sm) solid var(--color-border);
     padding: 0.4rem 2rem 0.4rem 0.8rem;
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
@@ -148,11 +146,11 @@ const {
 
   .year-selector {
     display: flex;
-    gap: 4px;
+    gap: var(--space-1);
     background: var(--color-surface-muted);
     padding: 2px;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-sm) solid var(--color-border);
   }
 
   .year-chip {
@@ -164,7 +162,7 @@ const {
     font-weight: var(--font-weight-bold);
     color: var(--color-text-soft);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-base);
   }
 
   .year-chip.is-active {
@@ -199,7 +197,7 @@ const {
   }
 
   .stat-bubble label {
-    font-size: 8px;
+    font-size: var(--font-size-micro);
     text-transform: uppercase;
     font-weight: var(--font-weight-bold);
     color: var(--color-text-muted);

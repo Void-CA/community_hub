@@ -1,6 +1,12 @@
 ---
-import type { ScheduleEntry } from '@/lib/schedules';
-import { formatAcademicYear, formatBlock, formatDay, getSubjectColor, getProfessorAlias } from '@/lib/schedules';
+import type { ScheduleEntry } from "@/lib/schedules";
+import {
+  formatAcademicYear,
+  formatBlock,
+  formatDay,
+  getSubjectColor,
+  getProfessorAlias,
+} from "@/lib/schedules";
 
 interface Props {
   entry: ScheduleEntry;
@@ -11,17 +17,26 @@ interface Props {
   style?: string;
 }
 
-const { entry, sectionId, label, hasConflict = false, conflictWith = [], style: extraStyle = '' } = Astro.props;
+const {
+  entry,
+  sectionId,
+  label,
+  hasConflict = false,
+  conflictWith = [],
+  style: extraStyle = "",
+} = Astro.props;
 const accentColor = getSubjectColor(entry.subject);
 const title = label ?? entry.subject;
 const professorAlias = getProfessorAlias(entry.professor);
 
-const startTime = formatBlock(entry.start_block).split(' - ')[0];
-const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entry.end_block).split(' - ')[0];
+const startTime = formatBlock(entry.start_block).split(" - ")[0];
+const endTime =
+  formatBlock(entry.end_block).split(" - ")[1] ||
+  formatBlock(entry.end_block).split(" - ")[0];
 ---
 
 <article
-  class:list={['schedule-tile', { 'has-conflict': hasConflict }]}
+  class:list={["schedule-tile", { "has-conflict": hasConflict }]}
   data-schedule-tile
   data-section-id={sectionId}
   data-professor={entry.professor.toLowerCase()}
@@ -37,10 +52,10 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
       </div>
       <span class="tile-group-badge">G{entry.group}</span>
     </header>
-    
+
     <div class="tile-body">
       <h4 class="tile-subject" title={title}>{title}</h4>
-      
+
       <div class="tile-meta">
         <span class="tile-room">Aula {entry.room}</span>
       </div>
@@ -58,25 +73,25 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
   .schedule-tile {
     display: flex;
     flex-direction: column;
-    padding: 0.6rem;
+    padding: var(--tile-padding);
     border-radius: var(--radius-lg);
-    border-left: 5px solid var(--tile-accent);
+    border-left: var(--tile-border-accent) solid var(--tile-accent);
     background: var(--color-surface);
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    box-shadow: var(--shadow-md);
     min-width: 0;
     cursor: default;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
     height: 100%;
-    border-top: 1px solid var(--color-border-soft);
-    border-right: 1px solid var(--color-border-soft);
-    border-bottom: 1px solid var(--color-border-soft);
+    border-top: var(--border-width-sm) solid var(--color-border-soft);
+    border-right: var(--border-width-sm) solid var(--color-border-soft);
+    border-bottom: var(--border-width-sm) solid var(--color-border-soft);
   }
 
   .schedule-tile:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    box-shadow: var(--shadow-lg);
     z-index: 100 !important;
   }
 
@@ -84,7 +99,7 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: 0.4rem;
+    gap: var(--tile-gap);
   }
 
   .tile-header {
@@ -95,19 +110,19 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
   }
 
   .tile-time {
-    font-size: 10px;
-    font-weight: 800;
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-extrabold);
     letter-spacing: 0.05em;
     color: var(--color-text-muted);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family: var(--font-family-mono);
   }
 
   .tile-group-badge {
-    font-size: 9px;
-    font-weight: 900;
+    font-size: var(--font-size-tiny);
+    font-weight: var(--font-weight-black);
     padding: 2px 6px;
     background: var(--color-surface-muted);
-    border: 1px solid var(--color-border-soft);
+    border: var(--border-width-sm) solid var(--color-border-soft);
     border-radius: 6px;
     color: var(--color-text-soft);
   }
@@ -120,9 +135,9 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
 
   .tile-subject {
     margin: 0;
-    font-size: 13px; /* Significant increase */
-    font-weight: 800;
-    line-height: 1.2;
+    font-size: 13px;
+    font-weight: var(--font-weight-extrabold);
+    line-height: var(--leading-tight, 1.2);
     color: var(--color-text);
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -137,7 +152,7 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
   }
 
   .tile-room {
@@ -147,15 +162,16 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
 
   .tile-footer {
     margin-top: auto;
-    padding-top: 0.5rem;
-    border-top: 1px solid color-mix(in srgb, var(--color-border-soft) 50%, transparent);
+    padding-top: var(--space-2);
+    border-top: var(--border-width-sm) solid
+      color-mix(in srgb, var(--color-border-soft) 50%, transparent);
   }
 
   .tile-professor {
     margin: 0;
     font-size: 11px;
     color: var(--color-text-muted);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     font-style: italic;
     white-space: nowrap;
     overflow: hidden;
@@ -174,8 +190,8 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
     right: 0;
     background: var(--color-error);
     color: white;
-    font-size: 8px;
-    font-weight: 900;
+    font-size: var(--font-size-micro);
+    font-weight: var(--font-weight-black);
     padding: 2px 6px;
     border-top-left-radius: 8px;
     letter-spacing: 0.1em;
@@ -189,7 +205,7 @@ const endTime = formatBlock(entry.end_block).split(' - ')[1] || formatBlock(entr
   :global(.timeline-tile-container[style*="span 1"]) .tile-footer {
     display: none;
   }
-  
+
   :global(.timeline-tile-container[style*="span 1"]) .tile-subject {
     -webkit-line-clamp: 1;
   }

@@ -127,7 +127,7 @@ const cellIndex = buildTimelineCellIndex(allSections);
     flex-direction: column;
     gap: var(--space-4);
     min-width: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-spring);
   }
 
   .timeline-header-actions {
@@ -139,13 +139,13 @@ const cellIndex = buildTimelineCellIndex(allSections);
 
   .zen-button {
     background: var(--color-surface-muted);
-    border: 1px solid var(--color-border);
-    padding: 0.5rem 1rem;
+    border: var(--border-width-sm) solid var(--color-border);
+    padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-md);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-base);
   }
 
   .zen-button:hover {
@@ -162,18 +162,18 @@ const cellIndex = buildTimelineCellIndex(allSections);
   .timeline-scroll {
     overflow: auto;
     border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-sm) solid var(--color-border);
     background: var(--color-bg);
     position: relative;
-    max-height: calc(100vh - 220px); /* Adapt to available space */
+    max-height: calc(100vh - 220px);
   }
 
   .timeline-grid {
     display: grid;
-    gap: 1px;
+    gap: var(--timeline-grid-gap);
     background: var(--color-border);
     min-width: 100%;
-    --cell-height: 3.8rem;
+    --cell-height: var(--cell-height);
   }
 
   .timeline-grid > div {
@@ -197,7 +197,7 @@ const cellIndex = buildTimelineCellIndex(allSections);
     justify-content: center;
     padding: var(--space-2);
     background: var(--color-surface-muted) !important;
-    border-bottom: 2px solid var(--color-primary);
+    border-bottom: var(--border-width-md) solid var(--color-primary);
   }
 
   .timeline-day span {
@@ -218,7 +218,7 @@ const cellIndex = buildTimelineCellIndex(allSections);
     justify-content: center;
     padding: var(--space-1);
     background: var(--color-surface-muted) !important;
-    border-right: 1px solid var(--color-border);
+    border-right: var(--border-width-sm) solid var(--color-border);
     gap: 0;
   }
 
@@ -237,18 +237,16 @@ const cellIndex = buildTimelineCellIndex(allSections);
   }
 
   .slot-label {
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     font-weight: var(--font-weight-bold);
     color: var(--color-primary);
   }
 
   .slot-range {
-    font-size: 9px;
+    font-size: var(--font-size-tiny);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-muted);
-    font-family:
-      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-      "Courier New", monospace;
+    font-family: var(--font-family-mono);
   }
 
   .timeline-bg-cell {
@@ -261,9 +259,9 @@ const cellIndex = buildTimelineCellIndex(allSections);
     background: repeating-linear-gradient(
       -45deg,
       var(--color-surface-muted),
-      var(--color-surface-muted) 4px,
-      color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) 4px,
-      color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) 8px
+      var(--color-surface-muted) var(--break-stripe-size),
+      color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) var(--break-stripe-size),
+      color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) calc(var(--break-stripe-size) * 2)
     ) !important;
   }
 
@@ -281,9 +279,9 @@ const cellIndex = buildTimelineCellIndex(allSections);
   .break-label-abs {
     position: absolute;
     top: 50%;
-    left: 50vw; /* Center horizontally in the grid */
+    left: 50vw;
     transform: translate(-50%, -50%);
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
