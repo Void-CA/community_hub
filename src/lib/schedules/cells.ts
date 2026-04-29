@@ -7,7 +7,7 @@ export function buildTimelineCellIndex(sections: ScheduleSection[], conflicts?: 
 
   for (const section of sections) {
     const sectionConflicts = conflicts?.get(section.id) || [];
-    
+
     for (const entry of section.entries) {
       const startLabel = oldToNewLabel[entry.start_block] ?? entry.start_block;
       const endLabel = oldToNewLabel[entry.end_block] ?? entry.end_block;
@@ -26,19 +26,19 @@ export function buildTimelineCellIndex(sections: ScheduleSection[], conflicts?: 
 
         const key = `${entry.day}::${label}`;
         const bucket = index.get(key) ?? [];
-        
+
         // Only add the tile data if it's the first block of the range
         // This allows the UI to use 'grid-row: span N'
         if (i === startIndex) {
-          bucket.push({ 
-            entry, 
+          bucket.push({
+            entry,
             sectionId: section.id,
             hasConflict: sectionConflicts.length > 0,
             conflictWith: sectionConflicts.map(c => c.groups.find(id => id !== section.id)!),
             rowSpan
           });
         }
-        
+
         index.set(key, bucket);
       }
     }

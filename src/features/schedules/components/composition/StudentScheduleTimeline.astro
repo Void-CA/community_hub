@@ -37,7 +37,10 @@ const cellIndex = buildTimelineCellIndex(allSections);
       class="timeline-grid"
       style={`grid-template-columns: 4rem repeat(${activeDays.length}, 1fr);`}
     >
+      <!-- 1. Header Corner -->
       <div class="timeline-corner"></div>
+      
+      <!-- 2. Day Headers -->
       {
         activeDays.map((day) => (
           <div class="timeline-day">
@@ -46,79 +49,67 @@ const cellIndex = buildTimelineCellIndex(allSections);
         ))
       }
 
+      <!-- 3. Time Axis & Background Cells -->
       {
-        scheduleBlocks.map((block) => {
+        scheduleBlocks.map((block, rowIndex) => {
           const isBreak = block.type === "break";
-          const blockIndex = getBlockIndex(block.label);
-          const occupied = allSections.some((section) =>
-            section.entries.some((entry) => {
-              const start = getBlockIndex(entry.start_block);
-              const end = getBlockIndex(entry.end_block);
-              return blockIndex >= start && end >= blockIndex;
-            }),
-          );
+          const rowStart = rowIndex + 2; // +1 for header, +1 for 1-based index
 
           return (
             <Fragment>
+              <!-- Time Label -->
               <div
-                class:list={[
-                  "timeline-time",
-                  { "is-break": isBreak, "is-empty": isBreak && !occupied },
-                ]}
+                class:list={["timeline-time", { "is-break": isBreak }]}
+                style={`grid-row: ${rowStart}; grid-column: 1;`}
               >
                 <span class="slot-label">{block.label || ""}</span>
                 <span class="slot-range">{block.range.split(" ")[0]}</span>
               </div>
-              {activeDays.map((day) => {
-                // Find tiles that START in this block
-                const tilesStartingHere = (
-                  cellIndex.get(`${day.code}::${block.label}`) ?? []
-                ).filter(
-                  (t) => getBlockIndex(t.entry.start_block) === blockIndex,
-                );
 
-                // Check if this cell is part of a span from a PREVIOUS block
-                const isCoveredBySpan = (
-                  cellIndex.get(`${day.code}::${block.label}`) ?? []
-                ).some((t) => getBlockIndex(t.entry.start_block) < blockIndex);
-
-                if (isCoveredBySpan) return null;
-
-                return (
-                  <div
-                    class:list={[
-                      "timeline-cell",
-                      {
-                        "is-break": isBreak,
-                        "is-empty": isBreak && !occupied,
-                        "has-multiple": tilesStartingHere.length > 1,
-                      },
-                    ]}
-                    data-day={day.code}
-                    data-block={block.label}
-                  >
-                    {isBreak && !occupied ? (
-                      <span class="break-label">{block.label}</span>
-                    ) : (
-                      tilesStartingHere.map(({ entry, sectionId, rowSpan }) => (
-                        <ScheduleTile
-                          entry={entry}
-                          sectionId={sectionId}
-                          label={entry.subject}
-                          style={
-                            rowSpan && rowSpan > 1
-                              ? `grid-row: span ${rowSpan}; min-height: calc(${rowSpan} * (var(--cell-height) + 1px) - 1px); z-index: 1;`
-                              : ""
-                          }
-                        />
-                      ))
-                    )}
-                  </div>
-                );
-              })}
+              <!-- Background Row -->
+              {activeDays.map((_, colIndex) => (
+                <div
+                  class:list={["timeline-bg-cell", { "is-break": isBreak }]}
+                  style={`grid-row: ${rowStart}; grid-column: ${colIndex + 2};`}
+                >
+                  {isBreak && colIndex === 0 && (
+                    <span class="break-label-abs">{block.label}</span>
+                  )}
+                </div>
+              ))}
             </Fragment>
           );
         })
+      }
+
+      <!-- 4. Real Tiles -->
+      {
+        allSections.map((section) => 
+          section.entries.map((entry) => {
+            const startIdx = getBlockIndex(entry.start_block);
+            const endIdx = getBlockIndex(entry.end_block);
+            const dayIdx = activeDays.findIndex(d => d.code === entry.day);
+            
+            if (dayIdx === -1 || startIdx === -1) return null;
+
+            const rowStart = startIdx + 2;
+            const rowSpan = endIdx - startIdx + 1;
+            const colStart = dayIdx + 2;
+
+            return (
+              <div
+                class="timeline-tile-container"
+                style={`grid-row: ${rowStart} / span ${rowSpan}; grid-column: ${colStart}; z-index: 10;`}
+              >
+                <ScheduleTile
+                  entry={entry}
+                  sectionId={section.id}
+                  label={entry.subject}
+                />
+              </div>
+            );
+          })
+        )
       }
     </div>
   </div>
@@ -254,26 +245,13 @@ const cellIndex = buildTimelineCellIndex(allSections);
       "Courier New", monospace;
   }
 
-  .timeline-cell {
+  .timeline-bg-cell {
     min-height: var(--cell-height);
-    padding: 2px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    transition: background-color 0.2s ease;
+    background: var(--color-surface);
+    position: relative;
   }
 
-  .timeline-cell.has-multiple {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-
-  .timeline-cell.has-multiple > * {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .timeline-cell.is-break {
+  .timeline-bg-cell.is-break {
     background: repeating-linear-gradient(
       -45deg,
       var(--color-surface-muted),
@@ -281,34 +259,29 @@ const cellIndex = buildTimelineCellIndex(allSections);
       color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) 4px,
       color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) 8px
     ) !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2rem;
-    border: none;
   }
 
-  .break-label {
+  .timeline-tile-container {
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .break-label-abs {
+    position: absolute;
+    top: 50%;
+    left: 50vw; /* Center horizontally in the grid */
+    transform: translate(-50%, -50%);
     font-size: 10px;
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-text-muted);
     opacity: 0.4;
-  }
-
-  .timeline-cell:hover {
-    background: var(--color-surface-muted) !important;
-  }
-
-  .timeline-cell:empty {
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      color-mix(in srgb, var(--color-surface-muted) 40%, transparent) 10px,
-      color-mix(in srgb, var(--color-surface-muted) 40%, transparent) 20px
-    );
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
   }
 
   @media (max-width: 768px) {

@@ -66,7 +66,10 @@ const isOccupied = (blockLabel: string) => {
       class="timeline-grid"
       style={`grid-template-columns: 4rem repeat(${activeDays.length}, 1fr);`}
     >
+      <!-- 1. Header Corner -->
       <div class="timeline-corner"></div>
+
+      <!-- 2. Day Headers -->
       {
         activeDays.map((day) => (
           <div class="timeline-day">
@@ -75,67 +78,69 @@ const isOccupied = (blockLabel: string) => {
         ))
       }
 
+      <!-- 3. Time Axis & Background Cells -->
       {
-        scheduleBlocks.map((block) => {
+        scheduleBlocks.map((block, rowIndex) => {
           const isBreak = block.type === "break";
-          const blockIndex = getBlockIndex(block.label);
-          const occupied = isOccupied(block.label);
+          const rowStart = rowIndex + 2;
 
           return (
             <Fragment>
+              <!-- Time Label -->
               <div
-                class:list={[
-                  "timeline-time",
-                  {
-                    "is-break": isBreak,
-                    "is-empty": isBreak && !occupied,
-                  },
-                ]}
+                class:list={["timeline-time", { "is-break": isBreak }]}
+                style={`grid-row: ${rowStart}; grid-column: 1;`}
               >
                 <span class="slot-label">{block.label || ""}</span>
-                <span class="slot-range">{block.range.split(' ')[0]}</span>
+                <span class="slot-range">{block.range.split(" ")[0]}</span>
               </div>
-              {activeDays.map((day) => {
-                const tilesForCell = getTilesForCell(day.code, block.label);
-                
-                // Row spanning logic
-                const tilesStartingHere = tilesForCell.filter(t => getBlockIndex(t.entry.start_block) === blockIndex);
-                const isCoveredBySpan = tilesForCell.some(t => getBlockIndex(t.entry.start_block) < blockIndex);
 
-                if (isCoveredBySpan) return null;
-
-                return (
-                  <div
-                    class:list={[
-                      "timeline-cell",
-                      {
-                        "is-break": isBreak,
-                        "is-empty": isBreak && !occupied,
-                      },
-                    ]}
-                  >
-                    {isBreak && !occupied ? (
-                      <span class="break-label">{block.label}</span>
-                    ) : (
-                      tilesStartingHere.map(({ entry, professorName, rowSpan }) => (
-                        <ScheduleTile
-                          entry={entry}
-                          sectionId={professorName}
-                          label={entry.subject}
-                          style={
-                            rowSpan && rowSpan > 1
-                              ? `grid-row: span ${rowSpan}; min-height: calc(${rowSpan} * (var(--cell-height) + 1px) - 1px); z-index: 1;`
-                              : ""
-                          }
-                        />
-                      ))
-                    )}
-                  </div>
-                );
-              })}
+              <!-- Background Cells -->
+              {activeDays.map((_, colIndex) => (
+                <div
+                  class:list={["timeline-bg-cell", { "is-break": isBreak }]}
+                  style={`grid-row: ${rowStart}; grid-column: ${colIndex + 2};`}
+                >
+                  {isBreak && colIndex === 0 && (
+                    <span class="break-label-abs">{block.label}</span>
+                  )}
+                </div>
+              ))}
             </Fragment>
           );
         })
+      }
+
+      <!-- 4. Professor Tiles (Absolute Positioning) -->
+      {
+        professorNames.map((name) => 
+          getEntries(name).map((entry) => {
+            const startIdx = getBlockIndex(entry.start_block);
+            const endIdx = getBlockIndex(entry.end_block);
+            const dayIdx = activeDays.findIndex(d => d.code === entry.day);
+
+            if (dayIdx === -1 || startIdx === -1) return null;
+
+            const rowStart = startIdx + 2;
+            const rowSpan = endIdx - startIdx + 1;
+            const colStart = dayIdx + 2;
+
+            return (
+              <div
+                class="timeline-tile-container"
+                data-section-id={name}
+                style={`grid-row: ${rowStart} / span ${rowSpan}; grid-column: ${colStart}; z-index: 10;`}
+                hidden
+              >
+                <ScheduleTile
+                  entry={entry}
+                  sectionId={name}
+                  label={entry.subject}
+                />
+              </div>
+            );
+          })
+        )
       }
     </div>
   </div>
@@ -269,25 +274,13 @@ const isOccupied = (blockLabel: string) => {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
-  .timeline-cell {
+  .timeline-bg-cell {
     min-height: var(--cell-height);
-    padding: 2px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    background: var(--color-surface);
+    position: relative;
   }
 
-  .timeline-time.is-empty,
-  .timeline-cell.is-empty {
-    min-height: 1.5rem !important;
-    max-height: 1.5rem;
-  }
-
-  .timeline-cell.is-empty .break-label {
-    font-size: 8px;
-  }
-
-  .timeline-cell.is-break {
+  .timeline-bg-cell.is-break {
     background: repeating-linear-gradient(
       -45deg,
       var(--color-surface-muted),
@@ -295,30 +288,33 @@ const isOccupied = (blockLabel: string) => {
       color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) 4px,
       color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) 8px
     ) !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2rem;
-    border: none;
   }
 
-  .break-label {
+  .timeline-tile-container {
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .timeline-tile-container[hidden] {
+    display: none !important;
+  }
+
+  .break-label-abs {
+    position: absolute;
+    top: 50%;
+    left: 50vw;
+    transform: translate(-50%, -50%);
     font-size: 10px;
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-text-muted);
     opacity: 0.4;
-  }
-
-  .timeline-cell:empty {
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      color-mix(in srgb, var(--color-surface-muted) 40%, transparent) 10px,
-      color-mix(in srgb, var(--color-surface-muted) 40%, transparent) 20px
-    );
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
   }
 
   .timeline-empty {

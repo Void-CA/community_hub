@@ -7,7 +7,7 @@ export function initProfessorScheduleState() {
   const initialProfessor = boot?.dataset.initialProfessor ?? '';
 
   const professorButtons = toArray<HTMLButtonElement>('[data-professor-button]');
-  const tiles = toArray<HTMLElement>('[data-schedule-tile]');
+  const tiles = toArray<HTMLElement>('.timeline-tile-container');
   const searchInput = document.getElementById('professor-search') as HTMLInputElement | null;
   const visibleProfessorCount = document.getElementById('visible-professor-count');
   const activeProfessorBadge = document.getElementById('active-professor-badge');
