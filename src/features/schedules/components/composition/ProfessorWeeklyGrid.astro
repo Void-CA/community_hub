@@ -1,6 +1,7 @@
 ---
 import Card from "@/components/UI/Card.astro";
 import ScheduleTile from "@/features/schedules/components/domain/ScheduleTile.astro";
+import Legend from "./Legend.astro";
 import { getBlockIndex, dayNames } from "@/lib/schedules";
 
 interface Props {
@@ -143,6 +144,7 @@ const isOccupied = (blockLabel: string) => {
         )
       }
     </div>
+    <Legend />
   </div>
 
   <div class="timeline-empty" id="timeline-empty" hidden>

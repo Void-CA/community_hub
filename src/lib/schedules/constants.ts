@@ -86,12 +86,12 @@ export const ICON_MAP = {
 } as const;
 
 export const majorAccents = [
-  '#3b82f6', // Blue
-  '#10b981', // Emerald
-  '#f59e0b', // Amber
-  '#ef4444', // Red
-  '#8b5cf6', // Violet
-  '#ec4899', // Pink
-  '#06b6d4', // Cyan
-  '#f97316', // Orange
+  'hsl(215, 70%, 55%)', // Blue
+  'hsl(160, 60%, 45%)', // Emerald
+  'hsl(35, 80%, 50%)',  // Amber
+  'hsl(0, 70%, 55%)',   // Red
+  'hsl(260, 60%, 60%)', // Violet
+  'hsl(330, 70%, 60%)', // Pink
+  'hsl(190, 70%, 45%)', // Cyan
+  'hsl(20, 80%, 55%)',  // Orange
 ];
