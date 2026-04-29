@@ -54,7 +54,7 @@ const cellIndex = buildTimelineCellIndex(allSections);
             section.entries.some((entry) => {
               const start = getBlockIndex(entry.start_block);
               const end = getBlockIndex(entry.end_block);
-              return blockIndex >= start && blockIndex <= end;
+              return blockIndex >= start && end >= blockIndex;
             }),
           );
 
@@ -67,16 +67,20 @@ const cellIndex = buildTimelineCellIndex(allSections);
                 ]}
               >
                 <span class="slot-label">{block.label || ""}</span>
-                <span class="slot-range">{block.range.split(' ')[0]}</span>
+                <span class="slot-range">{block.range.split(" ")[0]}</span>
               </div>
               {activeDays.map((day) => {
                 // Find tiles that START in this block
-                const tilesStartingHere = (cellIndex.get(`${day.code}::${block.label}`) ?? [])
-                  .filter(t => getBlockIndex(t.entry.start_block) === blockIndex);
+                const tilesStartingHere = (
+                  cellIndex.get(`${day.code}::${block.label}`) ?? []
+                ).filter(
+                  (t) => getBlockIndex(t.entry.start_block) === blockIndex,
+                );
 
                 // Check if this cell is part of a span from a PREVIOUS block
-                const isCoveredBySpan = (cellIndex.get(`${day.code}::${block.label}`) ?? [])
-                  .some(t => getBlockIndex(t.entry.start_block) < blockIndex);
+                const isCoveredBySpan = (
+                  cellIndex.get(`${day.code}::${block.label}`) ?? []
+                ).some((t) => getBlockIndex(t.entry.start_block) < blockIndex);
 
                 if (isCoveredBySpan) return null;
 
@@ -245,7 +249,9 @@ const cellIndex = buildTimelineCellIndex(allSections);
     font-size: 9px;
     font-weight: var(--font-weight-medium);
     color: var(--color-text-muted);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
   }
 
   .timeline-cell {

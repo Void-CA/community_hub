@@ -43,7 +43,7 @@ const isOccupied = (blockLabel: string) => {
     getEntries(name).some((entry) => {
       const start = getBlockIndex(entry.start_block);
       const end = getBlockIndex(entry.end_block);
-      return current >= start && current <= end;
+      return current >= start && end >= current;
     }),
   );
 };
