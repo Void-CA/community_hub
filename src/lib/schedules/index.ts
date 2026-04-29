@@ -4,6 +4,7 @@ import { buildTimelineCellIndex } from './cells';
 import { detectConflicts, findValidPath } from './engine';
 import { getScheduleSummary } from './summary';
 import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel, ICON_MAP, majorAccents } from './constants';
+import type { ScheduleEntry, ScheduleSection } from './types';
 
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
 const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);
@@ -20,7 +21,6 @@ export {
   schedulePeriodCatalog,
   ICON_MAP
 };
-
 export * from './types';
 
 export const dayCodes = dayOrder;
