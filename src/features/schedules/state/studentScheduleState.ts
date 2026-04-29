@@ -67,10 +67,22 @@ export function initStudentScheduleState() {
 
   const applyVisibility = () => {
     let visibleCount = 0;
-    sectionButtons.forEach((button) => {
-      const visible = isSectionVisible(button);
-      button.hidden = !visible;
-      if (visible) visibleCount++;
+    const containers = toArray<HTMLElement>('[data-subject-container]');
+
+    containers.forEach((container) => {
+      const buttons = [...container.querySelectorAll<SectionButton>('[data-section-toggle]')];
+      let hasVisibleButton = false;
+
+      buttons.forEach((button) => {
+        const visible = isSectionVisible(button);
+        button.hidden = !visible;
+        if (visible) {
+          hasVisibleButton = true;
+          visibleCount++;
+        }
+      });
+
+      container.hidden = !hasVisibleButton;
     });
 
     if (visibleSectionCount) {
@@ -86,14 +98,10 @@ export function initStudentScheduleState() {
 
       button.classList.toggle('is-selected', selected);
       button.setAttribute('aria-pressed', String(selected));
-
-      if (check) {
-        check.textContent = selected ? 'Incluida' : 'Disponible';
-      }
     });
 
     const activeTiles = tiles.filter((tile) => state.selectedIds.has(tile.dataset.sectionId ?? ''));
-    
+
     tiles.forEach((tile) => {
       tile.hidden = !state.selectedIds.has(tile.dataset.sectionId ?? '');
       tile.classList.remove('has-conflict');
@@ -160,79 +168,30 @@ export function initStudentScheduleState() {
     updateSummary();
   };
 
-  const refreshSelectionByPreset = () => {
-    // Only auto-select if we are filtering by a specific major/year
-    if (state.major !== 'all' || state.year !== '0') {
-      state.selectedIds = new Set(
-        sectionButtons
-          .filter((button) => {
-            const majors = button.dataset.majorList?.split('|') ?? [];
-            const years = button.dataset.yearList?.split('|') ?? [];
-            const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
-            const matchesYear = state.year === '0' || years.includes(state.year);
-            return matchesMajor && matchesYear;
-          })
-          .map((button) => button.dataset.sectionId ?? '')
-      );
-    }
+  // Only auto-select if we are filtering by a specific major/year
+  if (state.major !== 'all' || state.year !== '0') {
+    const subjectSelected = new Set<string>();
+    state.selectedIds = new Set(
+      sectionButtons
+        .filter((button) => {
+          const majors = button.dataset.majorList?.split('|') ?? [];
+          const years = button.dataset.yearList?.split('|') ?? [];
+          const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
+          const matchesYear = state.year === '0' || years.includes(state.year);
 
-    applyVisibility();
-    applySelectionState();
-  };
+          if (!matchesMajor || !matchesYear) return false;
 
-  majorButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const nextMajor = button.dataset.major ?? state.major;
-      if (state.major === nextMajor) return;
-      
-      state.major = nextMajor;
-      majorButtons.forEach((candidate) => candidate.classList.toggle('is-active', candidate === button));
-      refreshSelectionByPreset();
-    });
-  });
+          // Only pick the first group we encounter for each subject (usually G1 due to sorting)
+          const subject = button.dataset.subject ?? '';
+          if (subjectSelected.has(subject)) return false;
 
-  yearButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const nextYear = button.dataset.year ?? state.year;
-      if (state.year === nextYear) return;
+          subjectSelected.add(subject);
+          return true;
+        })
+        .map((button) => button.dataset.sectionId ?? '')
+    );
+  }
 
-      state.year = nextYear;
-      yearButtons.forEach((candidate) => candidate.classList.toggle('is-active', candidate === button));
-      refreshSelectionByPreset();
-    });
-  });
-
-  sectionButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const sectionId = button.dataset.sectionId ?? '';
-      if (state.selectedIds.has(sectionId)) {
-        state.selectedIds.delete(sectionId);
-      } else {
-        state.selectedIds.add(sectionId);
-      }
-
-      applySelectionState();
-    });
-  });
-
-  searchInput?.addEventListener('input', applyVisibility);
-
-  zenToggle?.addEventListener('click', () => {
-    dashboard?.classList.toggle('is-zen');
-    zenToggle.classList.toggle('is-active');
-    const isZen = dashboard?.classList.contains('is-zen');
-    zenToggle.textContent = isZen ? 'Ver catálogo' : 'Vista dedicada';
-  });
-
-  periodSelect?.addEventListener('change', () => {
-    const selected = periodSelect.value;
-    const [year, term] = selected.split('-');
-    const nextUrl = new URL(window.location.href);
-    nextUrl.searchParams.set('year', year ?? '');
-    nextUrl.searchParams.set('term', term ?? '');
-    window.location.assign(nextUrl.toString());
-  });
-
-  // Initial setup
-  refreshSelectionByPreset();
-}
+  applyVisibility();
+  applySelectionState();
+};

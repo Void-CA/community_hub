@@ -3,6 +3,7 @@ import { filterEntries } from './filters';
 import { buildTimelineCellIndex } from './cells';
 import { detectConflicts, findValidPath } from './engine';
 import { getScheduleSummary } from './summary';
+import { groupSectionsBySubject } from './organizer';
 import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel, ICON_MAP, majorAccents } from './constants';
 import type { ScheduleEntry, ScheduleSection } from './types';
 
@@ -19,7 +20,8 @@ export {
   resolveScheduleDatasetByYearTerm,
   scheduleDatasets,
   schedulePeriodCatalog,
-  ICON_MAP
+  ICON_MAP,
+  groupSectionsBySubject
 };
 export * from './types';
 
