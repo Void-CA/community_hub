@@ -23,7 +23,7 @@ export function initStudentScheduleState() {
   const majorSelect = document.getElementById('major-select') as HTMLSelectElement | null;
   const yearButtons = toArray<HTMLButtonElement>('[data-year-button]');
   const sectionButtons = toArray<SectionButton>('[data-section-toggle]');
-  const tiles = toArray<HTMLElement>('[data-schedule-tile]');
+  const tiles = toArray<HTMLElement>('.timeline-tile-container');
 
   const searchInput = document.getElementById('section-search') as HTMLInputElement | null;
   const periodSelect = document.getElementById('period-select') as HTMLSelectElement | null;
@@ -108,12 +108,17 @@ export function initStudentScheduleState() {
     });
 
     cellGroups.forEach((group) => {
-      const parentCell = group[0]?.parentElement;
-      if (parentCell) {
-        parentCell.classList.toggle('has-multiple', group.length > 1);
-      }
       if (group.length > 1) {
-        group.forEach((tile) => tile.classList.add('has-conflict'));
+        group.forEach((container, idx) => {
+          const tile = container.querySelector('[data-schedule-tile]');
+          if (tile) tile.classList.add('has-conflict');
+          // In absolute grid, we can offset them or just let them overlap with z-index
+          container.style.zIndex = String(10 + idx);
+          if (idx > 0) {
+            container.style.marginLeft = `${idx * 4}px`;
+            container.style.marginTop = `${idx * 4}px`;
+          }
+        });
       }
     });
 

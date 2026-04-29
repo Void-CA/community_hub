@@ -99,7 +99,11 @@ const cellIndex = buildTimelineCellIndex(allSections);
             return (
               <div
                 class="timeline-tile-container"
+                data-section-id={section.id}
+                data-day={entry.day}
+                data-block={entry.start_block}
                 style={`grid-row: ${rowStart} / span ${rowSpan}; grid-column: ${colStart}; z-index: 10;`}
+                hidden
               >
                 <ScheduleTile
                   entry={entry}
@@ -266,6 +270,10 @@ const cellIndex = buildTimelineCellIndex(allSections);
     display: flex;
     flex-direction: column;
     min-height: 0;
+  }
+
+  .timeline-tile-container[hidden] {
+    display: none !important;
   }
 
   .break-label-abs {
