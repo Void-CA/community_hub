@@ -4,8 +4,8 @@ import ScheduleTile from "@/features/schedules/components/domain/ScheduleTile.as
 import { getBlockIndex, dayNames } from "@/lib/schedules";
 
 interface Props {
-  activeDays: any[];
-  scheduleBlocks: any[];
+  activeDays: readonly any[];
+  scheduleBlocks: readonly any[];
   professorSchedules: Record<string, any>;
   professorNames: string[];
 }

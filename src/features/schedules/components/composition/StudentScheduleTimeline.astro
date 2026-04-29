@@ -1,9 +1,12 @@
 ---
-import ScheduleTile from '../domain/ScheduleTile.astro';
-import { formatBlock, buildTimelineCellIndex, getBlockIndex } from '@/lib/schedules';
-import type { ScheduleSection } from '@/lib/schedules';
-import Card from '@/components/UI/Card.astro';
-import { Fragment } from 'astro/components';
+import ScheduleTile from "../domain/ScheduleTile.astro";
+import {
+  formatBlock,
+  buildTimelineCellIndex,
+  getBlockIndex,
+} from "@/lib/schedules";
+import type { ScheduleSection } from "@/lib/schedules";
+import Card from "@/components/UI/Card.astro";
 
 interface DayItem {
   code: string;
@@ -12,7 +15,7 @@ interface DayItem {
 
 interface Props {
   activeDays: DayItem[];
-  scheduleBlocks: any[]; // Changed from string[]
+  scheduleBlocks: readonly any[]; // Changed from string[]
   allSections: ScheduleSection[];
 }
 
@@ -30,61 +33,82 @@ const cellIndex = buildTimelineCellIndex(allSections);
   </div>
 
   <div class="timeline-scroll">
-    <div class="timeline-grid" style={`grid-template-columns: 5rem repeat(${activeDays.length}, minmax(12rem, 1fr));`}>
+    <div
+      class="timeline-grid"
+      style={`grid-template-columns: 5rem repeat(${activeDays.length}, minmax(12rem, 1fr));`}
+    >
       <div class="timeline-corner"></div>
-      {activeDays.map((day) => <div class="timeline-day"><span>{day.label}</span></div>)}
+      {
+        activeDays.map((day) => (
+          <div class="timeline-day">
+            <span>{day.label}</span>
+          </div>
+        ))
+      }
 
-      {scheduleBlocks.map((block) => {
-        const isBreak = block.type === 'break';
-        const occupied = allSections.some((section) =>
-          section.entries.some((entry) => {
-            const start = getBlockIndex(entry.start_block);
-            const end = getBlockIndex(entry.end_block);
-            const current = getBlockIndex(block.label);
-            return current >= start && end >= current;
-          })
-        );
-        
-        return (
-          <Fragment>
-            <div class:list={['timeline-time', { 'is-break': isBreak, 'is-empty': isBreak && !occupied }]}>
-              <span class="slot-label">{block.label || ''}</span>
-              <span class="slot-range">{block.range}</span>
-            </div>
-            {activeDays.map((day) => {
-              const tilesForCell = cellIndex.get(`${day.code}::${block.label}`) ?? [];
+      {
+        scheduleBlocks.map((block) => {
+          const isBreak = block.type === "break";
+          const occupied = allSections.some((section) =>
+            section.entries.some((entry) => {
+              const start = getBlockIndex(entry.start_block);
+              const end = getBlockIndex(entry.end_block);
+              const current = getBlockIndex(block.label);
+              return current >= start && end >= current;
+            }),
+          );
 
-              return (
-                <div 
-                  class:list={[
-                    'timeline-cell', 
-                    { 
-                      'is-break': isBreak, 
-                      'is-empty': isBreak && !occupied,
-                      'has-multiple': tilesForCell.length > 1
-                    }
-                  ]}
-                  data-day={day.code}
-                  data-block={block.label}
-                >
-                  {isBreak && !occupied ? (
-                    <span class="break-label">{block.label}</span>
-                  ) : (
-                    tilesForCell.map(({ entry, sectionId, rowSpan }) => (
-                      <ScheduleTile 
-                        entry={entry} 
-                        sectionId={sectionId} 
-                        label={entry.subject} 
-                        style={rowSpan && rowSpan > 1 ? `grid-row: span ${rowSpan}; height: calc(${rowSpan} * (var(--cell-height) + 1px) - 1px);` : ''}
-                      />
-                    ))
-                  )}
-                </div>
-              );
-            })}
-          </Fragment>
-        );
-      })}
+          return (
+            <Fragment>
+              <div
+                class:list={[
+                  "timeline-time",
+                  { "is-break": isBreak, "is-empty": isBreak && !occupied },
+                ]}
+              >
+                <span class="slot-label">{block.label || ""}</span>
+                <span class="slot-range">{block.range}</span>
+              </div>
+              {activeDays.map((day) => {
+                const tilesForCell =
+                  cellIndex.get(`${day.code}::${block.label}`) ?? [];
+
+                return (
+                  <div
+                    class:list={[
+                      "timeline-cell",
+                      {
+                        "is-break": isBreak,
+                        "is-empty": isBreak && !occupied,
+                        "has-multiple": tilesForCell.length > 1,
+                      },
+                    ]}
+                    data-day={day.code}
+                    data-block={block.label}
+                  >
+                    {isBreak && !occupied ? (
+                      <span class="break-label">{block.label}</span>
+                    ) : (
+                      tilesForCell.map(({ entry, sectionId, rowSpan }) => (
+                        <ScheduleTile
+                          entry={entry}
+                          sectionId={sectionId}
+                          label={entry.subject}
+                          style={
+                            rowSpan && rowSpan > 1
+                              ? `grid-row: span ${rowSpan}; height: calc(${rowSpan} * (var(--cell-height) + 1px) - 1px);`
+                              : ""
+                          }
+                        />
+                      ))
+                    )}
+                  </div>
+                );
+              })}
+            </Fragment>
+          );
+        })
+      }
     </div>
   </div>
 </Card>
@@ -191,7 +215,11 @@ const cellIndex = buildTimelineCellIndex(allSections);
   }
 
   .timeline-time.is-break {
-    background: color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) !important;
+    background: color-mix(
+      in srgb,
+      var(--color-surface-muted) 80%,
+      var(--color-bg)
+    ) !important;
   }
 
   .timeline-time.is-empty,
