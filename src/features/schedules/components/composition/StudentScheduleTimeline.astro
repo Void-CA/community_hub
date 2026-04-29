@@ -1,6 +1,6 @@
 ---
 import ScheduleTile from '../domain/ScheduleTile.astro';
-import { formatBlock, buildTimelineCellIndex } from '@/lib/schedules';
+import { formatBlock, buildTimelineCellIndex, getBlockIndex } from '@/lib/schedules';
 import type { ScheduleSection } from '@/lib/schedules';
 import Card from '@/components/UI/Card.astro';
 import { Fragment } from 'astro/components';
@@ -38,11 +38,10 @@ const cellIndex = buildTimelineCellIndex(allSections);
         const isBreak = block.type === 'break';
         const occupied = allSections.some((section) =>
           section.entries.some((entry) => {
-            const { getBlockIndex } = require('@/lib/schedules');
             const start = getBlockIndex(entry.start_block);
             const end = getBlockIndex(entry.end_block);
             const current = getBlockIndex(block.label);
-            return current >= start && current <= end;
+            return current >= start && end >= current;
           })
         );
         

@@ -1,5 +1,6 @@
 import fullSchedule from '../../data/schedules/2026/IIC/full_schedule.json';
 import professorSchedulesRaw from '../../data/schedules/2026/IIC/professors_schedules.json';
+import { dayNormalization, oldToNewLabel } from './constants';
 import type {
   ProfessorSchedule,
   RawFullSchedule,
@@ -12,13 +13,24 @@ import type {
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
 
 function buildEntryIdentity(entry: Omit<ScheduleEntry, 'academicYear'>) {
+  const day = dayNormalization[entry.day] ?? entry.day;
+  const start = oldToNewLabel[entry.start_block] ?? entry.start_block;
+  const end = oldToNewLabel[entry.end_block] ?? entry.end_block;
   const majors = [...entry.majors].sort(collator.compare).join('|');
-  return [entry.day, entry.start_block, entry.end_block, entry.subject, String(entry.group), entry.professor, entry.room, majors].join('::');
+  return [day, start, end, entry.subject, String(entry.group), entry.professor, entry.room, majors].join('::');
 }
 
 function normalizeScheduleEntries(rawSchedule: RawFullSchedule) {
+  const normalize = (entry: any) => ({
+    ...entry,
+    day: dayNormalization[entry.day] ?? entry.day,
+    start_block: oldToNewLabel[entry.start_block] ?? entry.start_block,
+    end_block: oldToNewLabel[entry.end_block] ?? entry.end_block,
+    academicYear: 0,
+  });
+
   if (Array.isArray(rawSchedule)) {
-    return rawSchedule.map((entry) => ({ ...entry, academicYear: 0 }));
+    return rawSchedule.map(normalize);
   }
 
   const result: ScheduleEntry[] = [];
@@ -27,8 +39,9 @@ function normalizeScheduleEntries(rawSchedule: RawFullSchedule) {
     const academicYear = Number(yearKey);
 
     for (const entry of yearEntries) {
+      const normalized = normalize(entry);
       result.push({
-        ...entry,
+        ...normalized,
         academicYear: Number.isNaN(academicYear) ? 0 : academicYear,
       });
     }
@@ -59,12 +72,21 @@ function normalizeProfessorSchedules(
     Object.entries(rawSchedules).map(([professorName, professorSchedule]) => {
       const byDay = Object.fromEntries(
         Object.entries(professorSchedule.by_day).map(([day, dayEntries]) => {
-          const normalizedEntries = dayEntries.map((entry) => ({
-            ...entry,
-            academicYear: academicYearByIdentity.get(buildEntryIdentity(entry)) ?? 0,
-          }));
+          const normalizedDay = dayNormalization[day] ?? day;
+          const normalizedEntries = dayEntries.map((entry) => {
+            const nEntry = {
+              ...entry,
+              day: dayNormalization[entry.day] ?? entry.day,
+              start_block: oldToNewLabel[entry.start_block] ?? entry.start_block,
+              end_block: oldToNewLabel[entry.end_block] ?? entry.end_block,
+            };
+            return {
+              ...nEntry,
+              academicYear: academicYearByIdentity.get(buildEntryIdentity(nEntry)) ?? 0,
+            };
+          });
 
-          return [day, normalizedEntries];
+          return [normalizedDay, normalizedEntries];
         })
       );
 

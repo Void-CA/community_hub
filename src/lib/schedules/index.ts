@@ -3,7 +3,7 @@ import { filterEntries } from './filters';
 import { buildTimelineCellIndex } from './cells';
 import { detectConflicts, findValidPath } from './engine';
 import { getScheduleSummary } from './summary';
-import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel, ICON_MAP } from './constants';
+import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel, ICON_MAP, majorAccents } from './constants';
 
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
 const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);

@@ -20,6 +20,21 @@ export const dayLabels: Record<string, string> = {
   S: 'Sábado'
 };
 
+export const dayNormalization: Record<string, string> = {
+  'Monday': 'L',
+  'Tuesday': 'M',
+  'Wednesday': 'X',
+  'Thursday': 'J',
+  'Friday': 'V',
+  'Saturday': 'S',
+  'Lunes': 'L',
+  'Martes': 'M',
+  'Miércoles': 'X',
+  'Jueves': 'J',
+  'Viernes': 'V',
+  'Sábado': 'S'
+};
+
 export const scheduleSlots = [
   { type: 'academic', range: '08:00 - 08:50 am', label: '1' },
   { type: 'academic', range: '08:50 - 09:40 am', label: '2' },
@@ -45,7 +60,18 @@ export const oldToNewLabel: Record<string, string> = {
   'tarde2': '6',
   'receso2': 'Receso',
   'tarde3': '7',
-  'tarde4': '8'
+  'tarde4': '8',
+  'Morning1': '1',
+  'Morning2': '2',
+  'Morning3': '3',
+  'Morning4': '4',
+  'Afternoon1': '5',
+  'Afternoon2': '6',
+  'Afternoon3': '7',
+  'Afternoon4': '8',
+  'Break1': 'Receso',
+  'Break2': 'Receso',
+  'Lunch': 'Almuerzo'
 };
 
 export const ICON_MAP = {
@@ -58,3 +84,14 @@ export const ICON_MAP = {
   search: Search,
   info: Info
 } as const;
+
+export const majorAccents = [
+  '#3b82f6', // Blue
+  '#10b981', // Emerald
+  '#f59e0b', // Amber
+  '#ef4444', // Red
+  '#8b5cf6', // Violet
+  '#ec4899', // Pink
+  '#06b6d4', // Cyan
+  '#f97316', // Orange
+];

@@ -14,6 +14,7 @@ import StudentScheduleCatalog from "@/features/schedules/components/composition/
 import StudentScheduleFilters from "@/features/schedules/components/composition/StudentScheduleFilters.astro";
 import StudentScheduleTimeline from "@/features/schedules/components/composition/StudentScheduleTimeline.astro";
 import Badge from "@/components/UI/Badge.astro";
+import DynamicIcon from "@/components/UI/DynamicIcon.astro";
 
 const yearParam = Astro.url.searchParams.get("year");
 const termParam = Astro.url.searchParams.get("term");
@@ -75,27 +76,24 @@ const activeSummary = {
 
       <div class="stats-group">
         <div class="stat-item">
+          <DynamicIcon intent="student" size={14} class="text-primary" />
           <span>Carrera activa</span>
-          <Badge variant="primary" id="active-major-badge">{initialMajor}</Badge
-          >
+          <Badge variant="primary" id="active-major-badge">{initialMajor}</Badge>
         </div>
         <div class="stat-item">
+          <DynamicIcon intent="time" size={14} class="text-primary" />
           <span>Año Académico</span>
-          <Badge variant="muted" id="active-year-badge"
-            >{initialYear}° Año</Badge
-          >
+          <Badge variant="muted" id="active-year-badge">{initialYear}° Año</Badge>
         </div>
         <div class="stat-item">
+          <DynamicIcon intent="info" size={14} class="text-primary" />
           <span>Secciones</span>
-          <Badge variant="muted" id="selected-section-count"
-            >{activeSummary.totalSections}</Badge
-          >
+          <Badge variant="muted" id="selected-section-count">{activeSummary.totalSections}</Badge>
         </div>
         <div class="stat-item">
+          <DynamicIcon intent="professor" size={14} class="text-primary" />
           <span>Sesiones / Sem</span>
-          <Badge variant="muted" id="selected-session-count"
-            >{activeSummary.totalEntries}</Badge
-          >
+          <Badge variant="muted" id="selected-session-count">{activeSummary.totalEntries}</Badge>
         </div>
       </div>
 
