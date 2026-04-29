@@ -157,7 +157,12 @@ const endTime =
 
   .tile-room {
     color: var(--tile-accent);
-    filter: brightness(0.8);
+  }
+
+  @media (prefers-color-scheme: light) {
+    .tile-room {
+      filter: brightness(0.8);
+    }
   }
 
   .tile-footer {

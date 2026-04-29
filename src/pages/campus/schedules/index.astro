@@ -34,26 +34,47 @@ const spotlightItems = [
   title={`Horarios Académicos | ${semesterLabel}`}
   description="Sistema de consulta de horarios académicos procesados por el Community Hub."
 >
-  <section class="section schedule-hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
+  <section class="schedule-hero">
+    <div class="container">
+      <div class="hero-header">
         <p class="eyebrow">Sistema de Horarios Académicos</p>
         <h1 class="hero-title">
-          Tus horarios, <span class="text-gradient">claros y consultables</span
-          >.
+          Tus horarios, <span class="text-gradient">claros y consultables</span>.
         </h1>
         <p class="hero-text text-soft">
-          Explora la carga académica del periodo <strong>{semesterLabel}</strong
-          >. Datos sincronizados desde el catálogo oficial de la universidad.
+          Explora la carga académica del periodo <strong>{semesterLabel}</strong>.
+          Datos sincronizados desde el catálogo oficial de la universidad.
         </p>
+      </div>
 
+      <div class="access-grid">
+        {
+          spotlightItems.map((item) => (
+            <a class="card access-card" href={item.href}>
+              <div class="access-icon">
+                <DynamicIcon intent={item.intent as any} size={32} />
+              </div>
+              <div class="access-content">
+                <h3>{item.title}</h3>
+                <p class="text-soft">{item.description}</p>
+              </div>
+              <div class="access-arrow">
+                <DynamicIcon intent="arrow" />
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="schedule-details section">
+    <div class="container details-grid">
+      <div class="details-search">
         <GlobalSearch />
-
         <div class="hero-meta">
           <Badge size="xs" variant="muted">Dataset v2.4</Badge>
-          <span class="text-xs text-soft"
-            >Última actualización: Hoy, 08:30 AM</span
-          >
+          <span class="text-xs text-soft">Última actualización: Hoy, 08:30 AM</span>
         </div>
       </div>
 
@@ -100,43 +121,11 @@ const spotlightItems = [
             Insight del periodo
           </div>
           <p class="insight-value">
-            La materia con más secciones es <strong
-              >{summary.mostPopularSubject?.name}</strong
-            >
+            La materia con más secciones es <strong>{summary.mostPopularSubject?.name}</strong>
             con {summary.mostPopularSubject?.count} grupos activos.
           </p>
         </div>
       </Card>
-    </div>
-  </section>
-
-  <section class="section pt-0">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Accesos principales</p>
-          <h2>Explora por tipo de consulta</h2>
-        </div>
-      </div>
-
-      <div class="grid access-grid">
-        {
-          spotlightItems.map((item) => (
-            <a class="card access-card" href={item.href}>
-              <div class="access-icon">
-                <DynamicIcon intent={item.intent as any} size={32} />
-              </div>
-              <div class="access-content">
-                <h3>{item.title}</h3>
-                <p class="text-soft">{item.description}</p>
-              </div>
-              <div class="access-arrow">
-                <DynamicIcon intent="arrow" />
-              </div>
-            </a>
-          ))
-        }
-      </div>
     </div>
   </section>
 
@@ -159,22 +148,14 @@ const spotlightItems = [
 </AppLayout>
 
 <style>
+  /* ── Hero (compact) ── */
   .schedule-hero {
-    padding-bottom: var(--space-8);
+    padding: var(--space-10) 0 var(--space-6);
   }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-    gap: var(--space-6);
-    align-items: stretch;
-  }
-
-  .hero-copy {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--space-4);
+  .hero-header {
+    max-width: 700px;
+    margin-bottom: var(--space-6);
   }
 
   .eyebrow {
@@ -187,27 +168,110 @@ const spotlightItems = [
   }
 
   .hero-title {
-    margin: 0;
-    font-size: clamp(2.4rem, 5vw, 4.5rem);
-    max-width: 12ch;
+    margin: var(--space-2) 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    max-width: 14ch;
+    line-height: 1.1;
   }
 
   .hero-text {
     max-width: 60ch;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
+  }
+
+  /* ── Access Cards ── */
+  .access-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .access-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-slow);
+  }
+
+  .access-card:hover {
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 2%, var(--color-surface));
+    transform: scale(1.01);
+  }
+
+  .access-icon {
+    font-size: 2rem;
+    background: var(--color-surface-muted);
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    flex-shrink: 0;
+  }
+
+  .access-content {
+    flex: 1;
+  }
+
+  .access-content h3 {
+    margin: 0 0 var(--space-1) 0;
+    font-size: var(--font-size-base);
+  }
+
+  .access-content p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+
+  .access-arrow {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all var(--transition-slow);
+    flex-shrink: 0;
+  }
+
+  .access-card:hover .access-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Details Section ── */
+  .schedule-details {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .details-search {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
   }
 
   .hero-meta {
     display: flex;
     align-items: center;
     gap: var(--space-4);
-    margin-top: var(--space-6);
   }
 
+  /* ── Hero Panel ── */
   .hero-panel {
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--space-4);
     background: linear-gradient(
       180deg,
       var(--color-surface) 0%,
@@ -219,7 +283,7 @@ const spotlightItems = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
+    gap: var(--space-3);
   }
 
   .panel-tag {
@@ -236,13 +300,13 @@ const spotlightItems = [
   }
 
   .panel-stat {
-    padding: var(--space-4);
+    padding: var(--space-3);
     border-radius: var(--radius-lg);
     background: var(--color-surface-muted);
-    border: 1px solid var(--color-border);
+    border: var(--border-width-sm) solid var(--color-border);
     text-decoration: none;
     color: inherit;
-    transition: all 0.2s ease;
+    transition: all var(--transition-base);
   }
 
   .panel-stat:hover {
@@ -266,31 +330,27 @@ const spotlightItems = [
   }
 
   .panel-stat strong {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl);
     color: var(--color-primary);
   }
 
   .panel-insight {
-    margin-top: var(--space-2);
-    padding: var(--space-4);
+    margin-top: var(--space-1);
+    padding: var(--space-3);
     border-radius: var(--radius-lg);
-    background: color-mix(
-      in srgb,
-      var(--color-accent) 5%,
-      var(--color-surface)
-    );
-    border: 1px dashed var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 5%, var(--color-surface));
+    border: var(--border-width-sm) dashed var(--color-accent);
   }
 
   .insight-label {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     color: var(--color-accent);
-    margin-bottom: 6px;
+    margin-bottom: var(--space-1);
   }
 
   .insight-value {
@@ -298,70 +358,7 @@ const spotlightItems = [
     margin: 0;
   }
 
-  .section-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-6);
-    align-items: end;
-    margin-bottom: var(--space-5);
-  }
-
-  .access-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .access-card {
-    display: flex;
-    align-items: center;
-    gap: var(--space-5);
-    padding: var(--space-5);
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .access-card:hover {
-    border-color: var(--color-primary);
-    background: color-mix(
-      in srgb,
-      var(--color-primary) 2%,
-      var(--color-surface)
-    );
-    transform: scale(1.01);
-  }
-
-  .access-icon {
-    font-size: 2.5rem;
-    background: var(--color-surface-muted);
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-xl);
-  }
-
-  .access-content {
-    flex: 1;
-  }
-
-  .access-content h3 {
-    margin: 0 0 4px 0;
-  }
-
-  .access-arrow {
-    font-size: 1.5rem;
-    color: var(--color-primary);
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.3s ease;
-  }
-
-  .access-card:hover .access-arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
+  /* ── Transparency ── */
   .transparency {
     display: grid;
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
@@ -370,17 +367,11 @@ const spotlightItems = [
   }
 
   @media (max-width: 960px) {
-    .hero-grid,
+    .details-grid,
     .transparency {
       grid-template-columns: 1fr;
     }
 
-    .section-heading {
-      grid-template-columns: 1fr;
-      display: grid;
-    }
-
-    .semester-grid,
     .access-grid {
       grid-template-columns: 1fr;
     }

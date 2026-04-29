@@ -63,8 +63,14 @@ const cellIndex = buildTimelineCellIndex(allSections);
                 class:list={["timeline-time", { "is-break": isBreak }]}
                 style={`grid-row: ${rowStart}; grid-column: 1;`}
               >
-                <span class="slot-label">{block.label || ""}</span>
-                <span class="slot-range">{block.range.split(" ")[0]}</span>
+                {isBreak ? (
+                  <span class="slot-break-label">{block.label}</span>
+                ) : (
+                  <Fragment>
+                    <span class="slot-range">{block.range}</span>
+                    <span class="slot-label">Bloque {block.label}</span>
+                  </Fragment>
+                )}
               </div>
 
               <!-- Background Row -->
@@ -162,10 +168,24 @@ const cellIndex = buildTimelineCellIndex(allSections);
   .timeline-scroll {
     overflow: auto;
     border-radius: var(--radius-lg);
-    border: var(--border-width-sm) solid var(--color-border);
+    border: var(--border-width-sm) solid var(--grid-line);
     background: var(--color-bg);
     position: relative;
     max-height: calc(100vh - 220px);
+  }
+
+  .timeline-grid {
+    display: grid;
+    gap: var(--timeline-grid-gap);
+    background: var(--grid-line);
+    min-width: 100%;
+    --cell-height: var(--cell-height);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .timeline-scroll {
+      border-color: var(--neutral-600);
+    }
   }
 
   .timeline-grid {
@@ -237,16 +257,26 @@ const cellIndex = buildTimelineCellIndex(allSections);
   }
 
   .slot-label {
-    font-size: var(--font-size-2xs);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary);
-  }
-
-  .slot-range {
     font-size: var(--font-size-tiny);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-muted);
     font-family: var(--font-family-mono);
+  }
+
+  .slot-range {
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    font-family: var(--font-family-mono);
+    line-height: 1.2;
+  }
+
+  .slot-break-label {
+    font-size: var(--font-size-2xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
   .timeline-bg-cell {
