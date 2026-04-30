@@ -1,0 +1,74 @@
+---
+import AppLayout from '@/layouts/AppLayout.astro';
+import ClubCard from '@/features/clubs/components/ClubCard.astro';
+import { getAllClubs } from '@/lib/clubs';
+
+const clubs = getAllClubs();
+---
+
+<AppLayout
+  title="Clubes Universitarios"
+  description="Descubre los clubes estudiantiles de la ULSA: propósito, impacto y horarios de encuentros."
+>
+  <section class="clubs-page">
+    <div class="container">
+      <header class="clubs-header">
+        <p class="eyebrow">Vida Estudiantil</p>
+        <h1>Clubes Universitarios</h1>
+        <p class="clubs-intro">
+          Iniciativas creadas por y para estudiantes. Conocé su propósito, su impacto y cuándo se reúnen.
+        </p>
+      </header>
+
+      <div class="clubs-grid">
+        {
+          clubs.map(({ profile }) => (
+            <ClubCard club={profile} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</AppLayout>
+
+<style>
+  .clubs-page {
+    padding: var(--space-12) 0;
+  }
+
+  .clubs-header {
+    margin-bottom: var(--space-10);
+    text-align: center;
+  }
+
+  .clubs-header h1 {
+    margin: var(--space-2) 0 var(--space-4);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .clubs-intro {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+    margin-bottom: var(--space-2);
+  }
+
+  .clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>

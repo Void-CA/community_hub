@@ -1,0 +1,14 @@
+{
+  "name": "Club de Electrónica",
+  "slug": "electronics",
+  "tagline": "Construyendo el futuro, circuito a circuito",
+  "description": "Comunidad estudiantil dedicada a la electrónica práctica. Diseñamos, soldamos y programamos circuitos desde cero, conectando la teoría con la experimentación real.",
+  "purpose": "Desarrollar habilidades prácticas en electrónica digital y analógica mediante proyectos hands-on y mentoría entre pares.",
+  "impact": "15 miembros activos, prototipos funcionales y talleres abiertos para toda la universidad.",
+  "social": {
+    "discord": "https://discord.gg/ulsa-electronica"
+  },
+  "leaders": [
+    "Herson Castillo"
+  ]
+}

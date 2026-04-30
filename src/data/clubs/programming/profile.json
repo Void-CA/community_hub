@@ -1,0 +1,16 @@
+{
+  "name": "Club de Programación",
+  "slug": "programming",
+  "tagline": "Donde el código une a los estudiantes",
+  "description": "Un espacio donde estudiantes de todas las carreras exploran la programación más allá del aula. Desde proyectos colaborativos hasta competencias de código, aprendemos juntos construyendo soluciones reales.",
+  "purpose": "Fomentar la curiosidad técnica, el trabajo en equipo y el aprendizaje autodirigido en desarrollo de software.",
+  "impact": "Más de 20 estudiantes activos, 5 proyectos colaborativos y participación en hackathons regionales.",
+  "social": {
+    "discord": "https://discord.gg/ulsa-dev",
+    "github": "https://github.com/ulsa-programacion"
+  },
+  "leaders": [
+    "Jonathan Blanco",
+    "Carolina Téllez"
+  ]
+}

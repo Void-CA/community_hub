@@ -1,0 +1,78 @@
+---
+import type { ClubMeeting } from '@/lib/clubs';
+
+const dayLabels: Record<string, string> = {
+  L: 'Lunes',
+  M: 'Martes',
+  X: 'Miércoles',
+  J: 'Jueves',
+  V: 'Viernes',
+  S: 'Sábado',
+};
+
+interface Props {
+  meeting: ClubMeeting;
+}
+
+const { meeting } = Astro.props;
+---
+
+<div class="meeting-row">
+  <div class="meeting-time">
+    <span class="meeting-day">{dayLabels[meeting.day] ?? meeting.day}</span>
+    <span class="meeting-hours">{meeting.startTime} — {meeting.endTime}</span>
+  </div>
+  <div class="meeting-details">
+    <span class="meeting-location">{meeting.location}</span>
+    <p class="meeting-desc">{meeting.description}</p>
+  </div>
+</div>
+
+<style>
+  .meeting-row {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .meeting-row:last-child {
+    border-bottom: none;
+  }
+
+  .meeting-time {
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+    gap: 2px;
+  }
+
+  .meeting-day {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+  }
+
+  .meeting-hours {
+    font-size: var(--font-size-xs);
+    font-family: var(--font-family-mono);
+    color: var(--color-text-muted);
+  }
+
+  .meeting-details {
+    flex: 1;
+  }
+
+  .meeting-location {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .meeting-desc {
+    margin: 4px 0 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+</style>
