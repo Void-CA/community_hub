@@ -8,8 +8,7 @@ import {
   schedulePeriods,
 } from '@/lib/schedules';
 import ProfessorStatsBanner from '@/features/schedules/components/composition/ProfessorStatsBanner.astro';
-import ProfessorCatalog from '@/features/schedules/components/composition/ProfessorCatalog.astro';
-import ProfessorWeeklyGrid from '@/features/schedules/components/composition/ProfessorWeeklyGrid.astro';
+import ProfessorScheduleDashboard from '@/features/schedules/components/composition/ProfessorScheduleDashboard.astro';
 import { dayOrder } from '@/lib/schedules/constants';
 
 const yearParam = Astro.url.searchParams.get('year');
@@ -50,78 +49,18 @@ const activeSummary = getScheduleSummary(initialEntries);
     currentPeriodId={dataset.period.id}
   />
 
-  <section class="dashboard-section">
-    <div
-      class="container-fluid dashboard-layout"
-      data-initial-professor={initialProfessor}
-      id="main-dashboard"
-    >
-      <div class="dashboard-explorer">
-        <ProfessorCatalog
-          professorNames={professorNames}
-          professorSchedules={professorSchedules}
-          initialProfessor={initialProfessor}
-        />
-      </div>
-
-      <div class="dashboard-timeline">
-        <ProfessorWeeklyGrid
-          activeDays={activeDays}
-          scheduleBlocks={scheduleBlocks}
-          professorSchedules={professorSchedules}
-          professorNames={professorNames}
-        />
-      </div>
-    </div>
-  </section>
-
-  <script>
-    import { initProfessorScheduleState } from '@/features/schedules/state/professorScheduleState';
-
-    // Initialize state when the script runs
-    initProfessorScheduleState();
-
-    // Support for view transitions if enabled
-    document.addEventListener('astro:page-load', () => {
-      initProfessorScheduleState();
-    });
-  </script>
+  <ProfessorScheduleDashboard
+    professorNames={professorNames}
+    professorSchedules={professorSchedules}
+    initialProfessor={initialProfessor}
+    activeDays={activeDays}
+    scheduleBlocks={scheduleBlocks}
+  />
 </AppLayout>
 
 <style>
   .container-fluid {
     max-width: 100%;
     padding: 0 var(--space-4);
-  }
-
-  .dashboard-section {
-    padding: var(--space-4) 0;
-  }
-
-  .dashboard-layout {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: var(--space-4);
-    align-items: start;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Zen Mode */
-  .dashboard-layout.is-zen {
-    grid-template-columns: 0px 1fr;
-    gap: 0;
-  }
-
-  .dashboard-layout.is-zen .dashboard-explorer {
-    transform: translateX(-100%);
-    opacity: 0;
-    pointer-events: none;
-    margin-right: -320px;
-  }
-
-  @media (max-width: 1200px) {
-    .dashboard-layout {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

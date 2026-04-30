@@ -1,12 +1,29 @@
-function toArray<T extends Element>(selector: string): T[] {
-  return [...document.querySelectorAll(selector)] as T[];
+type CatalogState = {
+  professor: string;
+  searchQuery: string;
+  currentPage: number;
+  totalPages: number;
+};
+
+type InitOptions = {
+  root?: HTMLElement;
+};
+
+function toArray<T extends Element>(root: HTMLElement, selector: string): T[] {
+  return [...root.querySelectorAll(selector)] as T[];
 }
 
-export function initProfessorScheduleState() {
-  const boot = document.querySelector<HTMLElement>('[data-initial-professor]');
+function byId<T extends HTMLElement>(root: HTMLElement, id: string): T | null {
+  return root.querySelector<T>(`#${id}`);
+}
+
+export function initProfessorScheduleState(options: InitOptions = {}) {
+  const root = options.root ?? document.body;
+
+  const boot = root.querySelector<HTMLElement>('[data-initial-professor]');
   const initialProfessor = boot?.dataset.initialProfessor ?? '';
 
-  const pagination = document.querySelector<HTMLElement>('[data-pagination]');
+  const pagination = root.querySelector<HTMLElement>('[data-pagination]');
   const totalPagesAttr = parseInt(
     pagination?.getAttribute('data-total-pages') ?? '1',
     10,
@@ -19,26 +36,14 @@ export function initProfessorScheduleState() {
     totalPages: totalPagesAttr,
   };
 
-  const professorButtons = toArray<HTMLButtonElement>('[data-professor-button]');
-  const tiles = toArray<HTMLElement>('.timeline-tile-container');
-  const searchInput = document.getElementById(
-    'professor-search',
-  ) as HTMLInputElement | null;
-  const visibleProfessorCount = document.getElementById(
-    'visible-professor-count',
-  );
-  const activeProfessorBadge = document.getElementById(
-    'active-professor-badge',
-  );
-  const activeSessionBadge = document.getElementById('active-session-badge');
-  const timelineEmpty = document.getElementById('timeline-empty');
-  const periodSelect = document.getElementById(
-    'period-select',
-  ) as HTMLSelectElement | null;
-
-  // Zen Mode toggle
-  const zenToggle = document.getElementById('zen-mode-toggle');
-  const dashboard = document.querySelector('.dashboard-layout');
+  const professorButtons = toArray<HTMLButtonElement>(root, '[data-professor-button]');
+  const tiles = toArray<HTMLElement>(root, '.timeline-tile-container');
+  const searchInput = byId<HTMLInputElement>(root, 'professor-search');
+  const visibleProfessorCount = byId(root, 'visible-professor-count');
+  const activeProfessorBadge = byId(root, 'active-professor-badge');
+  const activeSessionBadge = byId(root, 'active-session-badge');
+  const timelineEmpty = byId(root, 'timeline-empty');
+  const periodSelect = byId<HTMLSelectElement>(root, 'period-select');
 
   const updateSummary = () => {
     const selectedTiles = tiles.filter(
@@ -187,14 +192,6 @@ export function initProfessorScheduleState() {
         applyState();
       }
     }
-  });
-
-  // Zen Mode toggle
-  zenToggle?.addEventListener('click', () => {
-    dashboard?.classList.toggle('is-zen');
-    zenToggle.classList.toggle('is-active');
-    const isZen = dashboard?.classList.contains('is-zen');
-    zenToggle.textContent = isZen ? 'Ver catálogo' : 'Vista dedicada';
   });
 
   // Period select

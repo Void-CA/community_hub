@@ -1,0 +1,115 @@
+---
+import type { ScheduleSection } from '@/lib/schedules';
+import StudentScheduleCatalog from '@/features/schedules/components/composition/StudentScheduleCatalog.astro';
+import StudentScheduleTimeline from '@/features/schedules/components/composition/StudentScheduleTimeline.astro';
+
+interface DayItem {
+  code: string;
+  label: string;
+}
+
+interface ScheduleBlock {
+  type: string;
+  label: string;
+  range: string;
+}
+
+interface Props {
+  allSections: readonly ScheduleSection[];
+  initialMajor: string;
+  initialYear: number;
+  initialVisibleSections: number;
+  activeDays: DayItem[];
+  scheduleBlocks: readonly ScheduleBlock[];
+  integrityError?: boolean;
+}
+
+const {
+  allSections,
+  initialMajor,
+  initialYear,
+  initialVisibleSections,
+  activeDays,
+  scheduleBlocks,
+  integrityError = false,
+} = Astro.props;
+---
+
+<section
+  class="dashboard-section"
+  data-initial-major={initialMajor}
+  data-initial-year={String(initialYear)}
+  data-integrity-error={integrityError ? 'true' : undefined}
+>
+  <div id="student-schedule-dashboard" class="container-fluid dashboard-layout">
+    <div class="dashboard-explorer">
+      <StudentScheduleCatalog
+        allSections={allSections}
+        initialMajor={initialMajor}
+        initialYear={initialYear}
+        initialVisibleSections={initialVisibleSections}
+      />
+    </div>
+
+    <div class="dashboard-timeline">
+      <StudentScheduleTimeline
+        activeDays={activeDays}
+        scheduleBlocks={scheduleBlocks}
+        allSections={allSections}
+      />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initStudentScheduleState } from '@/features/schedules/state/studentScheduleState';
+
+  const root = document.getElementById('student-schedule-dashboard');
+  if (root) {
+    initStudentScheduleState({ root });
+  }
+
+  // Zen Mode toggle
+  const zenToggle = document.getElementById('zen-mode-toggle');
+  if (root) {
+    zenToggle?.addEventListener('click', () => {
+      root.classList.toggle('is-zen');
+      zenToggle.textContent = root.classList.contains('is-zen')
+        ? 'Ver Catálogo'
+        : 'Vista dedicada';
+    });
+  }
+</script>
+
+<style>
+  .dashboard-section {
+    padding: var(--space-4) 0;
+  }
+
+  .dashboard-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-4);
+    align-items: start;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Zen Mode */
+  .dashboard-layout.is-zen {
+    grid-template-columns: 0px 1fr;
+    gap: 0;
+  }
+
+  .dashboard-layout.is-zen .dashboard-explorer {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    margin-right: -280px;
+  }
+
+  @media (max-width: 1200px) {
+    .dashboard-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

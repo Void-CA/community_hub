@@ -10,9 +10,15 @@ interface DayItem {
   label: string;
 }
 
+interface scheduleBlock {
+  type: string;
+  label: string;
+  range: string;
+}
+
 interface Props {
   activeDays: DayItem[];
-  scheduleBlocks: { type: string; label: string; range: string }[];
+  scheduleBlocks: scheduleBlock[];
   allSections: ScheduleSection[];
 }
 

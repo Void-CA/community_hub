@@ -6,12 +6,22 @@ type State = {
   selectedIds: Set<string>;
 };
 
-function toArray<T extends Element>(selector: string): T[] {
-  return [...document.querySelectorAll(selector)] as T[];
+type InitOptions = {
+  root?: HTMLElement;
+};
+
+function toArray<T extends Element>(root: HTMLElement, selector: string): T[] {
+  return [...root.querySelectorAll(selector)] as T[];
 }
 
-export function initStudentScheduleState() {
-  const boot = document.querySelector<HTMLElement>('[data-initial-major]');
+function byId<T extends HTMLElement>(root: HTMLElement, id: string): T | null {
+  return root.querySelector<T>(`#${id}`);
+}
+
+export function initStudentScheduleState(options: InitOptions = {}) {
+  const root = options.root ?? document.body;
+
+  const boot = root.querySelector<HTMLElement>('[data-initial-major]');
   const initialMajor = boot?.dataset.initialMajor ?? 'all';
   const initialYear = boot?.dataset.initialYear ?? '0';
   const integrityError = boot?.dataset.integrityError === 'true';
@@ -22,26 +32,16 @@ export function initStudentScheduleState() {
     );
   }
 
-  const majorSelect = document.getElementById(
-    'major-select',
-  ) as HTMLSelectElement | null;
-  const yearButtons = toArray<HTMLButtonElement>('[data-year-button]');
-  const sectionButtons = toArray<SectionButton>('[data-section-toggle]');
-  const tiles = toArray<HTMLElement>('.timeline-tile-container');
+  const majorSelect = byId<HTMLSelectElement>(root, 'major-select');
+  const yearButtons = toArray<HTMLButtonElement>(root, '[data-year-button]');
+  const sectionButtons = toArray<SectionButton>(root, '[data-section-toggle]');
+  const tiles = toArray<HTMLElement>(root, '.timeline-tile-container');
 
-  const searchInput = document.getElementById(
-    'section-search',
-  ) as HTMLInputElement | null;
-  const periodSelect = document.getElementById(
-    'period-select',
-  ) as HTMLSelectElement | null;
-  const visibleSectionCount = document.getElementById('visible-section-count');
-  const selectedSectionCount = document.getElementById(
-    'selected-section-count',
-  );
-  const selectedSessionCount = document.getElementById(
-    'selected-session-count',
-  );
+  const searchInput = byId<HTMLInputElement>(root, 'section-search');
+  const periodSelect = byId<HTMLSelectElement>(root, 'period-select');
+  const visibleSectionCount = byId(root, 'visible-section-count');
+  const selectedSectionCount = byId(root, 'selected-section-count');
+  const selectedSessionCount = byId(root, 'selected-session-count');
 
   const state: State = {
     major: initialMajor,
@@ -75,7 +75,7 @@ export function initStudentScheduleState() {
 
   const applyVisibility = () => {
     let visibleCount = 0;
-    const containers = toArray<HTMLElement>('[data-subject-container]');
+    const containers = toArray<HTMLElement>(root, '[data-subject-container]');
 
     containers.forEach((container) => {
       const buttons = [
@@ -133,7 +133,6 @@ export function initStudentScheduleState() {
         group.forEach((container, idx) => {
           const tile = container.querySelector('[data-schedule-tile]');
           if (tile) tile.classList.add('has-conflict');
-          // In absolute grid, we can offset them or just let them overlap with z-index
           container.style.zIndex = String(10 + idx);
           if (idx > 0) {
             container.style.marginLeft = `${idx * 4}px`;
@@ -144,7 +143,7 @@ export function initStudentScheduleState() {
     });
 
     // Cleanup cells
-    toArray<HTMLElement>('.timeline-cell.has-multiple').forEach((cell) => {
+    toArray<HTMLElement>(root, '.timeline-cell.has-multiple').forEach((cell) => {
       const visibleChildren = [...cell.children].filter(
         (child) => !(child as HTMLElement).hidden,
       );

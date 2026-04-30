@@ -1,0 +1,106 @@
+---
+import type { ProfessorSchedule } from '@/lib/schedules';
+import ProfessorCatalog from '@/features/schedules/components/composition/ProfessorCatalog.astro';
+import ProfessorWeeklyGrid from '@/features/schedules/components/composition/ProfessorWeeklyGrid.astro';
+
+interface DayItem {
+  code: string;
+  label: string;
+}
+
+interface ScheduleBlock {
+  type: string;
+  label: string;
+  range: string;
+}
+
+interface Props {
+  professorNames: string[];
+  professorSchedules: Record<string, ProfessorSchedule>;
+  initialProfessor: string;
+  activeDays: DayItem[];
+  scheduleBlocks: readonly ScheduleBlock[];
+}
+
+const {
+  professorNames,
+  professorSchedules,
+  initialProfessor,
+  activeDays,
+  scheduleBlocks,
+} = Astro.props;
+---
+
+<section class="dashboard-section" data-initial-professor={initialProfessor}>
+  <div id="professor-schedule-dashboard" class="container-fluid dashboard-layout">
+    <div class="dashboard-explorer">
+      <ProfessorCatalog
+        professorNames={professorNames}
+        professorSchedules={professorSchedules}
+        initialProfessor={initialProfessor}
+      />
+    </div>
+
+    <div class="dashboard-timeline">
+      <ProfessorWeeklyGrid
+        activeDays={activeDays}
+        scheduleBlocks={scheduleBlocks}
+        professorSchedules={professorSchedules}
+        professorNames={professorNames}
+      />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initProfessorScheduleState } from '@/features/schedules/state/professorScheduleState';
+
+  const root = document.getElementById('professor-schedule-dashboard');
+  if (root) {
+    initProfessorScheduleState({ root });
+  }
+
+  // Zen Mode toggle
+  const zenToggle = document.getElementById('zen-mode-toggle');
+  if (root) {
+    zenToggle?.addEventListener('click', () => {
+      root.classList.toggle('is-zen');
+      zenToggle.classList.toggle('is-active');
+      const isZen = root.classList.contains('is-zen');
+      zenToggle.textContent = isZen ? 'Ver catálogo' : 'Vista dedicada';
+    });
+  }
+</script>
+
+<style>
+  .dashboard-section {
+    padding: var(--space-4) 0;
+  }
+
+  .dashboard-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-4);
+    align-items: start;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Zen Mode */
+  .dashboard-layout.is-zen {
+    grid-template-columns: 0px 1fr;
+    gap: 0;
+  }
+
+  .dashboard-layout.is-zen .dashboard-explorer {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    margin-right: -320px;
+  }
+
+  @media (max-width: 1200px) {
+    .dashboard-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
