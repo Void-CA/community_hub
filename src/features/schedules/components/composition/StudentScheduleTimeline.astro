@@ -1,13 +1,12 @@
 ---
+import BaseTimeline from "./BaseTimeline.astro";
 import ScheduleTile from "../domain/ScheduleTile.astro";
 import Legend from "./Legend.astro";
 import {
-  formatBlock,
   buildTimelineCellIndex,
   getBlockIndex,
 } from "@/lib/schedules";
 import type { ScheduleSection } from "@/lib/schedules";
-import Card from "@/components/UI/Card.astro";
 
 interface DayItem {
   code: string;
@@ -16,7 +15,7 @@ interface DayItem {
 
 interface Props {
   activeDays: DayItem[];
-  scheduleBlocks: readonly any[]; // Changed from string[]
+  scheduleBlocks: readonly any[];
   allSections: ScheduleSection[];
 }
 
@@ -24,308 +23,40 @@ const { activeDays, scheduleBlocks, allSections } = Astro.props;
 const cellIndex = buildTimelineCellIndex(allSections);
 ---
 
-<Card as="main" class="timeline" padding="lg">
-  <div class="timeline-header-actions">
-    <div>
-      <p class="eyebrow">Visualización</p>
-      <h2>Mi Horario</h2>
-    </div>
-    <button id="zen-mode-toggle" class="zen-button">Vista dedicada</button>
-  </div>
+<BaseTimeline title="Mi Horario" activeDays={activeDays} scheduleBlocks={scheduleBlocks}>
+  <Fragment slot="tiles">
+    {
+      allSections.map((section) =>
+        section.entries.map((entry) => {
+          const startIdx = getBlockIndex(entry.start_block);
+          const endIdx = getBlockIndex(entry.end_block);
+          const dayIdx = activeDays.findIndex((d) => d.code === entry.day);
 
-  <div class="timeline-scroll">
-    <div
-      class="timeline-grid"
-      style={`grid-template-columns: 4rem repeat(${activeDays.length}, 1fr);`}
-    >
-      <!-- 1. Header Corner -->
-      <div class="timeline-corner"></div>
-      
-      <!-- 2. Day Headers -->
-      {
-        activeDays.map((day) => (
-          <div class="timeline-day">
-            <span>{day.label}</span>
-          </div>
-        ))
-      }
+          if (dayIdx === -1 || startIdx === -1) return null;
 
-      <!-- 3. Time Axis & Background Cells -->
-      {
-        scheduleBlocks.map((block, rowIndex) => {
-          const isBreak = block.type === "break";
-          const rowStart = rowIndex + 2; // +1 for header, +1 for 1-based index
+          const rowStart = startIdx + 2;
+          const rowSpan = endIdx - startIdx + 1;
+          const colStart = dayIdx + 2;
 
           return (
-            <Fragment>
-              <!-- Time Label -->
-              <div
-                class:list={["timeline-time", { "is-break": isBreak }]}
-                style={`grid-row: ${rowStart}; grid-column: 1;`}
-              >
-                {isBreak ? (
-                  <span class="slot-break-label">{block.label}</span>
-                ) : (
-                  <Fragment>
-                    <span class="slot-range">{block.range}</span>
-                    <span class="slot-label">Bloque {block.label}</span>
-                  </Fragment>
-                )}
-              </div>
-
-              <!-- Background Row -->
-              {activeDays.map((_, colIndex) => (
-                <div
-                  class:list={["timeline-bg-cell", { "is-break": isBreak }]}
-                  style={`grid-row: ${rowStart}; grid-column: ${colIndex + 2};`}
-                >
-                  {isBreak && colIndex === 0 && (
-                    <span class="break-label-abs">{block.label}</span>
-                  )}
-                </div>
-              ))}
-            </Fragment>
+            <div
+              class="timeline-tile-container"
+              data-section-id={section.id}
+              data-day={entry.day}
+              data-block={entry.start_block}
+              style={`grid-row: ${rowStart} / span ${rowSpan}; grid-column: ${colStart}; z-index: 10;`}
+              hidden
+            >
+              <ScheduleTile
+                entry={entry}
+                sectionId={section.id}
+                label={entry.subject}
+              />
+            </div>
           );
         })
-      }
-
-      <!-- 4. Real Tiles -->
-      {
-        allSections.map((section) => 
-          section.entries.map((entry) => {
-            const startIdx = getBlockIndex(entry.start_block);
-            const endIdx = getBlockIndex(entry.end_block);
-            const dayIdx = activeDays.findIndex(d => d.code === entry.day);
-            
-            if (dayIdx === -1 || startIdx === -1) return null;
-
-            const rowStart = startIdx + 2;
-            const rowSpan = endIdx - startIdx + 1;
-            const colStart = dayIdx + 2;
-
-            return (
-              <div
-                class="timeline-tile-container"
-                data-section-id={section.id}
-                data-day={entry.day}
-                data-block={entry.start_block}
-                style={`grid-row: ${rowStart} / span ${rowSpan}; grid-column: ${colStart}; z-index: 10;`}
-                hidden
-              >
-                <ScheduleTile
-                  entry={entry}
-                  sectionId={section.id}
-                  label={entry.subject}
-                />
-              </div>
-            );
-          })
-        )
-      }
-    </div>
-    <Legend />
-  </div>
-</Card>
-
-<style>
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    min-width: 0;
-    transition: all var(--transition-spring);
-  }
-
-  .timeline-header-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-bottom: var(--space-2);
-  }
-
-  .zen-button {
-    background: var(--color-surface-muted);
-    border: var(--border-width-sm) solid var(--color-border);
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
-    cursor: pointer;
-    transition: all var(--transition-base);
-  }
-
-  .zen-button:hover {
-    background: var(--color-primary);
-    color: white;
-    border-color: var(--color-primary);
-  }
-
-  .zen-button.is-active {
-    background: var(--color-primary);
-    color: white;
-  }
-
-  .timeline-scroll {
-    overflow: auto;
-    border-radius: var(--radius-lg);
-    border: var(--border-width-sm) solid var(--grid-line);
-    background: var(--color-bg);
-    position: relative;
-    max-height: calc(100vh - 220px);
-  }
-
-  .timeline-grid {
-    display: grid;
-    gap: var(--timeline-grid-gap);
-    background: var(--grid-line);
-    min-width: 100%;
-    --cell-height: var(--cell-height);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .timeline-scroll {
-      border-color: var(--neutral-600);
+      )
     }
-  }
-
-  .timeline-grid {
-    display: grid;
-    gap: var(--timeline-grid-gap);
-    background: var(--color-border);
-    min-width: 100%;
-    --cell-height: var(--cell-height);
-  }
-
-  .timeline-grid > div {
-    background: var(--color-surface);
-  }
-
-  .timeline-corner {
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 30;
-    background: var(--color-surface-muted) !important;
-  }
-
-  .timeline-day {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-2);
-    background: var(--color-surface-muted) !important;
-    border-bottom: var(--border-width-md) solid var(--color-primary);
-  }
-
-  .timeline-day span {
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-muted);
-  }
-
-  .timeline-time {
-    position: sticky;
-    left: 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-1);
-    background: var(--color-surface-muted) !important;
-    border-right: var(--border-width-sm) solid var(--color-border);
-    gap: 0;
-  }
-
-  .timeline-time.is-break {
-    background: color-mix(
-      in srgb,
-      var(--color-surface-muted) 80%,
-      var(--color-bg)
-    ) !important;
-  }
-
-  .timeline-time.is-empty,
-  .timeline-cell.is-empty {
-    min-height: 1.5rem !important;
-    height: 1.5rem !important;
-  }
-
-  .slot-label {
-    font-size: var(--font-size-tiny);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-muted);
-    font-family: var(--font-family-mono);
-  }
-
-  .slot-range {
-    font-size: var(--font-size-2xs);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary);
-    font-family: var(--font-family-mono);
-    line-height: 1.2;
-  }
-
-  .slot-break-label {
-    font-size: var(--font-size-2xs);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .timeline-bg-cell {
-    min-height: var(--cell-height);
-    background: var(--color-surface);
-    position: relative;
-  }
-
-  .timeline-bg-cell.is-break {
-    background: repeating-linear-gradient(
-      -45deg,
-      var(--color-surface-muted),
-      var(--color-surface-muted) var(--break-stripe-size),
-      color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) var(--break-stripe-size),
-      color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) calc(var(--break-stripe-size) * 2)
-    ) !important;
-  }
-
-  .timeline-tile-container {
-    padding: 3px;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-  }
-
-  .timeline-tile-container[hidden] {
-    display: none !important;
-  }
-
-  .break-label-abs {
-    position: absolute;
-    top: 50%;
-    left: 50vw;
-    transform: translate(-50%, -50%);
-    font-size: var(--font-size-2xs);
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-muted);
-    opacity: 0.4;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 5;
-  }
-
-  @media (max-width: 768px) {
-    .timeline-time span {
-      writing-mode: horizontal-tb;
-      transform: none;
-    }
-  }
-</style>
+  </Fragment>
+  <Legend />
+</BaseTimeline>
