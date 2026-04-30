@@ -47,6 +47,17 @@ export default tseslint.config(
     },
   },
 
+  // State files (DOM-heavy code, type checker false positives)
+  {
+    files: ['src/**/state/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+    },
+  },
+
   // Astro files
   ...pluginAstro.configs['flat/recommended'],
   {
