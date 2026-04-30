@@ -7,7 +7,7 @@ const navItems = [
 ---
 
 <nav class="navbar">
-  <div class="container navbar-inner">
+  <div class="container">
     <a href="/" class="logo">
       <span class="logo-brand">ULSA</span><span class="logo-mark">Hub</span>
     </a>
@@ -15,20 +15,18 @@ const navItems = [
     <div class="nav-links">
       {
         navItems.map((item) => (
-          <a href={item.href} class="nav-link">
+          <a href={item.href} class:list={['nav-link', { 'is-active': Astro.url.pathname === item.href }]}>
             {item.name}
           </a>
         ))
       }
     </div>
-
-    <div class="nav-actions"></div>
   </div>
 </nav>
 
 <style>
   .navbar {
-    height: 64px;
+    height: var(--navbar-height);
     display: flex;
     align-items: center;
     background-color: var(--color-bg);
@@ -36,53 +34,63 @@ const navItems = [
     position: sticky;
     top: 0;
     z-index: 1000;
-    backdrop-filter: blur(8px);
-    background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
   }
 
-  .navbar-inner {
+  .container {
     display: flex;
     width: 100%;
-    justify-content: space-between;
     align-items: center;
-    gap: var(--space-6);
+    /* Cambiamos justify-content para asegurar el espacio entre los dos bloques principales */
+    justify-content: space-between; 
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--container-width);
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+    /* Prevenimos que los elementos hijos se encimen en pantallas medianas */
+    gap: var(--space-4); 
   }
 
   .logo {
-    display: flex;
+    display: inline-flex;
     align-items: baseline;
-    gap: 0;
     text-decoration: none;
     font-family: var(--font-family-heading);
     line-height: 1;
-  }
-
-  .logo-brand {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-black);
-    color: var(--color-primary);
-    letter-spacing: 0.05em;
-  }
-
-  .logo-mark {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text);
-    margin-left: 2px;
+    /* Forzamos que el logo no se colapse bajo ninguna circunstancia */
+    flex-shrink: 0; 
   }
 
   .nav-links {
     display: flex;
-    gap: var(--space-2);
+    align-items: center;
+    gap: var(--space-1);
+    /* Permitimos que los links se ajusten si es necesario */
+    flex-shrink: 1;
+    justify-content: flex-end;
   }
 
+  .logo-brand {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary);
+    letter-spacing: 0.04em;
+  }
+
+  .logo-mark {
+    font-size: 1.375rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+
   .nav-link {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-soft);
-    position: relative;
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-md);
+    text-decoration: none;
     transition: all var(--transition-base);
   }
 
@@ -91,7 +99,13 @@ const navItems = [
     background-color: var(--color-surface-muted);
   }
 
-  @media (max-width: 1024px) {
+  .nav-link.is-active {
+    color: var(--color-text);
+    background-color: var(--color-surface-muted);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  @media (max-width: 768px) {
     .nav-links {
       display: none;
     }

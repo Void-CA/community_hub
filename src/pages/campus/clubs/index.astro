@@ -1,34 +1,41 @@
 ---
 import AppLayout from '@/layouts/AppLayout.astro';
 import { getAllClubs } from '@/lib/clubs';
+import { Code, Zap, Target } from 'lucide-astro';
 
 const clubs = getAllClubs();
 
-const clubIcons: Record<string, string> = {
-  programming: '💻',
-  electronics: '⚡',
+const clubIcons: Record<string, typeof Code> = {
+  programming: Code,
+  electronics: Zap,
 };
 
-const clubAccents: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
+const clubAccents: Record<string, { lightBg: string; lightText: string; lightBorder: string; darkBg: string; darkText: string; darkBorder: string }> = {
   programming: {
-    bg: 'var(--brand-50)',
-    text: 'var(--brand-600)',
-    border: 'var(--brand-100)',
-    gradient: 'linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%)',
+    lightBg: 'linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%)',
+    lightText: 'var(--brand-600)',
+    lightBorder: 'var(--brand-100)',
+    darkBg: 'linear-gradient(135deg, var(--brand-950) 0%, var(--neutral-900) 100%)',
+    darkText: 'var(--brand-400, #818cf8)',
+    darkBorder: 'color-mix(in srgb, var(--brand-500) 25%, transparent)',
   },
   electronics: {
-    bg: 'var(--accent-50)',
-    text: 'var(--accent-600)',
-    border: 'color-mix(in srgb, var(--accent-500) 20%, transparent)',
-    gradient: 'linear-gradient(135deg, var(--accent-50) 0%, color-mix(in srgb, var(--accent-500) 10%, var(--neutral-50)) 100%)',
+    lightBg: 'linear-gradient(135deg, var(--accent-50) 0%, color-mix(in srgb, var(--accent-500) 10%, var(--neutral-50)) 100%)',
+    lightText: 'var(--accent-600)',
+    lightBorder: 'color-mix(in srgb, var(--accent-500) 20%, transparent)',
+    darkBg: 'linear-gradient(135deg, var(--accent-950) 0%, var(--neutral-900) 100%)',
+    darkText: 'var(--accent-400, #fb923c)',
+    darkBorder: 'color-mix(in srgb, var(--accent-500) 25%, transparent)',
   },
 };
 
 interface AccentColors {
-  bg: string;
-  text: string;
-  border: string;
-  gradient: string;
+  lightBg: string;
+  lightText: string;
+  lightBorder: string;
+  darkBg: string;
+  darkText: string;
+  darkBorder: string;
 }
 ---
 
@@ -50,15 +57,19 @@ interface AccentColors {
         {
           clubs.map(({ profile }) => {
             const accent: AccentColors = clubAccents[profile.slug] ?? {
-              bg: 'var(--color-surface-muted)',
-              text: 'var(--color-primary)',
-              border: 'var(--color-border)',
-              gradient: 'var(--color-surface-muted)',
+              lightBg: 'var(--color-surface-muted)',
+              lightText: 'var(--color-primary)',
+              lightBorder: 'var(--color-border)',
+              darkBg: 'var(--color-surface)',
+              darkText: 'var(--color-primary)',
+              darkBorder: 'var(--color-border)',
             };
-            const icon = clubIcons[profile.slug] ?? '🎯';
+            const Icon = clubIcons[profile.slug] ?? Target;
             return (
-              <a href={`/campus/clubs/${profile.slug}`} class="club-card" style={`--club-bg: ${accent.bg}; --club-text: ${accent.text}; --club-border: ${accent.border}; --club-gradient: ${accent.gradient};`}>
-                <div class="club-card-icon">{icon}</div>
+              <a href={`/campus/clubs/${profile.slug}`} class:list={['club-card', `is-${profile.slug}`]} style={`--club-bg-light: ${accent.lightBg}; --club-text-light: ${accent.lightText}; --club-border-light: ${accent.lightBorder}; --club-bg-dark: ${accent.darkBg}; --club-text-dark: ${accent.darkText}; --club-border-dark: ${accent.darkBorder};`}>
+                <div class="club-card-icon">
+                  <Icon size={32} strokeWidth={1.5} />
+                </div>
                 <h3 class="club-card-name">{profile.name}</h3>
                 <p class="club-card-tagline">{profile.tagline}</p>
                 <div class="club-card-footer">
@@ -127,8 +138,8 @@ interface AccentColors {
     color: inherit;
     padding: var(--space-8);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--club-border);
-    background: var(--club-gradient);
+    border: 1px solid var(--club-border-light);
+    background: var(--club-bg-light);
     transition: all var(--transition-slow);
     position: relative;
     overflow: hidden;
@@ -141,7 +152,7 @@ interface AccentColors {
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--club-text);
+    background: var(--club-text-light);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform var(--transition-slow);
@@ -150,7 +161,7 @@ interface AccentColors {
   .club-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
-    border-color: var(--club-text);
+    border-color: var(--club-text-light);
   }
 
   .club-card:hover::before {
@@ -158,9 +169,10 @@ interface AccentColors {
   }
 
   .club-card-icon {
-    font-size: 2.5rem;
-    line-height: 1;
     margin-bottom: var(--space-4);
+    color: var(--club-text-light);
+    display: flex;
+    align-items: center;
   }
 
   .club-card-name {
@@ -184,23 +196,48 @@ interface AccentColors {
     justify-content: space-between;
     align-items: center;
     padding-top: var(--space-4);
-    border-top: 1px solid var(--club-border);
+    border-top: 1px solid var(--club-border-light);
   }
 
   .club-card-leaders {
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
-    color: var(--club-text);
+    color: var(--club-text-light);
   }
 
   .club-card-cta {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
-    color: var(--club-text);
+    color: var(--club-text-light);
     transition: transform var(--transition-base);
   }
 
   .club-card:hover .club-card-cta {
     transform: translateX(4px);
+  }
+
+  /* Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    .club-card {
+      border-color: var(--club-border-dark);
+      background: var(--club-bg-dark);
+    }
+
+    .club-card::before {
+      background: var(--club-text-dark);
+    }
+
+    .club-card:hover {
+      border-color: var(--club-text-dark);
+    }
+
+    .club-card-icon {
+      color: var(--club-text-dark);
+    }
+
+    .club-card-leaders,
+    .club-card-cta {
+      color: var(--club-text-dark);
+    }
   }
 </style>

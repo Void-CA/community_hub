@@ -18,14 +18,21 @@
   /* Primary Scale (Indigo/Blue) */
   --brand-50: #eef2ff;
   --brand-100: #e0e7ff;
+  --brand-400: #818cf8;
   --brand-500: #6366f1;
   --brand-600: #4f46e5;
   --brand-700: #4338ca;
+  --brand-900: #1e1b4b;
+  --brand-950: #0e0b2e;
 
   /* Accent Scale (Amber/Gold) */
   --accent-50: #fffbeb;
+  --accent-400: #fb923c;
   --accent-500: #f59e0b;
   --accent-600: #d97706;
+  --accent-700: #b45309;
+  --accent-900: #451a03;
+  --accent-950: #261200;
 
   /* Spacing Scale */
   --space-1: 0.25rem; /* 4px */
@@ -181,5 +188,13 @@
       color-mix(in srgb, var(--color-primary) 25%, transparent);
 
     --grid-line: var(--neutral-600);
+
+    /* Club Card Backgrounds (Dark Mode) */
+    --club-programming-bg: var(--brand-950);
+    --club-programming-border: color-mix(in srgb, var(--brand-500) 25%, transparent);
+    --club-programming-text: var(--brand-500);
+    --club-electronics-bg: var(--accent-950);
+    --club-electronics-border: color-mix(in srgb, var(--accent-500) 25%, transparent);
+    --club-electronics-text: var(--accent-500);
   }
 }

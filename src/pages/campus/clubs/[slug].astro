@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.astro';
 import Card from '@/components/UI/Card.astro';
 import { getAllClubSlugs, getClub } from '@/lib/clubs';
+import { Code, Zap, Target, Calendar, ArrowLeft, ExternalLink } from 'lucide-astro';
 
 export function getStaticPaths() {
   const slugs = getAllClubSlugs();
@@ -11,46 +12,57 @@ export function getStaticPaths() {
 const { slug } = Astro.params;
 const { profile, meetings } = getClub(slug!);
 
-const clubIcons: Record<string, string> = {
-  programming: '💻',
-  electronics: '⚡',
+const clubIcons: Record<string, typeof Code> = {
+  programming: Code,
+  electronics: Zap,
 };
 
-const clubAccents: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
+const clubAccents: Record<string, { lightBg: string; lightText: string; lightBorder: string; darkBg: string; darkText: string; darkBorder: string }> = {
   programming: {
-    bg: 'var(--brand-50)',
-    text: 'var(--brand-600)',
-    border: 'var(--brand-100)',
-    gradient: 'linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%)',
+    lightBg: 'linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%)',
+    lightText: 'var(--brand-600)',
+    lightBorder: 'var(--brand-100)',
+    darkBg: 'linear-gradient(135deg, var(--brand-950) 0%, var(--neutral-900) 100%)',
+    darkText: 'var(--brand-400, #818cf8)',
+    darkBorder: 'color-mix(in srgb, var(--brand-500) 25%, transparent)',
   },
   electronics: {
-    bg: 'var(--accent-50)',
-    text: 'var(--accent-600)',
-    border: 'color-mix(in srgb, var(--accent-500) 20%, transparent)',
-    gradient: 'linear-gradient(135deg, var(--accent-50) 0%, color-mix(in srgb, var(--accent-500) 10%, var(--neutral-50)) 100%)',
+    lightBg: 'linear-gradient(135deg, var(--accent-50) 0%, color-mix(in srgb, var(--accent-500) 10%, var(--neutral-50)) 100%)',
+    lightText: 'var(--accent-600)',
+    lightBorder: 'color-mix(in srgb, var(--accent-500) 20%, transparent)',
+    darkBg: 'linear-gradient(135deg, var(--accent-950) 0%, var(--neutral-900) 100%)',
+    darkText: 'var(--accent-400, #fb923c)',
+    darkBorder: 'color-mix(in srgb, var(--accent-500) 25%, transparent)',
   },
 };
 
 const accent = clubAccents[slug!] ?? {
-  bg: 'var(--color-surface-muted)',
-  text: 'var(--color-primary)',
-  border: 'var(--color-border)',
-  gradient: 'var(--color-surface-muted)',
+  lightBg: 'var(--color-surface-muted)',
+  lightText: 'var(--color-primary)',
+  lightBorder: 'var(--color-border)',
+  darkBg: 'var(--color-surface)',
+  darkText: 'var(--color-primary)',
+  darkBorder: 'var(--color-border)',
 };
-const icon = clubIcons[slug!] ?? '🎯';
+const Icon = clubIcons[slug!] ?? Target;
 ---
 
 <AppLayout
   title={`${profile.name} | Clubes Universitarios`}
   description={profile.tagline}
 >
-  <section class="club-detail" style={`--club-bg: ${accent.bg}; --club-text: ${accent.text}; --club-border: ${accent.border}; --club-gradient: ${accent.gradient};`}>
+  <section class="club-detail" style={`--club-bg-light: ${accent.lightBg}; --club-text-light: ${accent.lightText}; --club-border-light: ${accent.lightBorder}; --club-bg-dark: ${accent.darkBg}; --club-text-dark: ${accent.darkText}; --club-border-dark: ${accent.darkBorder};`}>
     <div class="container">
-      <a href="/campus/clubs" class="back-link">← Clubes</a>
+      <a href="/campus/clubs" class="back-link">
+        <ArrowLeft size={16} strokeWidth={2} />
+        Clubes
+      </a>
 
       <!-- Hero -->
       <header class="club-hero">
-        <div class="club-hero-icon">{icon}</div>
+        <div class="club-hero-icon">
+          <Icon size={40} strokeWidth={1.5} />
+        </div>
         <h1>{profile.name}</h1>
         <p class="club-hero-tagline">{profile.tagline}</p>
       </header>
@@ -102,7 +114,8 @@ const icon = clubIcons[slug!] ?? '🎯';
                           rel="noopener noreferrer"
                           class="social-link"
                         >
-                          {platform.charAt(0).toUpperCase() + platform.slice(1)} ↗
+                          {platform.charAt(0).toUpperCase() + platform.slice(1)}
+                          <ExternalLink size={12} strokeWidth={2} />
                         </a>
                       ))
                     }
@@ -119,7 +132,7 @@ const icon = clubIcons[slug!] ?? '🎯';
         meetings.length > 0 && (
           <div class="meetings-section">
             <h2 class="meetings-heading">
-              <span class="meetings-icon">📅</span>
+              <Calendar size={22} strokeWidth={1.5} />
               Encuentros
             </h2>
             <div class="meetings-grid">
@@ -151,7 +164,7 @@ const icon = clubIcons[slug!] ?? '🎯';
   .back-link {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-2);
     margin-bottom: var(--space-8);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
@@ -175,9 +188,9 @@ const icon = clubIcons[slug!] ?? '🎯';
     align-items: flex-start;
     gap: var(--space-3);
     padding: var(--space-8);
-    background: var(--club-gradient, var(--club-bg));
+    background: var(--club-bg-light);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--club-border);
+    border: 1px solid var(--club-border-light);
     position: relative;
     overflow: hidden;
   }
@@ -189,12 +202,13 @@ const icon = clubIcons[slug!] ?? '🎯';
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--club-text);
+    background: var(--club-text-light);
   }
 
   .club-hero-icon {
-    font-size: 3rem;
-    line-height: 1;
+    color: var(--club-text-light);
+    display: flex;
+    align-items: center;
   }
 
   .club-hero h1 {
@@ -233,7 +247,7 @@ const icon = clubIcons[slug!] ?? '🎯';
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--club-text);
+    color: var(--club-text-light);
   }
 
   .info-section p {
@@ -286,9 +300,12 @@ const icon = clubIcons[slug!] ?? '🎯';
 
   .social-link {
     font-size: var(--font-size-sm);
-    color: var(--club-text);
+    color: var(--club-text-light);
     text-decoration: none;
     font-weight: var(--font-weight-semibold);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
     transition: color var(--transition-base);
   }
 
@@ -309,10 +326,6 @@ const icon = clubIcons[slug!] ?? '🎯';
     margin: 0 0 var(--space-6);
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-bold);
-  }
-
-  .meetings-icon {
-    font-size: 1.5rem;
   }
 
   .meetings-grid {
@@ -340,7 +353,7 @@ const icon = clubIcons[slug!] ?? '🎯';
   .meeting-day {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
-    color: var(--club-text);
+    color: var(--club-text-light);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -366,6 +379,30 @@ const icon = clubIcons[slug!] ?? '🎯';
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
     line-height: 1.5;
+  }
+
+  /* Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    .club-hero {
+      background: var(--club-bg-dark);
+      border-color: var(--club-border-dark);
+    }
+
+    .club-hero::before {
+      background: var(--club-text-dark);
+    }
+
+    .club-hero-icon {
+      color: var(--club-text-dark);
+    }
+
+    .info-section h2 {
+      color: var(--club-text-dark);
+    }
+
+    .meeting-day {
+      color: var(--club-text-dark);
+    }
   }
 
   @media (max-width: 900px) {
