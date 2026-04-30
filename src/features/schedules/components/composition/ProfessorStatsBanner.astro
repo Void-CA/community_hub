@@ -1,6 +1,5 @@
 ---
-import Badge from "@/components/UI/Badge.astro";
-import type { SchedulePeriod } from "@/lib/schedules";
+import type { SchedulePeriod } from '@/lib/schedules';
 
 interface Props {
   semesterLabel: string;
@@ -12,7 +11,7 @@ interface Props {
 }
 
 const {
-  semesterLabel,
+  semesterLabel: _semesterLabel,
   totalEntries,
   initialProfessor,
   initialSessionCount,
@@ -29,7 +28,10 @@ const {
         <select id="period-select" class="toolbar-select">
           {
             schedulePeriods.map((period) => (
-              <option value={period.id} selected={period.id === currentPeriodId}>
+              <option
+                value={period.id}
+                selected={period.id === currentPeriodId}
+              >
                 {period.label}
               </option>
             ))
@@ -84,7 +86,9 @@ const {
     gap: 2px;
   }
 
-  .flex-1 { flex: 1; }
+  .flex-1 {
+    flex: 1;
+  }
 
   .toolbar-label span,
   .toolbar-hint {
@@ -154,6 +158,8 @@ const {
     .toolbar-content {
       flex-wrap: wrap;
     }
-    .toolbar-divider { display: none; }
+    .toolbar-divider {
+      display: none;
+    }
   }
 </style>

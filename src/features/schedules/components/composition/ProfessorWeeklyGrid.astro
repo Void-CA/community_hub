@@ -1,27 +1,37 @@
 ---
-import BaseTimeline from "./BaseTimeline.astro";
-import ScheduleTile from "@/features/schedules/components/domain/ScheduleTile.astro";
-import Legend from "./Legend.astro";
-import { getBlockIndex, dayNames } from "@/lib/schedules";
+import BaseTimeline from './BaseTimeline.astro';
+import ScheduleTile from '@/features/schedules/components/domain/ScheduleTile.astro';
+import Legend from './Legend.astro';
+import { getBlockIndex, dayNames } from '@/lib/schedules';
+import type { ProfessorSchedule, ScheduleEntry } from '@/lib/schedules';
+
+interface DayItem {
+  code: string;
+  label: string;
+}
 
 interface Props {
-  activeDays: readonly any[];
-  scheduleBlocks: readonly any[];
-  professorSchedules: Record<string, any>;
+  activeDays: DayItem[];
+  scheduleBlocks: { type: string; label: string; range: string }[];
+  professorSchedules: Record<string, ProfessorSchedule>;
   professorNames: string[];
 }
 
 const { activeDays, scheduleBlocks, professorSchedules, professorNames } =
   Astro.props;
 
-const getEntries = (name: string) => {
+const getEntries = (name: string): ScheduleEntry[] => {
   const professor = professorSchedules[name];
   if (!professor) return [];
   return dayNames.flatMap(({ code }) => professor.by_day[code] ?? []);
 };
 ---
 
-<BaseTimeline title="Grilla Semanal" activeDays={activeDays} scheduleBlocks={scheduleBlocks}>
+<BaseTimeline
+  title="Grilla Semanal"
+  activeDays={activeDays}
+  scheduleBlocks={scheduleBlocks}
+>
   <Fragment slot="header-right">
     <p class="text-soft">Solo se muestra el docente seleccionado.</p>
   </Fragment>
@@ -55,7 +65,7 @@ const getEntries = (name: string) => {
               />
             </div>
           );
-        })
+        }),
       )
     }
   </Fragment>

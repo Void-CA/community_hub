@@ -1,8 +1,8 @@
 ---
-import type { ScheduleEntry } from "@/lib/schedules";
-import { formatBlock, formatDay, getMajorAccent } from "@/lib/schedules";
-import Badge from "@/components/UI/Badge.astro";
-import Card from "@/components/UI/Card.astro";
+import type { ScheduleEntry } from '@/lib/schedules';
+import { formatBlock, formatDay, getSubjectColor } from '@/lib/schedules';
+import Badge from '@/components/UI/Badge.astro';
+import Card from '@/components/UI/Card.astro';
 
 interface Props {
   entry: ScheduleEntry;
@@ -10,17 +10,16 @@ interface Props {
 }
 
 const { entry, compact = false } = Astro.props;
-const primaryMajor = entry.majors[0] ?? "General";
-const accent = getMajorAccent(primaryMajor);
+const accent = getSubjectColor(entry.subject);
 ---
 
 <Card
   as="article"
-  class:list={["schedule-entry", { "schedule-entry-compact": compact }]}
+  class:list={['schedule-entry', { 'schedule-entry-compact': compact }]}
   data-schedule-entry
   data-day={entry.day.toLowerCase()}
   data-group={String(entry.group)}
-  data-majors={entry.majors.map((major) => major.toLowerCase()).join("|")}
+  data-majors={entry.majors.map((major) => major.toLowerCase()).join('|')}
   data-professor={entry.professor.toLowerCase()}
   data-subject={entry.subject.toLowerCase()}
   data-room={entry.room.toLowerCase()}
@@ -83,7 +82,7 @@ const accent = getMajorAccent(primaryMajor);
   }
 
   .schedule-entry::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0 auto 0 0;
     width: 4px;

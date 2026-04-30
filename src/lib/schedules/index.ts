@@ -1,14 +1,27 @@
-import { scheduleDatasets, schedulePeriodCatalog, getScheduleDataset, resolveScheduleDatasetByYearTerm } from './loadDataset';
+import {
+  scheduleDatasets,
+  schedulePeriodCatalog,
+  getScheduleDataset,
+  resolveScheduleDatasetByYearTerm,
+} from './loadDataset';
 import { filterEntries } from './filters';
 import { buildTimelineCellIndex } from './cells';
 import { detectConflicts, findValidPath } from './engine';
 import { getScheduleSummary } from './summary';
 import { groupSectionsBySubject } from './organizer';
-import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel, ICON_MAP, majorAccents } from './constants';
-import type { ScheduleEntry, ScheduleSection, SchedulePathResultUnion } from './types';
+import {
+  scheduleSlots,
+  dayOrder,
+  dayLabels,
+  oldToNewLabel,
+  ICON_MAP,
+  majorAccents,
+} from './constants';
+import type { ScheduleEntry, ScheduleSection } from './types';
 
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
-const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);
+const uniqueSorted = (values: string[]) =>
+  [...new Set(values)].sort(collator.compare);
 
 export {
   buildTimelineCellIndex,
@@ -21,12 +34,15 @@ export {
   scheduleDatasets,
   schedulePeriodCatalog,
   ICON_MAP,
-  groupSectionsBySubject
+  groupSectionsBySubject,
 };
 export * from './types';
 
 export const dayCodes = dayOrder;
-export const dayNames = dayOrder.map((day) => ({ code: day, label: dayLabels[day] ?? day }));
+export const dayNames = dayOrder.map((day) => ({
+  code: day,
+  label: dayLabels[day] ?? day,
+}));
 export const scheduleBlocks = scheduleSlots;
 export const schedulePeriods = schedulePeriodCatalog;
 export const defaultSchedulePeriodId = schedulePeriods[0]?.id ?? '2026-IIC';
@@ -36,12 +52,28 @@ const defaultDataset = getScheduleDataset();
 export const semesterLabel = defaultDataset.period.label;
 export const scheduleEntries = defaultDataset.entries;
 export const professorSchedules = defaultDataset.professorSchedules;
-export const majors = uniqueSorted(scheduleEntries.flatMap((entry) => entry.majors));
-export const groups = [...new Set(scheduleEntries.map((entry) => entry.group))].sort((left, right) => left - right);
-export const professorNames = Object.keys(professorSchedules).sort(collator.compare);
-export const subjectNames = uniqueSorted(scheduleEntries.map((entry) => entry.subject));
-export const roomNames = uniqueSorted(scheduleEntries.map((entry) => entry.room));
-export const academicYears = [...new Set(scheduleEntries.map((entry) => entry.academicYear).filter((year) => year > 0))].sort((left, right) => left - right);
+export const majors = uniqueSorted(
+  scheduleEntries.flatMap((entry) => entry.majors),
+);
+export const groups = [
+  ...new Set(scheduleEntries.map((entry) => entry.group)),
+].sort((left, right) => left - right);
+export const professorNames = Object.keys(professorSchedules).sort(
+  collator.compare,
+);
+export const subjectNames = uniqueSorted(
+  scheduleEntries.map((entry) => entry.subject),
+);
+export const roomNames = uniqueSorted(
+  scheduleEntries.map((entry) => entry.room),
+);
+export const academicYears = [
+  ...new Set(
+    scheduleEntries
+      .map((entry) => entry.academicYear)
+      .filter((year) => year > 0),
+  ),
+].sort((left, right) => left - right);
 
 export function formatAcademicYear(academicYear: number) {
   if (academicYear <= 0) {
@@ -68,14 +100,24 @@ export function getBlockIndex(block: string) {
   return index === -1 ? scheduleSlots.length : index;
 }
 
-export function getEntrySortKey(entry: ScheduleEntry): [number, number, number, number, string] {
-  return [dayOrder.indexOf(entry.day), getBlockIndex(entry.start_block), getBlockIndex(entry.end_block), entry.group, entry.subject];
+export function getEntrySortKey(
+  entry: ScheduleEntry,
+): [number, number, number, number, string] {
+  return [
+    dayOrder.indexOf(entry.day),
+    getBlockIndex(entry.start_block),
+    getBlockIndex(entry.end_block),
+    entry.group,
+    entry.subject,
+  ];
 }
 
 export function sortEntries(entries: ScheduleEntry[]) {
   return [...entries].sort((left, right) => {
-    const [leftDay, leftStart, leftEnd, leftGroup, leftSubject] = getEntrySortKey(left);
-    const [rightDay, rightStart, rightEnd, rightGroup, rightSubject] = getEntrySortKey(right);
+    const [leftDay, leftStart, leftEnd, leftGroup, leftSubject] =
+      getEntrySortKey(left);
+    const [rightDay, rightStart, rightEnd, rightGroup, rightSubject] =
+      getEntrySortKey(right);
 
     if (leftDay !== rightDay) return leftDay - rightDay;
     if (leftStart !== rightStart) return leftStart - rightStart;
@@ -98,14 +140,16 @@ export function buildScheduleSections(entries: ScheduleEntry[]) {
       existing.entries.push(entry);
       existing.days = uniqueSorted([...existing.days, entry.day]);
       existing.majors = uniqueSorted([...existing.majors, ...entry.majors]);
-      existing.academicYears = [...new Set([...existing.academicYears, entry.academicYear])].sort((left, right) => left - right);
-      
+      existing.academicYears = [
+        ...new Set([...existing.academicYears, entry.academicYear]),
+      ].sort((left, right) => left - right);
+
       // Update representative professor and room if they are different
       const currentProfs = existing.professor.split(' / ');
       if (!currentProfs.includes(entry.professor)) {
         existing.professor = [...currentProfs, entry.professor].join(' / ');
       }
-      
+
       const currentRooms = existing.room.split(' / ');
       if (!currentRooms.includes(entry.room)) {
         existing.room = [...currentRooms, entry.room].join(' / ');
@@ -126,23 +170,29 @@ export function buildScheduleSections(entries: ScheduleEntry[]) {
     });
   }
 
-  return [...sections.values()].map((section) => ({
-    ...section,
-    entries: sortEntries(section.entries),
-    days: uniqueSorted(section.days),
-  })).sort((left, right) => {
-    const [leftDay] = getEntrySortKey(left.entries[0]);
-    const [rightDay] = getEntrySortKey(right.entries[0]);
+  return [...sections.values()]
+    .map((section) => ({
+      ...section,
+      entries: sortEntries(section.entries),
+      days: uniqueSorted(section.days),
+    }))
+    .sort((left, right) => {
+      const [leftDay] = getEntrySortKey(left.entries[0]);
+      const [rightDay] = getEntrySortKey(right.entries[0]);
 
-    if (leftDay !== rightDay) return leftDay - rightDay;
-    if (left.subject !== right.subject) return collator.compare(left.subject, right.subject);
-    return left.group - right.group;
-  });
+      if (leftDay !== rightDay) return leftDay - rightDay;
+      if (left.subject !== right.subject)
+        return collator.compare(left.subject, right.subject);
+      return left.group - right.group;
+    });
 }
 
 export function groupEntriesByDay(entries: ScheduleEntry[]) {
   return dayOrder
-    .map((day) => ({ day, entries: sortEntries(entries.filter((entry) => entry.day === day)) }))
+    .map((day) => ({
+      day,
+      entries: sortEntries(entries.filter((entry) => entry.day === day)),
+    }))
     .filter((group) => group.entries.length > 0);
 }
 
@@ -187,36 +237,45 @@ export function getSubjectColor(subject: string) {
 }
 
 export function getProfessorAlias(name: string) {
-  if (!name) return "";
+  if (!name) return '';
   const parts = name.trim().split(/\s+/);
   if (parts.length <= 2) return name;
-  
+
   // Format: "P. Lastname" or "First Last"
   const first = parts[0];
   const last = parts[parts.length - 1];
-  
+
   if (first?.toLowerCase().startsWith('prof')) {
     return `Prof. ${last}`;
   }
-  
+
   return `${first} ${last}`;
 }
 
 export function filterScheduleSections(
   sections: ScheduleSection[],
-  filters: { major?: string; year?: string; search?: string }
+  filters: { major?: string; year?: string; search?: string },
 ) {
-  const query = filters.search?.trim().toLowerCase() ?? "";
-  
+  const query = filters.search?.trim().toLowerCase() ?? '';
+
   return sections.filter((section) => {
-    const matchesMajor = !filters.major || filters.major === "all" || 
-      section.majors.some(m => m.toLowerCase() === filters.major?.toLowerCase());
-      
-    const matchesYear = !filters.year || filters.year === "0" || 
-      section.academicYears.some(y => String(y) === filters.year);
-      
-    const matchesSearch = !query || 
-      [section.subject, section.professor, section.room].some(s => s.toLowerCase().includes(query));
+    const matchesMajor =
+      !filters.major ||
+      filters.major === 'all' ||
+      section.majors.some(
+        (m) => m.toLowerCase() === filters.major?.toLowerCase(),
+      );
+
+    const matchesYear =
+      !filters.year ||
+      filters.year === '0' ||
+      section.academicYears.some((y) => String(y) === filters.year);
+
+    const matchesSearch =
+      !query ||
+      [section.subject, section.professor, section.room].some((s) =>
+        s.toLowerCase().includes(query),
+      );
 
     return matchesMajor && matchesYear && matchesSearch;
   });

@@ -1,6 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { filterEntries, filterScheduleSections, buildScheduleSections } from '../index';
-import { entry, section, entries as fx } from './fixtures';
+import {
+  filterEntries,
+  filterScheduleSections,
+  buildScheduleSections,
+} from '../index';
+import { section, entries as fx } from './fixtures';
 
 describe('filterEntries', () => {
   const allEntries = [
@@ -30,7 +34,9 @@ describe('filterEntries', () => {
     const result = filterEntries(allEntries, { major: 'ICE', day: 'L' });
     // calculo1_L1 and calculo1_L2 are ICE + Monday
     expect(result).toHaveLength(2);
-    expect(result.every((e) => e.majors.includes('ICE') && e.day === 'L')).toBe(true);
+    expect(result.every((e) => e.majors.includes('ICE') && e.day === 'L')).toBe(
+      true,
+    );
   });
 
   it('returns all entries when no filters', () => {
@@ -58,23 +64,26 @@ describe('filterScheduleSections', () => {
   it('filters by search (subject)', () => {
     const result = filterScheduleSections(sections, { search: 'cálculo' });
     expect(result).toHaveLength(1);
-    expect(result[0]!.subject).toBe('Cálculo I');
+    expect(result[0].subject).toBe('Cálculo I');
   });
 
   it('filters by search (professor)', () => {
     const result = filterScheduleSections(sections, { search: 'carlos' });
     expect(result).toHaveLength(1);
-    expect(result[0]!.subject).toBe('Física I');
+    expect(result[0].subject).toBe('Física I');
   });
 
   it('filters by search (room)', () => {
     const result = filterScheduleSections(sections, { search: 'D401' });
     expect(result).toHaveLength(1);
-    expect(result[0]!.subject).toBe('Inglés I');
+    expect(result[0].subject).toBe('Inglés I');
   });
 
   it('combines major + search', () => {
-    const result = filterScheduleSections(sections, { major: 'ICE', search: 'física' });
+    const result = filterScheduleSections(sections, {
+      major: 'ICE',
+      search: 'física',
+    });
     expect(result).toHaveLength(1);
   });
 
@@ -87,8 +96,8 @@ describe('buildScheduleSections', () => {
   it('groups entries by subject + group', () => {
     const secs = buildScheduleSections([fx.calculo1_L1, fx.calculo1_X1]);
     expect(secs).toHaveLength(1);
-    expect(secs[0]!.id).toBe('Cálculo I::G1');
-    expect(secs[0]!.entries).toHaveLength(2);
+    expect(secs[0].id).toBe('Cálculo I::G1');
+    expect(secs[0].entries).toHaveLength(2);
   });
 
   it('separates different groups of the same subject', () => {
@@ -101,25 +110,29 @@ describe('buildScheduleSections', () => {
   it('merges multiple professors when same section has different teachers', () => {
     const e2 = { ...fx.calculo1_L1, professor: 'Otro Profesor', room: 'A101' };
     const secs = buildScheduleSections([fx.calculo1_L1, e2]);
-    expect(secs[0]!.professor).toBe('Juan Pérez / Otro Profesor');
+    expect(secs[0].professor).toBe('Juan Pérez / Otro Profesor');
   });
 
   it('merges multiple rooms when same section has different classrooms', () => {
     const e2 = { ...fx.calculo1_L1, room: 'A102', professor: 'Juan Pérez' };
     const secs = buildScheduleSections([fx.calculo1_L1, e2]);
-    expect(secs[0]!.room).toBe('A101 / A102');
+    expect(secs[0].room).toBe('A101 / A102');
   });
 
   it('collects unique majors', () => {
     const e2 = { ...fx.calculo1_L1, majors: ['IMS'] as string[] };
     const secs = buildScheduleSections([fx.calculo1_L1, e2]);
-    expect(secs[0]!.majors).toEqual(['ICE', 'IMS']);
+    expect(secs[0].majors).toEqual(['ICE', 'IMS']);
   });
 
   it('sorts entries within sections', () => {
-    const secs = buildScheduleSections([fx.calculo1_X1, fx.calculo1_L1, fx.calculo1_L2]);
-    const sectionEntries = secs[0]!.entries;
-    expect(sectionEntries[0]!.day).toBe('L');
-    expect(sectionEntries[2]!.day).toBe('X');
+    const secs = buildScheduleSections([
+      fx.calculo1_X1,
+      fx.calculo1_L1,
+      fx.calculo1_L2,
+    ]);
+    const sectionEntries = secs[0].entries;
+    expect(sectionEntries[0].day).toBe('L');
+    expect(sectionEntries[2].day).toBe('X');
   });
 });

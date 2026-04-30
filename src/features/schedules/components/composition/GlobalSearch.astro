@@ -1,25 +1,34 @@
 ---
 import Card from '@/components/UI/Card.astro';
-import Badge from '@/components/UI/Badge.astro';
-import { resolveScheduleDatasetByYearTerm, buildScheduleSections } from '@/lib/schedules';
+import {
+  resolveScheduleDatasetByYearTerm,
+  buildScheduleSections,
+} from '@/lib/schedules';
 
 // For simplicity, we'll load the current dataset to provide search suggestions
 const dataset = resolveScheduleDatasetByYearTerm();
 const professors = Object.keys(dataset.professorSchedules).sort();
 const sections = buildScheduleSections(dataset.entries);
-const subjects = [...new Set(sections.map(s => s.subject))].sort();
+const subjects = [...new Set(sections.map((s) => s.subject))].sort();
 ---
 
 <div class="global-search" id="global-search-container">
   <div class="search-input-wrapper">
-    <input 
-      type="text" 
-      id="global-schedule-search" 
-      placeholder="Busca un profesor, materia o carrera..." 
+    <input
+      type="text"
+      id="global-schedule-search"
+      placeholder="Busca un profesor, materia o carrera..."
       autocomplete="off"
     />
     <div class="search-icon">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+      <svg
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+      >
         <circle cx="11" cy="11" r="8"></circle>
         <path d="m21 21-4.3-4.3"></path>
       </svg>
@@ -44,23 +53,34 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
 
   input?.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase().trim();
-    
+
     if (query.length < 2) {
       resultsContainer?.classList.add('hidden');
       return;
     }
 
     const matchedProfessors = professors
-      .filter(p => p.toLowerCase().includes(query))
+      .filter((p) => p.toLowerCase().includes(query))
       .slice(0, MAX_RESULTS)
-      .map(p => ({ name: p, type: 'profesor', url: `/campus/schedules/professors?search=${encodeURIComponent(p)}` }));
+      .map((p) => ({
+        name: p,
+        type: 'profesor',
+        url: `/campus/schedules/professors?search=${encodeURIComponent(p)}`,
+      }));
 
     const matchedSubjects = subjects
-      .filter(s => s.toLowerCase().includes(query))
+      .filter((s) => s.toLowerCase().includes(query))
       .slice(0, MAX_RESULTS)
-      .map(s => ({ name: s, type: 'materia', url: `/campus/schedules/students?search=${encodeURIComponent(s)}` }));
+      .map((s) => ({
+        name: s,
+        type: 'materia',
+        url: `/campus/schedules/students?search=${encodeURIComponent(s)}`,
+      }));
 
-    const allResults = [...matchedProfessors, ...matchedSubjects].slice(0, MAX_RESULTS);
+    const allResults = [...matchedProfessors, ...matchedSubjects].slice(
+      0,
+      MAX_RESULTS,
+    );
 
     if (allResults.length === 0) {
       resultsContainer?.classList.add('hidden');
@@ -73,19 +93,25 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
 
   // Close on click outside
   document.addEventListener('click', (e) => {
-    if (!document.getElementById('global-search-container')?.contains(e.target)) {
+    if (
+      !document.getElementById('global-search-container')?.contains(e.target)
+    ) {
       resultsContainer?.classList.add('hidden');
     }
   });
 
   function renderResults(results) {
     if (!resultsList) return;
-    resultsList.innerHTML = results.map(res => `
+    resultsList.innerHTML = results
+      .map(
+        (res) => `
       <a href="${res.url}" class="search-result-item">
         <span class="result-name">${res.name}</span>
         <span class="result-badge ${res.type}">${res.type}</span>
       </a>
-    `).join('');
+    `,
+      )
+      .join('');
   }
 </script>
 
@@ -176,12 +202,20 @@ const subjects = [...new Set(sections.map(s => s.subject))].sort();
   }
 
   .result-badge.profesor {
-    background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+    background: color-mix(
+      in srgb,
+      var(--color-primary) 10%,
+      var(--color-surface)
+    );
     color: var(--color-primary);
   }
 
   .result-badge.materia {
-    background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+    background: color-mix(
+      in srgb,
+      var(--color-accent) 10%,
+      var(--color-surface)
+    );
     color: var(--color-accent);
   }
 </style>

@@ -2,15 +2,17 @@
 import ToolCard from '../Tools/ToolCard.astro';
 import { tools } from '../../data/tools';
 
-const featuredTools = tools.filter(t => t.featured);
+const featuredTools = tools.filter((t) => t.featured);
 ---
 
 <div class="bento-grid featured-grid">
-  {featuredTools.map(tool => (
-    <div class="grid-item">
-      <ToolCard tool={tool} />
-    </div>
-  ))}
+  {
+    featuredTools.map((tool) => (
+      <div class="grid-item">
+        <ToolCard tool={tool} />
+      </div>
+    ))
+  }
 </div>
 
 <style>

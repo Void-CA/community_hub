@@ -149,15 +149,15 @@ describe('sortEntries', () => {
 
   it('sorts by day first', () => {
     const sorted = sortEntries([e1, e2, e3]);
-    expect(sorted[0]!.day).toBe('L');
-    expect(sorted[2]!.day).toBe('X');
+    expect(sorted[0].day).toBe('L');
+    expect(sorted[2].day).toBe('X');
   });
 
   it('sorts by start_block within same day', () => {
     const sorted = sortEntries([e1, e2, e3]);
     const mondayEntries = sorted.filter((e) => e.day === 'L');
-    expect(mondayEntries[0]!.start_block).toBe('1');
-    expect(mondayEntries[1]!.start_block).toBe('3');
+    expect(mondayEntries[0].start_block).toBe('1');
+    expect(mondayEntries[1].start_block).toBe('3');
   });
 
   it('does not mutate the original array', () => {

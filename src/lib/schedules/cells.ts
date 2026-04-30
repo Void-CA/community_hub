@@ -1,9 +1,18 @@
-import type { ScheduleSection, ScheduleEntry, TimelineCellTile, OverlapConflict } from './types';
+import type {
+  ScheduleSection,
+  TimelineCellTile,
+  OverlapConflict,
+} from './types';
 import { scheduleSlots, oldToNewLabel } from './constants';
 
-export function buildTimelineCellIndex(sections: ScheduleSection[], conflicts?: Map<string, OverlapConflict[]>) {
+export function buildTimelineCellIndex(
+  sections: ScheduleSection[],
+  conflicts?: Map<string, OverlapConflict[]>,
+) {
   const index = new Map<string, TimelineCellTile[]>();
-  const academicLabels = scheduleSlots.filter(s => s.type === 'academic').map(s => s.label);
+  const academicLabels = scheduleSlots
+    .filter((s) => s.type === 'academic')
+    .map((s) => s.label);
 
   for (const section of sections) {
     const sectionConflicts = conflicts?.get(section.id) || [];
@@ -34,8 +43,10 @@ export function buildTimelineCellIndex(sections: ScheduleSection[], conflicts?: 
             entry,
             sectionId: section.id,
             hasConflict: sectionConflicts.length > 0,
-            conflictWith: sectionConflicts.map(c => c.groups.find(id => id !== section.id)!),
-            rowSpan
+            conflictWith: sectionConflicts.map(
+              (c) => c.groups.find((id) => id !== section.id)!,
+            ),
+            rowSpan,
           });
         }
 

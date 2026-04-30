@@ -1,25 +1,25 @@
 ---
-import AppLayout from "@/layouts/AppLayout.astro";
+import AppLayout from '@/layouts/AppLayout.astro';
 import {
   dayNames,
   getScheduleSummary,
   resolveScheduleDatasetByYearTerm,
   scheduleBlocks,
   schedulePeriods,
-} from "@/lib/schedules";
-import ProfessorStatsBanner from "@/features/schedules/components/composition/ProfessorStatsBanner.astro";
-import ProfessorCatalog from "@/features/schedules/components/composition/ProfessorCatalog.astro";
-import ProfessorWeeklyGrid from "@/features/schedules/components/composition/ProfessorWeeklyGrid.astro";
-import { dayOrder } from "@/lib/schedules/constants";
+} from '@/lib/schedules';
+import ProfessorStatsBanner from '@/features/schedules/components/composition/ProfessorStatsBanner.astro';
+import ProfessorCatalog from '@/features/schedules/components/composition/ProfessorCatalog.astro';
+import ProfessorWeeklyGrid from '@/features/schedules/components/composition/ProfessorWeeklyGrid.astro';
+import { dayOrder } from '@/lib/schedules/constants';
 
-const yearParam = Astro.url.searchParams.get("year");
-const termParam = Astro.url.searchParams.get("term");
+const yearParam = Astro.url.searchParams.get('year');
+const termParam = Astro.url.searchParams.get('term');
 const dataset = resolveScheduleDatasetByYearTerm(yearParam, termParam);
 const semesterLabel = dataset.period.label;
 const scheduleEntries = dataset.entries;
 const professorSchedules = dataset.professorSchedules;
-const professorNames = Object.keys(professorSchedules).sort(
-  new Intl.Collator("es", { sensitivity: "base" }).compare,
+const professorNames = Object.keys(professorSchedules).sort((a, b) =>
+  new Intl.Collator('es', { sensitivity: 'base' }).compare(a, b),
 );
 
 const getProfessorEntries = (name: string) => {
@@ -31,7 +31,7 @@ const getProfessorEntries = (name: string) => {
 const activeDays = dayNames.filter((day) =>
   scheduleEntries.some((entry) => entry.day === day.code),
 );
-const initialProfessor = professorNames[0] ?? "";
+const initialProfessor = professorNames[0] ?? '';
 const initialEntries = getProfessorEntries(initialProfessor);
 const summary = getScheduleSummary(scheduleEntries);
 const activeSummary = getScheduleSummary(initialEntries);
@@ -76,13 +76,13 @@ const activeSummary = getScheduleSummary(initialEntries);
   </section>
 
   <script>
-    import { initProfessorScheduleState } from "@/features/schedules/state/professorScheduleState";
+    import { initProfessorScheduleState } from '@/features/schedules/state/professorScheduleState';
 
     // Initialize state when the script runs
     initProfessorScheduleState();
 
     // Support for view transitions if enabled
-    document.addEventListener("astro:page-load", () => {
+    document.addEventListener('astro:page-load', () => {
       initProfessorScheduleState();
     });
   </script>

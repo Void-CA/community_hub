@@ -1,6 +1,5 @@
 ---
-import { formatAcademicYear } from "@/lib/schedules";
-import type { SchedulePeriod } from "@/lib/schedules";
+import type { SchedulePeriod } from '@/lib/schedules';
 
 interface Props {
   schedulePeriods: SchedulePeriod[];
@@ -61,10 +60,7 @@ const {
           periodYears.map((year) => (
             <button
               type="button"
-              class:list={[
-                "year-chip",
-                { "is-active": year === initialYear },
-              ]}
+              class:list={['year-chip', { 'is-active': year === initialYear }]}
               data-year-button
               data-year={String(year)}
             >
@@ -208,6 +204,8 @@ const {
       flex-wrap: wrap;
       gap: var(--space-4);
     }
-    .toolbar-divider { display: none; }
+    .toolbar-divider {
+      display: none;
+    }
   }
 </style>

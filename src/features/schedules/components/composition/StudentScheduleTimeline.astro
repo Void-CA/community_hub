@@ -1,12 +1,9 @@
 ---
-import BaseTimeline from "./BaseTimeline.astro";
-import ScheduleTile from "../domain/ScheduleTile.astro";
-import Legend from "./Legend.astro";
-import {
-  buildTimelineCellIndex,
-  getBlockIndex,
-} from "@/lib/schedules";
-import type { ScheduleSection } from "@/lib/schedules";
+import BaseTimeline from './BaseTimeline.astro';
+import ScheduleTile from '../domain/ScheduleTile.astro';
+import Legend from './Legend.astro';
+import { getBlockIndex } from '@/lib/schedules';
+import type { ScheduleSection } from '@/lib/schedules';
 
 interface DayItem {
   code: string;
@@ -15,15 +12,18 @@ interface DayItem {
 
 interface Props {
   activeDays: DayItem[];
-  scheduleBlocks: readonly any[];
+  scheduleBlocks: { type: string; label: string; range: string }[];
   allSections: ScheduleSection[];
 }
 
 const { activeDays, scheduleBlocks, allSections } = Astro.props;
-const cellIndex = buildTimelineCellIndex(allSections);
 ---
 
-<BaseTimeline title="Mi Horario" activeDays={activeDays} scheduleBlocks={scheduleBlocks}>
+<BaseTimeline
+  title="Mi Horario"
+  activeDays={activeDays}
+  scheduleBlocks={scheduleBlocks}
+>
   <Fragment slot="tiles">
     {
       allSections.map((section) =>
@@ -55,7 +55,7 @@ const cellIndex = buildTimelineCellIndex(allSections);
               />
             </div>
           );
-        })
+        }),
       )
     }
   </Fragment>

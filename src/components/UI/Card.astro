@@ -1,23 +1,32 @@
 ---
-interface Props {
-  as?: any;
-  variant?: "flat" | "elevated" | "glass" | "bordered";
-  padding?: "none" | "sm" | "md" | "lg";
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  as?:
+    | 'div'
+    | 'section'
+    | 'article'
+    | 'aside'
+    | 'nav'
+    | 'main'
+    | 'header'
+    | 'footer';
+  variant?: 'flat' | 'elevated' | 'glass' | 'bordered';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
   class?: string;
-  [key: string]: any;
 }
 
 const {
-  as: Tag = "div",
-  variant = "bordered",
-  padding = "md",
+  as: Tag = 'div',
+  variant = 'bordered',
+  padding = 'md',
   class: className,
   ...rest
 } = Astro.props;
 ---
 
 <Tag
-  class:list={["card-atom", `is-${variant}`, `p-${padding}`, className]}
+  class:list={['card-atom', `is-${variant}`, `p-${padding}`, className]}
   {...rest}
 >
   <slot />

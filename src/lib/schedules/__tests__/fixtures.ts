@@ -3,16 +3,18 @@ import type { ScheduleEntry, ScheduleSection } from '../types';
 /**
  * Minimal factory for a ScheduleEntry.
  */
-export function entry(overrides: Partial<ScheduleEntry> & {
-  day: string;
-  start_block: string;
-  end_block: string;
-  subject: string;
-  group: number;
-  professor: string;
-  room: string;
-  majors: string[];
-}): ScheduleEntry {
+export function entry(
+  overrides: Partial<ScheduleEntry> & {
+    day: string;
+    start_block: string;
+    end_block: string;
+    subject: string;
+    group: number;
+    professor: string;
+    room: string;
+    majors: string[];
+  },
+): ScheduleEntry {
   return {
     academicYear: 3,
     ...overrides,
@@ -25,10 +27,10 @@ export function entry(overrides: Partial<ScheduleEntry> & {
 export function section(id: string, entries: ScheduleEntry[]): ScheduleSection {
   return {
     id,
-    subject: entries[0]!.subject,
-    group: entries[0]!.group,
-    professor: entries[0]!.professor,
-    room: entries[0]!.room,
+    subject: entries[0].subject,
+    group: entries[0].group,
+    professor: entries[0].professor,
+    room: entries[0].room,
     majors: [...new Set(entries.flatMap((e) => e.majors))],
     academicYears: [...new Set(entries.map((e) => e.academicYear))],
     entries,

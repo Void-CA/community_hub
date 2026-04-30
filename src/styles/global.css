@@ -3,7 +3,9 @@
 @import './layout.css';
 @import './utilities.css';
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -20,30 +22,57 @@ body {
   line-height: 1.5;
 }
 
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
 /* Typography Base */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-text);
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-bold);
   line-height: 1.1;
 }
 
-h1 { font-size: var(--font-size-4xl); margin-bottom: var(--space-6); }
-h2 { font-size: var(--font-size-3xl); margin-bottom: var(--space-4); }
-h3 { font-size: var(--font-size-xl); margin-bottom: var(--space-3); }
+h1 {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-6);
+}
+h2 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-4);
+}
+h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-3);
+}
 
 a {
   color: var(--color-primary);
@@ -55,14 +84,21 @@ a:hover {
   color: var(--color-primary-hover);
 }
 
-ul, ol {
+ul,
+ol {
   padding-left: var(--space-5);
 }
 
 /* Base Utility Classes */
-.text-muted { color: var(--color-text-muted); }
-.text-soft { color: var(--color-text-soft); }
-.text-center { text-align: center; }
+.text-muted {
+  color: var(--color-text-muted);
+}
+.text-soft {
+  color: var(--color-text-soft);
+}
+.text-center {
+  text-align: center;
+}
 
 .sr-only {
   border-width: 0;

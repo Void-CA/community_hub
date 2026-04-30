@@ -17,19 +17,31 @@ export function initStudentScheduleState() {
   const integrityError = boot?.dataset.integrityError === 'true';
 
   if (integrityError) {
-    console.warn('Integrity Error: No conflict-free path found for this major/year combination.');
+    console.warn(
+      'Integrity Error: No conflict-free path found for this major/year combination.',
+    );
   }
 
-  const majorSelect = document.getElementById('major-select') as HTMLSelectElement | null;
+  const majorSelect = document.getElementById(
+    'major-select',
+  ) as HTMLSelectElement | null;
   const yearButtons = toArray<HTMLButtonElement>('[data-year-button]');
   const sectionButtons = toArray<SectionButton>('[data-section-toggle]');
   const tiles = toArray<HTMLElement>('.timeline-tile-container');
 
-  const searchInput = document.getElementById('section-search') as HTMLInputElement | null;
-  const periodSelect = document.getElementById('period-select') as HTMLSelectElement | null;
+  const searchInput = document.getElementById(
+    'section-search',
+  ) as HTMLInputElement | null;
+  const periodSelect = document.getElementById(
+    'period-select',
+  ) as HTMLSelectElement | null;
   const visibleSectionCount = document.getElementById('visible-section-count');
-  const selectedSectionCount = document.getElementById('selected-section-count');
-  const selectedSessionCount = document.getElementById('selected-session-count');
+  const selectedSectionCount = document.getElementById(
+    'selected-section-count',
+  );
+  const selectedSessionCount = document.getElementById(
+    'selected-session-count',
+  );
 
   const state: State = {
     major: initialMajor,
@@ -43,7 +55,8 @@ export function initStudentScheduleState() {
     const query = searchInput?.value.trim().toLowerCase() ?? '';
     const search = button.dataset.search ?? '';
 
-    const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
+    const matchesMajor =
+      state.major === 'all' || majors.includes(state.major.toLowerCase());
     const matchesYear = state.year === '0' || years.includes(state.year);
     const matchesSearch = query.length === 0 || search.includes(query);
 
@@ -51,9 +64,13 @@ export function initStudentScheduleState() {
   };
 
   const updateSummary = () => {
-    const selectedTiles = tiles.filter((tile) => state.selectedIds.has(tile.dataset.sectionId ?? ''));
-    if (selectedSectionCount) selectedSectionCount.textContent = String(state.selectedIds.size);
-    if (selectedSessionCount) selectedSessionCount.textContent = String(selectedTiles.length);
+    const selectedTiles = tiles.filter((tile) =>
+      state.selectedIds.has(tile.dataset.sectionId ?? ''),
+    );
+    if (selectedSectionCount)
+      selectedSectionCount.textContent = String(state.selectedIds.size);
+    if (selectedSessionCount)
+      selectedSessionCount.textContent = String(selectedTiles.length);
   };
 
   const applyVisibility = () => {
@@ -61,7 +78,9 @@ export function initStudentScheduleState() {
     const containers = toArray<HTMLElement>('[data-subject-container]');
 
     containers.forEach((container) => {
-      const buttons = [...container.querySelectorAll<SectionButton>('[data-section-toggle]')];
+      const buttons = [
+        ...container.querySelectorAll<SectionButton>('[data-section-toggle]'),
+      ];
       let hasVisibleButton = false;
 
       buttons.forEach((button) => {
@@ -89,8 +108,10 @@ export function initStudentScheduleState() {
       button.setAttribute('aria-pressed', String(selected));
     });
 
-    const activeTiles = tiles.filter((tile) => state.selectedIds.has(tile.dataset.sectionId ?? ''));
-    
+    const activeTiles = tiles.filter((tile) =>
+      state.selectedIds.has(tile.dataset.sectionId ?? ''),
+    );
+
     tiles.forEach((tile) => {
       tile.hidden = !state.selectedIds.has(tile.dataset.sectionId ?? '');
       tile.classList.remove('has-conflict');
@@ -124,7 +145,9 @@ export function initStudentScheduleState() {
 
     // Cleanup cells
     toArray<HTMLElement>('.timeline-cell.has-multiple').forEach((cell) => {
-      const visibleChildren = [...cell.children].filter((child) => !(child as HTMLElement).hidden);
+      const visibleChildren = [...cell.children].filter(
+        (child) => !(child as HTMLElement).hidden,
+      );
       if (visibleChildren.length <= 1) {
         cell.classList.remove('has-multiple');
       }
@@ -145,14 +168,19 @@ export function initStudentScheduleState() {
         return;
       }
 
-      const sectionTiles = tiles.filter(t => t.dataset.sectionId === sectionId);
-      const conflictsWithSelection = sectionTiles.some(t => {
+      const sectionTiles = tiles.filter(
+        (t) => t.dataset.sectionId === sectionId,
+      );
+      const conflictsWithSelection = sectionTiles.some((t) => {
         const key = `${t.dataset.day}-${t.dataset.block}`;
         return occupiedSlots.has(key);
       });
 
       button.classList.toggle('is-ghosted', conflictsWithSelection);
-      button.classList.toggle('is-compatible', !conflictsWithSelection && state.selectedIds.size > 0);
+      button.classList.toggle(
+        'is-compatible',
+        !conflictsWithSelection && state.selectedIds.size > 0,
+      );
     });
 
     updateSummary();
@@ -166,18 +194,21 @@ export function initStudentScheduleState() {
           .filter((button) => {
             const majors = button.dataset.majorList?.split('|') ?? [];
             const years = button.dataset.yearList?.split('|') ?? [];
-            const matchesMajor = state.major === 'all' || majors.includes(state.major.toLowerCase());
-            const matchesYear = state.year === '0' || years.includes(state.year);
-            
+            const matchesMajor =
+              state.major === 'all' ||
+              majors.includes(state.major.toLowerCase());
+            const matchesYear =
+              state.year === '0' || years.includes(state.year);
+
             if (!matchesMajor || !matchesYear) return false;
 
             const subject = button.dataset.subject ?? '';
             if (subjectSelected.has(subject)) return false;
-            
+
             subjectSelected.add(subject);
             return true;
           })
-          .map((button) => button.dataset.sectionId ?? '')
+          .map((button) => button.dataset.sectionId ?? ''),
       );
     }
 
@@ -195,7 +226,9 @@ export function initStudentScheduleState() {
       const nextYear = button.dataset.year ?? state.year;
       if (state.year === nextYear) return;
       state.year = nextYear;
-      yearButtons.forEach((candidate) => candidate.classList.toggle('is-active', candidate === button));
+      yearButtons.forEach((candidate) =>
+        candidate.classList.toggle('is-active', candidate === button),
+      );
       refreshSelectionByPreset();
     });
   });

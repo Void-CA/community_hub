@@ -15,7 +15,15 @@ export interface ProfessorSchedule {
 }
 
 // Icon Intent contract for Data-Driven UI
-export type IconIntent = 'student' | 'professor' | 'conflict' | 'room' | 'time' | 'arrow' | 'search' | 'info';
+export type IconIntent =
+  | 'student'
+  | 'professor'
+  | 'conflict'
+  | 'room'
+  | 'time'
+  | 'arrow'
+  | 'search'
+  | 'info';
 
 export interface ViewAction {
   label: string;
@@ -49,7 +57,9 @@ export interface ScheduleSection {
 }
 
 export type RawScheduleEntry = Omit<ScheduleEntry, 'academicYear'>;
-export type RawFullSchedule = Record<string, RawScheduleEntry[]> | RawScheduleEntry[];
+export type RawFullSchedule =
+  | Record<string, RawScheduleEntry[]>
+  | RawScheduleEntry[];
 export type RawProfessorSchedule = {
   by_day: Record<string, RawScheduleEntry[]>;
 };

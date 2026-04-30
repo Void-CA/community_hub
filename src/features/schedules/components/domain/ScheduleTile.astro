@@ -1,14 +1,13 @@
 ---
-import type { ScheduleEntry } from "@/lib/schedules";
+import type { ScheduleEntry } from '@/lib/schedules';
 import {
   formatAcademicYear,
   formatBlock,
-  formatDay,
   getSubjectColor,
   getProfessorAlias,
-} from "@/lib/schedules";
+} from '@/lib/schedules';
 
-export type ScheduleTileVariant = "student" | "professor";
+export type ScheduleTileVariant = 'student' | 'professor';
 
 interface Props {
   entry: ScheduleEntry;
@@ -25,27 +24,26 @@ const {
   sectionId,
   label,
   hasConflict = false,
-  conflictWith = [],
-  style: extraStyle = "",
-  variant = "student",
+  conflictWith: _conflictWith = [],
+  style: extraStyle = '',
+  variant = 'student',
 } = Astro.props;
 const accentColor = getSubjectColor(entry.subject);
 const title = label ?? entry.subject;
 const professorAlias = getProfessorAlias(entry.professor);
 
-const startTime = formatBlock(entry.start_block).split(" - ")[0];
+const startTime = formatBlock(entry.start_block).split(' - ')[0];
 const endTime =
-  formatBlock(entry.end_block).split(" - ")[1] ||
-  formatBlock(entry.end_block).split(" - ")[0];
-
+  formatBlock(entry.end_block).split(' - ')[1] ||
+  formatBlock(entry.end_block).split(' - ')[0];
 
 const academicYearLabel = entry.academicYear
   ? ` · ${formatAcademicYear(entry.academicYear)}`
-  : "";
+  : '';
 ---
 
 <article
-  class:list={["schedule-tile", { "has-conflict": hasConflict }]}
+  class:list={['schedule-tile', { 'has-conflict': hasConflict }]}
   data-schedule-tile
   data-section-id={sectionId}
   data-professor={entry.professor.toLowerCase()}
@@ -71,14 +69,15 @@ const academicYearLabel = entry.academicYear
     </div>
 
     <footer class="tile-footer">
-      {variant === "student" && (
-        <p class="tile-professor">{professorAlias}</p>
-      )}
-      {variant === "professor" && entry.majors.length > 0 && (
-        <span class="tile-major-badge">
-          {entry.majors.join(" · ")}{academicYearLabel}
-        </span>
-      )}
+      {variant === 'student' && <p class="tile-professor">{professorAlias}</p>}
+      {
+        variant === 'professor' && entry.majors.length > 0 && (
+          <span class="tile-major-badge">
+            {entry.majors.join(' · ')}
+            {academicYearLabel}
+          </span>
+        )
+      }
     </footer>
   </div>
 
@@ -231,11 +230,11 @@ const academicYearLabel = entry.academicYear
   }
 
   /* Adjustments for short spans */
-  :global(.timeline-tile-container[style*="span 1"]) .tile-footer {
+  :global(.timeline-tile-container[style*='span 1']) .tile-footer {
     display: none;
   }
 
-  :global(.timeline-tile-container[style*="span 1"]) .tile-subject {
+  :global(.timeline-tile-container[style*='span 1']) .tile-subject {
     -webkit-line-clamp: 1;
   }
 </style>

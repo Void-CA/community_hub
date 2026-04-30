@@ -14,33 +14,59 @@ const isInactive = status === 'inactive';
 const CardTag = isActive ? 'a' : 'div';
 ---
 
-<CardTag 
-  href={isActive ? href : undefined} 
+<CardTag
+  href={isActive ? href : undefined}
   class:list={[
     'card tool-card',
     { 'tool-card-inactive': isInactive },
-    { 'tool-card-experimental': status === 'experimental' }
+    { 'tool-card-experimental': status === 'experimental' },
   ]}
 >
   <div class="tool-content">
     <div class="tool-header">
       <div class="title-group">
         <h3>{title}</h3>
-        {label && <span class="badge" data-status={status}>{label}</span>}
+        {
+          label && (
+            <span class="badge" data-status={status}>
+              {label}
+            </span>
+          )
+        }
       </div>
-      
-      {isActive && (
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      )}
+
+      {
+        isActive && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="arrow-icon"
+          >
+            <>
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </>
+          </svg>
+        )
+      }
     </div>
-    
+
     <p class="tool-description">{description}</p>
-    
-    {isActive && (
-      <div class="tool-footer">
-        <span class="cta-text">Usar herramienta</span>
-      </div>
-    )}
+
+    {
+      isActive && (
+        <div class="tool-footer">
+          <span class="cta-text">Usar herramienta</span>
+        </div>
+      )
+    }
   </div>
 </CardTag>
 
@@ -96,13 +122,13 @@ const CardTag = isActive ? 'a' : 'div';
     border: 1px solid transparent;
   }
 
-  .badge[data-status="experimental"] {
+  .badge[data-status='experimental'] {
     background-color: var(--accent-50);
     color: var(--accent-600);
     border-color: var(--accent-500);
   }
 
-  .badge[data-status="inactive"] {
+  .badge[data-status='inactive'] {
     background-color: var(--neutral-100);
     color: var(--neutral-500);
     border-color: var(--neutral-200);

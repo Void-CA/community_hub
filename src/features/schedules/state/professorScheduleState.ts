@@ -6,14 +6,24 @@ export function initProfessorScheduleState() {
   const boot = document.querySelector<HTMLElement>('[data-initial-professor]');
   const initialProfessor = boot?.dataset.initialProfessor ?? '';
 
-  const professorButtons = toArray<HTMLButtonElement>('[data-professor-button]');
+  const professorButtons = toArray<HTMLButtonElement>(
+    '[data-professor-button]',
+  );
   const tiles = toArray<HTMLElement>('.timeline-tile-container');
-  const searchInput = document.getElementById('professor-search') as HTMLInputElement | null;
-  const visibleProfessorCount = document.getElementById('visible-professor-count');
-  const activeProfessorBadge = document.getElementById('active-professor-badge');
+  const searchInput = document.getElementById(
+    'professor-search',
+  ) as HTMLInputElement | null;
+  const visibleProfessorCount = document.getElementById(
+    'visible-professor-count',
+  );
+  const activeProfessorBadge = document.getElementById(
+    'active-professor-badge',
+  );
   const activeSessionBadge = document.getElementById('active-session-badge');
   const timelineEmpty = document.getElementById('timeline-empty');
-  const periodSelect = document.getElementById('period-select') as HTMLSelectElement | null;
+  const periodSelect = document.getElementById(
+    'period-select',
+  ) as HTMLSelectElement | null;
 
   // Zen Mode toggle
   const zenToggle = document.getElementById('zen-mode-toggle');
@@ -25,7 +35,7 @@ export function initProfessorScheduleState() {
 
   const updateSummary = () => {
     const selectedTiles = tiles.filter(
-      (tile) => tile.dataset.sectionId === state.professor
+      (tile) => tile.dataset.sectionId === state.professor,
     );
 
     if (activeProfessorBadge) {
@@ -57,7 +67,7 @@ export function initProfessorScheduleState() {
     });
 
     const hasCurrentVisible = visibleButtons.some(
-      (button) => (button.dataset.professor ?? '') === state.professor
+      (button) => (button.dataset.professor ?? '') === state.professor,
     );
 
     if (!hasCurrentVisible && visibleButtons.length > 0) {
@@ -76,10 +86,10 @@ export function initProfessorScheduleState() {
 
     if (visibleProfessorCount) {
       visibleProfessorCount.textContent = String(
-        professorButtons.filter((button) => !button.hidden).length
+        professorButtons.filter((button) => !button.hidden).length,
       );
     }
-    
+
     updateSummary();
   };
 
@@ -90,7 +100,7 @@ export function initProfessorScheduleState() {
 
   professorButtons.forEach((button) => {
     button.addEventListener('click', () =>
-      selectProfessor(button.dataset.professor ?? initialProfessor)
+      selectProfessor(button.dataset.professor ?? initialProfessor),
     );
   });
 

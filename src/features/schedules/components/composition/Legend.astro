@@ -1,6 +1,4 @@
 ---
-import { majorAccents } from '@/lib/schedules/constants';
-
 interface LegendItem {
   color?: string;
   label: string;
@@ -12,36 +10,38 @@ const generalItems: LegendItem[] = [
   {
     label: 'Materia',
     description: 'Cada materia tiene un color único asignado automáticamente.',
-    color: 'var(--color-primary)'
+    color: 'var(--color-primary)',
   },
   {
     label: 'Conflicto',
     description: 'Aviso de solapamiento entre dos o más clases.',
-    color: 'var(--color-error)'
+    color: 'var(--color-error)',
   },
   {
     label: 'Receso / Almuerzo',
     description: 'Espacios entre bloques académicos.',
-    isPattern: true
-  }
+    isPattern: true,
+  },
 ];
 ---
 
 <div class="schedule-legend">
   <p class="legend-title">Guía de Visualización</p>
   <div class="legend-grid">
-    {generalItems.map(item => (
-      <div class="legend-item">
-        <div 
-          class:list={["legend-swatch", { "is-pattern": item.isPattern }]} 
-          style={item.color ? `background-color: ${item.color}` : ''}
-        ></div>
-        <div class="legend-info">
-          <span class="legend-label">{item.label}</span>
-          <span class="legend-desc">{item.description}</span>
+    {
+      generalItems.map((item) => (
+        <div class="legend-item">
+          <div
+            class:list={['legend-swatch', { 'is-pattern': item.isPattern }]}
+            style={item.color ? `background-color: ${item.color}` : ''}
+          />
+          <div class="legend-info">
+            <span class="legend-label">{item.label}</span>
+            <span class="legend-desc">{item.description}</span>
+          </div>
         </div>
-      </div>
-    ))}
+      ))
+    }
   </div>
 </div>
 

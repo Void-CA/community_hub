@@ -1,12 +1,12 @@
-import { 
-  GraduationCap, 
-  Users, 
-  AlertTriangle, 
-  MapPin, 
-  Clock, 
+import {
+  GraduationCap,
+  Users,
+  AlertTriangle,
+  MapPin,
+  Clock,
   ArrowRight,
   Search,
-  Info
+  Info,
 } from '@lucide/astro';
 
 export const dayOrder = ['L', 'M', 'X', 'J', 'V', 'S'];
@@ -17,22 +17,22 @@ export const dayLabels: Record<string, string> = {
   X: 'Miércoles',
   J: 'Jueves',
   V: 'Viernes',
-  S: 'Sábado'
+  S: 'Sábado',
 };
 
 export const dayNormalization: Record<string, string> = {
-  'Monday': 'L',
-  'Tuesday': 'M',
-  'Wednesday': 'X',
-  'Thursday': 'J',
-  'Friday': 'V',
-  'Saturday': 'S',
-  'Lunes': 'L',
-  'Martes': 'M',
-  'Miércoles': 'X',
-  'Jueves': 'J',
-  'Viernes': 'V',
-  'Sábado': 'S'
+  Monday: 'L',
+  Tuesday: 'M',
+  Wednesday: 'X',
+  Thursday: 'J',
+  Friday: 'V',
+  Saturday: 'S',
+  Lunes: 'L',
+  Martes: 'M',
+  Miércoles: 'X',
+  Jueves: 'J',
+  Viernes: 'V',
+  Sábado: 'S',
 };
 
 export const scheduleSlots = [
@@ -50,28 +50,28 @@ export const scheduleSlots = [
 ] as const;
 
 export const oldToNewLabel: Record<string, string> = {
-  'mañana1': '1',
-  'mañana2': '2',
-  'receso1': 'Receso',
-  'mañana3': '3',
-  'mañana4': '4',
-  'almuerzo': 'Almuerzo',
-  'tarde1': '5',
-  'tarde2': '6',
-  'receso2': 'Receso',
-  'tarde3': '7',
-  'tarde4': '8',
-  'Morning1': '1',
-  'Morning2': '2',
-  'Morning3': '3',
-  'Morning4': '4',
-  'Afternoon1': '5',
-  'Afternoon2': '6',
-  'Afternoon3': '7',
-  'Afternoon4': '8',
-  'Break1': 'Receso',
-  'Break2': 'Receso',
-  'Lunch': 'Almuerzo'
+  mañana1: '1',
+  mañana2: '2',
+  receso1: 'Receso',
+  mañana3: '3',
+  mañana4: '4',
+  almuerzo: 'Almuerzo',
+  tarde1: '5',
+  tarde2: '6',
+  receso2: 'Receso',
+  tarde3: '7',
+  tarde4: '8',
+  Morning1: '1',
+  Morning2: '2',
+  Morning3: '3',
+  Morning4: '4',
+  Afternoon1: '5',
+  Afternoon2: '6',
+  Afternoon3: '7',
+  Afternoon4: '8',
+  Break1: 'Receso',
+  Break2: 'Receso',
+  Lunch: 'Almuerzo',
 };
 
 export const ICON_MAP = {
@@ -82,16 +82,16 @@ export const ICON_MAP = {
   time: Clock,
   arrow: ArrowRight,
   search: Search,
-  info: Info
+  info: Info,
 } as const;
 
 export const majorAccents = [
   'hsl(215, 70%, 55%)', // Blue
   'hsl(160, 60%, 45%)', // Emerald
-  'hsl(35, 80%, 50%)',  // Amber
-  'hsl(0, 70%, 55%)',   // Red
+  'hsl(35, 80%, 50%)', // Amber
+  'hsl(0, 70%, 55%)', // Red
   'hsl(260, 60%, 60%)', // Violet
   'hsl(330, 70%, 60%)', // Pink
   'hsl(190, 70%, 45%)', // Cyan
-  'hsl(20, 80%, 55%)',  // Orange
+  'hsl(20, 80%, 55%)', // Orange
 ];

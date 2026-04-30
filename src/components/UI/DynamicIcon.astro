@@ -12,4 +12,8 @@ const { intent, size = 20, class: className, strokeWidth = 2.5 } = Astro.props;
 const IconComponent = ICON_MAP[intent];
 ---
 
-{IconComponent && <IconComponent size={size} class={className} stroke-width={strokeWidth} />}
+{
+  IconComponent && (
+    <IconComponent size={size} class={className} stroke-width={strokeWidth} />
+  )
+}

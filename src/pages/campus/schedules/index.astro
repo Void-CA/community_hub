@@ -1,31 +1,37 @@
 ---
-import GlobalSearch from "@/features/schedules/components/composition/GlobalSearch.astro";
-import Card from "@/components/UI/Card.astro";
-import Badge from "@/components/UI/Badge.astro";
-import DynamicIcon from "@/components/UI/DynamicIcon.astro";
+import GlobalSearch from '@/features/schedules/components/composition/GlobalSearch.astro';
+import Card from '@/components/UI/Card.astro';
+import Badge from '@/components/UI/Badge.astro';
+import DynamicIcon from '@/components/UI/DynamicIcon.astro';
 import {
   semesterLabel,
   groups,
   scheduleEntries,
   getScheduleSummary,
-} from "@/lib/schedules";
-import AppLayout from "@/layouts/AppLayout.astro";
+} from '@/lib/schedules';
+import AppLayout from '@/layouts/AppLayout.astro';
+import type { IconIntent } from '@/lib/schedules';
 
 const summary = getScheduleSummary(scheduleEntries);
 
-const spotlightItems = [
+const spotlightItems: {
+  title: string;
+  description: string;
+  href: string;
+  intent: IconIntent;
+}[] = [
   {
-    title: "Vista de Estudiantes",
+    title: 'Vista de Estudiantes',
     description:
-      "Consulta por carrera, año y grupo con detección de conflictos.",
-    href: "/campus/schedules/students",
-    intent: "student",
+      'Consulta por carrera, año y grupo con detección de conflictos.',
+    href: '/campus/schedules/students',
+    intent: 'student',
   },
   {
-    title: "Vista de Profesores",
-    description: "Busca a un docente y revisa su carga semanal y materias.",
-    href: "/campus/schedules/professors",
-    intent: "professor",
+    title: 'Vista de Profesores',
+    description: 'Busca a un docente y revisa su carga semanal y materias.',
+    href: '/campus/schedules/professors',
+    intent: 'professor',
   },
 ];
 ---
@@ -39,11 +45,12 @@ const spotlightItems = [
       <div class="hero-header">
         <p class="eyebrow">Sistema de Horarios Académicos</p>
         <h1 class="hero-title">
-          Tus horarios, <span class="text-gradient">claros y consultables</span>.
+          Tus horarios, <span class="text-gradient">claros y consultables</span
+          >.
         </h1>
         <p class="hero-text text-soft">
-          Explora la carga académica del periodo <strong>{semesterLabel}</strong>.
-          Datos sincronizados desde el catálogo oficial de la universidad.
+          Explora la carga académica del periodo <strong>{semesterLabel}</strong
+          >. Datos sincronizados desde el catálogo oficial de la universidad.
         </p>
       </div>
 
@@ -52,7 +59,7 @@ const spotlightItems = [
           spotlightItems.map((item) => (
             <a class="card access-card" href={item.href}>
               <div class="access-icon">
-                <DynamicIcon intent={item.intent as any} size={32} />
+                <DynamicIcon intent={item.intent} size={32} />
               </div>
               <div class="access-content">
                 <h3>{item.title}</h3>
@@ -74,7 +81,9 @@ const spotlightItems = [
         <GlobalSearch />
         <div class="hero-meta">
           <Badge size="xs" variant="muted">Dataset v2.4</Badge>
-          <span class="text-xs text-soft">Última actualización: Hoy, 08:30 AM</span>
+          <span class="text-xs text-soft"
+            >Última actualización: Hoy, 08:30 AM</span
+          >
         </div>
       </div>
 
@@ -121,7 +130,9 @@ const spotlightItems = [
             Insight del periodo
           </div>
           <p class="insight-value">
-            La materia con más secciones es <strong>{summary.mostPopularSubject?.name}</strong>
+            La materia con más secciones es <strong
+              >{summary.mostPopularSubject?.name}</strong
+            >
             con {summary.mostPopularSubject?.count} grupos activos.
           </p>
         </div>
@@ -198,7 +209,11 @@ const spotlightItems = [
 
   .access-card:hover {
     border-color: var(--color-primary);
-    background: color-mix(in srgb, var(--color-primary) 2%, var(--color-surface));
+    background: color-mix(
+      in srgb,
+      var(--color-primary) 2%,
+      var(--color-surface)
+    );
     transform: scale(1.01);
   }
 
@@ -338,7 +353,11 @@ const spotlightItems = [
     margin-top: var(--space-1);
     padding: var(--space-3);
     border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--color-accent) 5%, var(--color-surface));
+    background: color-mix(
+      in srgb,
+      var(--color-accent) 5%,
+      var(--color-surface)
+    );
     border: var(--border-width-sm) dashed var(--color-accent);
   }
 

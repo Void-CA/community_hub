@@ -6,10 +6,18 @@ interface Props {
   [key: string]: any;
 }
 
-const { variant = 'soft', size = 'sm', class: className, ...rest } = Astro.props;
+const {
+  variant = 'soft',
+  size = 'sm',
+  class: className,
+  ...rest
+} = Astro.props;
 ---
 
-<span class:list={['badge', `is-${variant}`, `is-${size}`, className]} {...rest}>
+<span
+  class:list={['badge', `is-${variant}`, `is-${size}`, className]}
+  {...rest}
+>
   <slot />
 </span>
 

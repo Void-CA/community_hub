@@ -1,4 +1,8 @@
-import type { ScheduleSection, OverlapConflict, ScheduleEntry, SchedulePathResultUnion } from './types';
+import type {
+  ScheduleSection,
+  OverlapConflict,
+  SchedulePathResultUnion,
+} from './types';
 import { getBlockIndex } from './index';
 
 /**
@@ -6,16 +10,19 @@ import { getBlockIndex } from './index';
  * Sections of the SAME SUBJECT are NOT conflicts (different groups are mutually exclusive).
  * Returns a map where keys are section IDs and values are the conflicts they have.
  */
-export function detectConflicts(sections: ScheduleSection[]): Map<string, OverlapConflict[]> {
+export function detectConflicts(
+  sections: ScheduleSection[],
+): Map<string, OverlapConflict[]> {
   const conflicts = new Map<string, OverlapConflict[]>();
 
   for (let i = 0; i < sections.length; i++) {
     for (let j = i + 1; j < sections.length; j++) {
-      const sectionA = sections[i]!;
-      const sectionB = sections[j]!;
+      const sectionA = sections[i];
+      const sectionB = sections[j];
 
       // Same subject = different groups of the same class, NOT a conflict
-      if (sectionA.subject.toLowerCase() === sectionB.subject.toLowerCase()) continue;
+      if (sectionA.subject.toLowerCase() === sectionB.subject.toLowerCase())
+        continue;
 
       const sharedBlocks = findOverlap(sectionA, sectionB);
 
@@ -72,7 +79,9 @@ function findOverlap(a: ScheduleSection, b: ScheduleSection): string[] {
  * CSP-like solver to find if a valid (conflict-free) path exists.
  * Only considers sections of different subjects for conflict checking.
  */
-export function findValidPath(sections: ScheduleSection[]): SchedulePathResultUnion {
+export function findValidPath(
+  sections: ScheduleSection[],
+): SchedulePathResultUnion {
   if (sections.length === 0) {
     return {
       success: false,
@@ -91,11 +100,12 @@ export function findValidPath(sections: ScheduleSection[]): SchedulePathResultUn
   function solve(subjectIndex: number): boolean {
     if (subjectIndex === subjects.length) return true;
 
-    const options = sectionsBySubject[subjectIndex]!;
+    const options = sectionsBySubject[subjectIndex];
     for (const option of options) {
       // Check if 'option' conflicts with any section already in 'path'
       const hasConflict = path.some(
-        (p) => p.subject !== option.subject && findOverlap(p, option).length > 0,
+        (p) =>
+          p.subject !== option.subject && findOverlap(p, option).length > 0,
       );
 
       if (!hasConflict) {

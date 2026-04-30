@@ -7,7 +7,7 @@ export interface Tool {
   href?: string;
   status: ToolStatus;
   category?: string;
-  
+
   // UI Display Props (Optional overrides)
   label?: string; // e.g., "Próximamente", "Beta", "Nuevo"
   isExternal?: boolean;

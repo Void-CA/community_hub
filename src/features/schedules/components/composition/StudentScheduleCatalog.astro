@@ -1,8 +1,7 @@
 ---
-import { formatAcademicYear, groupSectionsBySubject } from "@/lib/schedules";
-import type { ScheduleSection } from "@/lib/schedules";
-import Badge from "@/components/UI/Badge.astro";
-import Card from "@/components/UI/Card.astro";
+import { groupSectionsBySubject } from '@/lib/schedules';
+import type { ScheduleSection } from '@/lib/schedules';
+import Card from '@/components/UI/Card.astro';
 
 interface Props {
   allSections: ScheduleSection[];
@@ -44,10 +43,11 @@ const groupedSubjects = groupSectionsBySubject(allSections);
           <div class="subject-info">
             <h3>{subject.subject}</h3>
             <span class="option-count">
-              {subject.options.length} {subject.options.length === 1 ? "grupo" : "grupos"}
+              {subject.options.length}{' '}
+              {subject.options.length === 1 ? 'grupo' : 'grupos'}
             </span>
           </div>
-          
+
           <div class="group-selector">
             {subject.options.map((option) => {
               const section = option.section;
@@ -55,9 +55,9 @@ const groupedSubjects = groupSectionsBySubject(allSections);
                 <button
                   type="button"
                   class:list={[
-                    "group-button",
+                    'group-button',
                     {
-                      "is-selected":
+                      'is-selected':
                         section.majors.includes(initialMajor) &&
                         (initialYear <= 0 ||
                           section.academicYears.includes(initialYear)),
@@ -68,10 +68,10 @@ const groupedSubjects = groupSectionsBySubject(allSections);
                   data-subject={section.subject}
                   data-major-list={section.majors
                     .map((m) => m.toLowerCase())
-                    .join("|")}
+                    .join('|')}
                   data-year-list={section.academicYears
                     .map((y) => String(y))
-                    .join("|")}
+                    .join('|')}
                   data-search={`${section.subject} ${section.professor} ${section.room} ${section.group}`.toLowerCase()}
                   aria-pressed={section.majors.includes(initialMajor)}
                   title={`${section.professor} · ${section.room}`}
@@ -211,7 +211,8 @@ const groupedSubjects = groupSectionsBySubject(allSections);
     background: var(--color-primary);
     color: white;
     border-color: var(--color-primary);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 30%, transparent);
+    box-shadow: 0 4px 12px
+      color-mix(in srgb, var(--color-primary) 30%, transparent);
     transform: translateY(-1px) scale(1.05);
   }
 
@@ -223,7 +224,10 @@ const groupedSubjects = groupSectionsBySubject(allSections);
 
   .group-button.is-compatible {
     border-color: var(--color-success);
-    background: color-mix(in srgb, var(--color-success) 5%, var(--color-surface));
+    background: color-mix(
+      in srgb,
+      var(--color-success) 5%,
+      var(--color-surface)
+    );
   }
-
 </style>

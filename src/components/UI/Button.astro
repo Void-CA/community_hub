@@ -9,14 +9,14 @@ interface Props {
   [key: string]: any;
 }
 
-const { 
-  href, 
-  variant = 'primary', 
-  size = 'md', 
-  class: className, 
-  target, 
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  class: className,
+  target,
   rel,
-  ...rest 
+  ...rest
 } = Astro.props;
 
 const Element = href ? 'a' : 'button';
@@ -24,18 +24,18 @@ const Element = href ? 'a' : 'button';
 const variantClasses = {
   primary: 'btn-primary',
   secondary: 'btn-secondary',
-  ghost: 'btn-ghost'
+  ghost: 'btn-ghost',
 };
 
 const sizeClasses = {
   sm: 'btn-sm',
   md: 'btn-md',
-  lg: 'btn-lg'
+  lg: 'btn-lg',
 };
 ---
 
-<Element 
-  href={href} 
+<Element
+  href={href}
   target={target}
   rel={rel}
   class:list={['btn', variantClasses[variant], sizeClasses[size], className]}

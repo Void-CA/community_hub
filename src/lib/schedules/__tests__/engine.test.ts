@@ -157,13 +157,40 @@ describe('detectConflicts', () => {
 
   it('records conflicts for both sides', () => {
     const s1 = section('A::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'A', group: 1, professor: 'P', room: 'R', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'A',
+        group: 1,
+        professor: 'P',
+        room: 'R',
+        majors: ['ICE'],
+      }),
     ]);
     const s2 = section('B::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'B', group: 1, professor: 'P', room: 'R', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'B',
+        group: 1,
+        professor: 'P',
+        room: 'R',
+        majors: ['ICE'],
+      }),
     ]);
     const s3 = section('C::G1', [
-      entry({ day: 'M', start_block: '1', end_block: '2', subject: 'C', group: 1, professor: 'P', room: 'R', majors: ['ICE'] }),
+      entry({
+        day: 'M',
+        start_block: '1',
+        end_block: '2',
+        subject: 'C',
+        group: 1,
+        professor: 'P',
+        room: 'R',
+        majors: ['ICE'],
+      }),
     ]);
 
     const conflicts = detectConflicts([s1, s2, s3]);
@@ -185,10 +212,28 @@ describe('findValidPath', () => {
 
   it('finds a valid path when no conflicts exist', () => {
     const s1 = section('Cálculo I::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'Cálculo I', group: 1, professor: 'P', room: 'A1', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Cálculo I',
+        group: 1,
+        professor: 'P',
+        room: 'A1',
+        majors: ['ICE'],
+      }),
     ]);
     const s2 = section('Física I::G1', [
-      entry({ day: 'M', start_block: '1', end_block: '2', subject: 'Física I', group: 1, professor: 'P', room: 'A1', majors: ['ICE'] }),
+      entry({
+        day: 'M',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Física I',
+        group: 1,
+        professor: 'P',
+        room: 'A1',
+        majors: ['ICE'],
+      }),
     ]);
 
     const result = findValidPath([s1, s2]);
@@ -200,13 +245,40 @@ describe('findValidPath', () => {
 
   it('finds a valid path when same-subject sections overlap (different groups)', () => {
     const s1 = section('Cálculo I::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'Cálculo I', group: 1, professor: 'P', room: 'A1', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Cálculo I',
+        group: 1,
+        professor: 'P',
+        room: 'A1',
+        majors: ['ICE'],
+      }),
     ]);
     const s2 = section('Cálculo I::G2', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'Cálculo I', group: 2, professor: 'P', room: 'A2', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Cálculo I',
+        group: 2,
+        professor: 'P',
+        room: 'A2',
+        majors: ['ICE'],
+      }),
     ]);
     const s3 = section('Física I::G1', [
-      entry({ day: 'M', start_block: '1', end_block: '2', subject: 'Física I', group: 1, professor: 'P', room: 'A1', majors: ['ICE'] }),
+      entry({
+        day: 'M',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Física I',
+        group: 1,
+        professor: 'P',
+        room: 'A1',
+        majors: ['ICE'],
+      }),
     ]);
 
     const result = findValidPath([s1, s2, s3]);
@@ -219,22 +291,51 @@ describe('findValidPath', () => {
   it('chooses non-conflicting section when options exist', () => {
     // Cálculo G1 doesn't conflict with anything
     const calculo1 = section('Cálculo I::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'Cálculo I', group: 1, professor: 'P', room: 'A1', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Cálculo I',
+        group: 1,
+        professor: 'P',
+        room: 'A1',
+        majors: ['ICE'],
+      }),
     ]);
     // Física G1 conflicts with Programación G1
     const fisica1 = section('Física I::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'Física I', group: 1, professor: 'P', room: 'B1', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Física I',
+        group: 1,
+        professor: 'P',
+        room: 'B1',
+        majors: ['ICE'],
+      }),
     ]);
     // Física G2 doesn't conflict
     const fisica2 = section('Física I::G2', [
-      entry({ day: 'M', start_block: '1', end_block: '2', subject: 'Física I', group: 2, professor: 'P', room: 'B2', majors: ['ICE'] }),
+      entry({
+        day: 'M',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Física I',
+        group: 2,
+        professor: 'P',
+        room: 'B2',
+        majors: ['ICE'],
+      }),
     ]);
 
     const result = findValidPath([calculo1, fisica1, fisica2]);
     expect(result.success).toBe(true);
     if (result.success) {
       // Should pick Física G2 to avoid conflict with Cálculo
-      const fisicaSection = result.sections.find((s) => s.subject === 'Física I');
+      const fisicaSection = result.sections.find(
+        (s) => s.subject === 'Física I',
+      );
       expect(fisicaSection!.group).toBe(2);
     }
   });
@@ -242,10 +343,28 @@ describe('findValidPath', () => {
   it('returns NO_VALID_PATH when all combinations conflict', () => {
     // Both sections of A and B overlap on Monday block 1
     const a1 = section('A::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'A', group: 1, professor: 'P', room: 'R', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'A',
+        group: 1,
+        professor: 'P',
+        room: 'R',
+        majors: ['ICE'],
+      }),
     ]);
     const b1 = section('B::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'B', group: 1, professor: 'P', room: 'R', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'B',
+        group: 1,
+        professor: 'P',
+        room: 'R',
+        majors: ['ICE'],
+      }),
     ]);
     // Only one option per subject, and they conflict → no valid path
     const result = findValidPath([a1, b1]);
@@ -257,7 +376,16 @@ describe('findValidPath', () => {
 
   it('works with single section', () => {
     const s1 = section('Solo::G1', [
-      entry({ day: 'L', start_block: '1', end_block: '2', subject: 'Solo', group: 1, professor: 'P', room: 'R', majors: ['ICE'] }),
+      entry({
+        day: 'L',
+        start_block: '1',
+        end_block: '2',
+        subject: 'Solo',
+        group: 1,
+        professor: 'P',
+        room: 'R',
+        majors: ['ICE'],
+      }),
     ]);
     const result = findValidPath([s1]);
     expect(result.success).toBe(true);

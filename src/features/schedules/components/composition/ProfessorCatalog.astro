@@ -1,9 +1,10 @@
 ---
-import Card from "@/components/UI/Card.astro";
+import Card from '@/components/UI/Card.astro';
+import type { ProfessorSchedule, ScheduleEntry } from '@/lib/schedules';
 
 interface Props {
   professorNames: string[];
-  professorSchedules: Record<string, any>;
+  professorSchedules: Record<string, ProfessorSchedule>;
   initialProfessor: string;
 }
 
@@ -12,16 +13,11 @@ const { professorNames, professorSchedules, initialProfessor } = Astro.props;
 const PAGE_SIZE = 6;
 const totalPages = Math.ceil(professorNames.length / PAGE_SIZE);
 
-const getEntries = (name: string) => {
+const getEntries = (name: string): ScheduleEntry[] => {
   const professor = professorSchedules[name];
   if (!professor) return [];
-  return Object.values(professor.by_day).flat() as any[];
+  return Object.values(professor.by_day).flat();
 };
-
-function getPageRange(page: number) {
-  const start = (page - 1) * PAGE_SIZE;
-  return { start, end: Math.min(start + PAGE_SIZE, professorNames.length) };
-}
 
 function getPageNumbers(current: number, total: number): (number | null)[] {
   const pages: (number | null)[] = [];
@@ -40,7 +36,12 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
 }
 ---
 
-<Card as="aside" class="catalog" padding="lg" data-initial-professor={initialProfessor}>
+<Card
+  as="aside"
+  class="catalog"
+  padding="lg"
+  data-initial-professor={initialProfessor}
+>
   <div class="catalog-head">
     <div>
       <p class="eyebrow">Catálogo</p>
@@ -64,8 +65,8 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
     {
       professorNames.map((name) => {
         const entries = getEntries(name);
-        const days = new Set(entries.map((entry: any) => entry.day)).size;
-        const subjects = new Set(entries.map((entry: any) => entry.subject)).size;
+        const days = new Set(entries.map((entry) => entry.day)).size;
+        const subjects = new Set(entries.map((entry) => entry.subject)).size;
         const idx = professorNames.indexOf(name);
         const page = Math.floor(idx / PAGE_SIZE) + 1;
 
@@ -73,9 +74,9 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
           <button
             type="button"
             class:list={[
-              "section-card",
-              { "is-selected": name === initialProfessor },
-              { "is-page-hidden": page > 1 },
+              'section-card',
+              { 'is-selected': name === initialProfessor },
+              { 'is-page-hidden': page > 1 },
             ]}
             data-professor-button
             data-professor={name}
@@ -91,13 +92,13 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
                 </p>
               </div>
               <div class="workload-indicator">
-                {["L", "M", "X", "J", "V"].map((code) => {
-                  const count = entries.filter((e: any) => e.day === code).length;
+                {['L', 'M', 'X', 'J', 'V'].map((code) => {
+                  const count = entries.filter((e) => e.day === code).length;
                   return (
                     <span
                       class:list={[
-                        "workload-dot",
-                        { "has-load": count > 0, "high-load": count > 3 },
+                        'workload-dot',
+                        { 'has-load': count > 0, 'high-load': count > 3 },
                       ]}
                       title={`${count} sesiones`}
                     />
@@ -111,52 +112,57 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
     }
   </div>
 
-  {totalPages > 1 && (
-    <nav class="pagination-nav" data-pagination data-total-pages={totalPages}>
-      <button
-        type="button"
-        class="page-btn page-prev"
-        data-page-action="prev"
-        disabled
-        aria-label="Página anterior"
-      >
-        <span>‹</span>
-      </button>
+  {
+    totalPages > 1 && (
+      <nav class="pagination-nav" data-pagination data-total-pages={totalPages}>
+        <button
+          type="button"
+          class="page-btn page-prev"
+          data-page-action="prev"
+          disabled
+          aria-label="Página anterior"
+        >
+          <span>‹</span>
+        </button>
 
-      {getPageNumbers(1, totalPages).map((p) => {
-        if (p === null) return <span class="page-ellipsis">…</span>;
-        return (
-          <button
-            type="button"
-            class:list={["page-btn", { "is-active": p === 1 }]}
-            data-page-number={p}
-          >
-            {p}
-          </button>
-        );
-      })}
+        {getPageNumbers(1, totalPages).map((p) => {
+          if (p === null) return <span class="page-ellipsis">…</span>;
+          return (
+            <button
+              type="button"
+              class:list={['page-btn', { 'is-active': p === 1 }]}
+              data-page-number={p}
+            >
+              {p}
+            </button>
+          );
+        })}
 
-      <button
-        type="button"
-        class="page-btn page-next"
-        data-page-action="next"
-        aria-label="Página siguiente"
-      >
-        <span>›</span>
-      </button>
-    </nav>
-  )}
+        <button
+          type="button"
+          class="page-btn page-next"
+          data-page-action="next"
+          aria-label="Página siguiente"
+        >
+          <span>›</span>
+        </button>
+      </nav>
+    )
+  }
 </Card>
 
 <script is:inline>
-  (function() {
+  (function () {
     var list = document.querySelector('[data-professor-list]');
     var pagination = document.querySelector('[data-pagination]');
 
     if (!list || !pagination) return;
 
     var currentPage = 1;
-    var totalPages = parseInt(pagination.getAttribute('data-total-pages') || '1', 10);
+    var totalPages = parseInt(
+      pagination.getAttribute('data-total-pages') || '1',
+      10,
+    );
     var allButtons = list.querySelectorAll('[data-professor-button]');
 
     function showPage(page) {
@@ -178,8 +184,8 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
 
       var prevBtn = pagination.querySelector('[data-page-action="prev"]');
       var nextBtn = pagination.querySelector('[data-page-action="next"]');
-      if (prevBtn) prevBtn.disabled = (page === 1);
-      if (nextBtn) nextBtn.disabled = (page === totalPages);
+      if (prevBtn) prevBtn.disabled = page === 1;
+      if (nextBtn) nextBtn.disabled = page === totalPages;
 
       list.setAttribute('data-page', String(page));
     }
@@ -187,7 +193,7 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
     // When search is active, filter and show matching buttons
     var searchInput = document.getElementById('professor-search');
     if (searchInput) {
-      searchInput.addEventListener('input', function() {
+      searchInput.addEventListener('input', function () {
         var query = searchInput.value.trim().toLowerCase();
         for (var i = 0; i < allButtons.length; i++) {
           var btn = allButtons[i];
@@ -205,7 +211,7 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
       });
     }
 
-    pagination.addEventListener('click', function(e) {
+    pagination.addEventListener('click', function (e) {
       var target = e.target;
       if (target.getAttribute && target.getAttribute('data-page-number')) {
         var num = parseInt(target.getAttribute('data-page-number'), 10);
@@ -214,7 +220,9 @@ function getPageNumbers(current: number, total: number): (number | null)[] {
         return;
       }
 
-      var closestBtn = target.closest ? target.closest('[data-page-action]') : null;
+      var closestBtn = target.closest
+        ? target.closest('[data-page-action]')
+        : null;
       if (!closestBtn) return;
 
       var action = closestBtn.getAttribute('data-page-action');

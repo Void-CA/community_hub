@@ -1,29 +1,27 @@
 ---
-import AppLayout from "@/layouts/AppLayout.astro";
+import AppLayout from '@/layouts/AppLayout.astro';
 import {
-  academicYears,
   buildScheduleSections,
   dayNames,
-  getScheduleSummary,
   resolveScheduleDatasetByYearTerm,
   scheduleBlocks,
   schedulePeriods,
   findValidPath,
-} from "@/lib/schedules";
-import StudentScheduleCatalog from "@/features/schedules/components/composition/StudentScheduleCatalog.astro";
-import StudentScheduleFilters from "@/features/schedules/components/composition/StudentScheduleFilters.astro";
-import StudentScheduleTimeline from "@/features/schedules/components/composition/StudentScheduleTimeline.astro";
-import Badge from "@/components/UI/Badge.astro";
-import DynamicIcon from "@/components/UI/DynamicIcon.astro";
+} from '@/lib/schedules';
+import StudentScheduleCatalog from '@/features/schedules/components/composition/StudentScheduleCatalog.astro';
+import StudentScheduleFilters from '@/features/schedules/components/composition/StudentScheduleFilters.astro';
+import StudentScheduleTimeline from '@/features/schedules/components/composition/StudentScheduleTimeline.astro';
 
-const yearParam = Astro.url.searchParams.get("year");
-const termParam = Astro.url.searchParams.get("term");
+const yearParam = Astro.url.searchParams.get('year');
+const termParam = Astro.url.searchParams.get('term');
 const dataset = resolveScheduleDatasetByYearTerm(yearParam, termParam);
 const semesterLabel = dataset.period.label;
 const scheduleEntries = dataset.entries;
 const periodMajors = [
   ...new Set(scheduleEntries.flatMap((entry) => entry.majors)),
-].sort(new Intl.Collator("es", { sensitivity: "base" }).compare);
+].sort((a, b) =>
+  new Intl.Collator('es', { sensitivity: 'base' }).compare(a, b),
+);
 const periodYears = [
   ...new Set(
     scheduleEntries
@@ -35,27 +33,17 @@ const allSections = buildScheduleSections(scheduleEntries);
 const activeDays = dayNames.filter((day) =>
   scheduleEntries.some((entry) => entry.day === day.code),
 );
-const initialMajor = periodMajors.includes("ICE")
-  ? "ICE"
-  : (periodMajors[0] ?? "all");
-const initialYear = periodYears[0] ?? academicYears[0] ?? 0;
+const initialMajor = periodMajors.includes('ICE')
+  ? 'ICE'
+  : (periodMajors[0] ?? 'all');
+const initialYear = periodYears[0] ?? 0;
 const initialSections = allSections.filter(
   (section) =>
     section.majors.includes(initialMajor) &&
     (initialYear <= 0 || section.academicYears.includes(initialYear)),
 );
-const summary = getScheduleSummary(scheduleEntries);
-
 const suggestedPath = findValidPath(initialSections);
-const integrityError = !suggestedPath.success;
-
-const activeSummary = {
-  totalEntries: initialSections.reduce(
-    (total, section) => total + section.entries.length,
-    0,
-  ),
-  totalSections: initialSections.length,
-};
+const _integrityError = !suggestedPath.success;
 ---
 
 <AppLayout
@@ -71,7 +59,11 @@ const activeSummary = {
     initialYear={initialYear}
   />
 
-  <section class="dashboard-section" data-initial-major={initialMajor} data-initial-year={String(initialYear)}>
+  <section
+    class="dashboard-section"
+    data-initial-major={initialMajor}
+    data-initial-year={String(initialYear)}
+  >
     <div class="container-fluid dashboard-layout" id="main-dashboard">
       <div class="dashboard-explorer">
         <StudentScheduleCatalog
@@ -93,18 +85,18 @@ const activeSummary = {
   </section>
 
   <script type="module">
-    import { initStudentScheduleState } from "/src/features/schedules/state/studentScheduleState.ts";
+    import { initStudentScheduleState } from '/src/features/schedules/state/studentScheduleState.ts';
     initStudentScheduleState();
 
     // Sincronización de Zen Mode
-    const zenToggle = document.getElementById("zen-mode-toggle");
-    const dashboard = document.getElementById("main-dashboard");
+    const zenToggle = document.getElementById('zen-mode-toggle');
+    const dashboard = document.getElementById('main-dashboard');
 
-    zenToggle?.addEventListener("click", () => {
-      dashboard?.classList.toggle("is-zen");
-      zenToggle.textContent = dashboard?.classList.contains("is-zen")
-        ? "Ver Catálogo"
-        : "Vista dedicada";
+    zenToggle?.addEventListener('click', () => {
+      dashboard?.classList.toggle('is-zen');
+      zenToggle.textContent = dashboard?.classList.contains('is-zen')
+        ? 'Ver Catálogo'
+        : 'Vista dedicada';
     });
   </script>
 </AppLayout>
