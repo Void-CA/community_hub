@@ -8,6 +8,8 @@ import {
   getProfessorAlias,
 } from "@/lib/schedules";
 
+export type ScheduleTileVariant = "student" | "professor";
+
 interface Props {
   entry: ScheduleEntry;
   sectionId: string;
@@ -15,6 +17,7 @@ interface Props {
   hasConflict?: boolean;
   conflictWith?: string[];
   style?: string;
+  variant?: ScheduleTileVariant;
 }
 
 const {
@@ -24,6 +27,7 @@ const {
   hasConflict = false,
   conflictWith = [],
   style: extraStyle = "",
+  variant = "student",
 } = Astro.props;
 const accentColor = getSubjectColor(entry.subject);
 const title = label ?? entry.subject;
@@ -62,7 +66,14 @@ const endTime =
     </div>
 
     <footer class="tile-footer">
-      <p class="tile-professor">{professorAlias}</p>
+      {variant === "student" && (
+        <p class="tile-professor">{professorAlias}</p>
+      )}
+      {variant === "professor" && entry.majors.length > 0 && (
+        <span class="tile-major-badge">
+          {entry.majors.join(" · ")}{entry.academicYear ? ` · ${entry.academicYear} año` : ""}
+        </span>
+      )}
     </footer>
   </div>
 
@@ -181,6 +192,14 @@ const endTime =
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* Professor variant */
+  .tile-major-badge {
+    font-size: 11px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--tile-accent);
+    letter-spacing: 0.02em;
   }
 
   /* Conflict State */
