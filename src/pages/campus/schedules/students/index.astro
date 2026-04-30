@@ -8,7 +8,6 @@ import {
   schedulePeriods,
   findValidPath,
 } from '@/lib/schedules';
-import StudentScheduleFilters from '@/features/schedules/components/composition/StudentScheduleFilters.astro';
 import StudentScheduleDashboard from '@/features/schedules/components/composition/StudentScheduleDashboard.astro';
 
 const yearParam = Astro.url.searchParams.get('year');
@@ -49,15 +48,6 @@ const integrityError = !suggestedPath.success;
   title={`Horarios de Estudiantes | ${semesterLabel}`}
   description="Vista compacta de horarios para estudiantes, con selector de carrera y grilla por bloques."
 >
-  <StudentScheduleFilters
-    schedulePeriods={schedulePeriods}
-    activePeriodId={dataset.period.id}
-    periodMajors={periodMajors}
-    initialMajor={initialMajor}
-    periodYears={periodYears}
-    initialYear={initialYear}
-  />
-
   <StudentScheduleDashboard
     allSections={allSections}
     initialMajor={initialMajor}
@@ -66,6 +56,10 @@ const integrityError = !suggestedPath.success;
     activeDays={activeDays}
     scheduleBlocks={scheduleBlocks}
     integrityError={integrityError}
+    schedulePeriods={schedulePeriods}
+    activePeriodId={dataset.period.id}
+    periodMajors={periodMajors}
+    periodYears={periodYears}
   />
 </AppLayout>
 

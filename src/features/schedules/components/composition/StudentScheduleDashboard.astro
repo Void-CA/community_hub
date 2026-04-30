@@ -1,6 +1,7 @@
 ---
 import type { ScheduleSection } from '@/lib/schedules';
 import StudentScheduleCatalog from '@/features/schedules/components/composition/StudentScheduleCatalog.astro';
+import StudentScheduleFilters from '@/features/schedules/components/composition/StudentScheduleFilters.astro';
 import StudentScheduleTimeline from '@/features/schedules/components/composition/StudentScheduleTimeline.astro';
 
 interface DayItem {
@@ -14,6 +15,13 @@ interface ScheduleBlock {
   range: string;
 }
 
+interface SchedulePeriod {
+  id: string;
+  year: string;
+  term: string;
+  label: string;
+}
+
 interface Props {
   allSections: readonly ScheduleSection[];
   initialMajor: string;
@@ -22,6 +30,10 @@ interface Props {
   activeDays: DayItem[];
   scheduleBlocks: readonly ScheduleBlock[];
   integrityError?: boolean;
+  schedulePeriods: SchedulePeriod[];
+  activePeriodId: string;
+  periodMajors: string[];
+  periodYears: number[];
 }
 
 const {
@@ -32,34 +44,49 @@ const {
   activeDays,
   scheduleBlocks,
   integrityError = false,
+  schedulePeriods,
+  activePeriodId,
+  periodMajors,
+  periodYears,
 } = Astro.props;
 ---
 
-<section
-  class="dashboard-section"
-  data-initial-major={initialMajor}
-  data-initial-year={String(initialYear)}
-  data-integrity-error={integrityError ? 'true' : undefined}
->
-  <div id="student-schedule-dashboard" class="container-fluid dashboard-layout">
-    <div class="dashboard-explorer">
-      <StudentScheduleCatalog
-        allSections={allSections}
-        initialMajor={initialMajor}
-        initialYear={initialYear}
-        initialVisibleSections={initialVisibleSections}
-      />
-    </div>
+<div id="student-schedule-dashboard">
+  <StudentScheduleFilters
+    schedulePeriods={schedulePeriods}
+    activePeriodId={activePeriodId}
+    periodMajors={periodMajors}
+    initialMajor={initialMajor}
+    periodYears={periodYears}
+    initialYear={initialYear}
+  />
 
-    <div class="dashboard-timeline">
-      <StudentScheduleTimeline
-        activeDays={activeDays}
-        scheduleBlocks={scheduleBlocks}
-        allSections={allSections}
-      />
+  <section
+    class="dashboard-section"
+    data-initial-major={initialMajor}
+    data-initial-year={String(initialYear)}
+    data-integrity-error={integrityError ? 'true' : undefined}
+  >
+    <div class="container-fluid dashboard-layout">
+      <div class="dashboard-explorer">
+        <StudentScheduleCatalog
+          allSections={allSections}
+          initialMajor={initialMajor}
+          initialYear={initialYear}
+          initialVisibleSections={initialVisibleSections}
+        />
+      </div>
+
+      <div class="dashboard-timeline">
+        <StudentScheduleTimeline
+          activeDays={activeDays}
+          scheduleBlocks={scheduleBlocks}
+          allSections={allSections}
+        />
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <script>
   import { initStudentScheduleState } from '@/features/schedules/state/studentScheduleState';
@@ -71,10 +98,11 @@ const {
 
   // Zen Mode toggle
   const zenToggle = document.getElementById('zen-mode-toggle');
-  if (root) {
+  const layout = document.querySelector('.dashboard-layout');
+  if (layout) {
     zenToggle?.addEventListener('click', () => {
-      root.classList.toggle('is-zen');
-      zenToggle.textContent = root.classList.contains('is-zen')
+      layout.classList.toggle('is-zen');
+      zenToggle.textContent = layout.classList.contains('is-zen')
         ? 'Ver Catálogo'
         : 'Vista dedicada';
     });
