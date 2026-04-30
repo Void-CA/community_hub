@@ -39,12 +39,12 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
       style={`grid-template-columns: 4rem repeat(${activeDays.length}, 1fr);`}
     >
       <!-- 1. Header Corner -->
-      <div class="timeline-corner"></div>
+      <div class="timeline-corner is-sticky"></div>
 
       <!-- 2. Day Headers -->
       {
         activeDays.map((day) => (
-          <div class="timeline-day">
+          <div class="timeline-day is-sticky">
             <span>{day.label}</span>
           </div>
         ))
@@ -161,16 +161,12 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
     --cell-height: var(--cell-height);
   }
 
-  .timeline-grid > div {
-    background: var(--color-surface);
-  }
-
   .timeline-corner {
     position: sticky;
     top: 0;
     left: 0;
     z-index: 30;
-    background: var(--color-surface-muted) !important;
+    background: var(--color-surface-muted);
   }
 
   .timeline-day {
@@ -181,7 +177,7 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
     align-items: center;
     justify-content: center;
     padding: var(--space-2);
-    background: var(--color-surface-muted) !important;
+    background: var(--color-surface-muted);
     border-bottom: var(--border-width-md) solid var(--color-primary);
   }
 
@@ -202,7 +198,7 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
     align-items: center;
     justify-content: center;
     padding: var(--space-1);
-    background: var(--color-surface-muted) !important;
+    background: var(--color-surface-muted);
     border-right: var(--border-width-sm) solid var(--color-border);
     gap: 0;
   }
@@ -212,13 +208,13 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
       in srgb,
       var(--color-surface-muted) 80%,
       var(--color-bg)
-    ) !important;
+    );
   }
 
   .timeline-time.is-empty,
   .timeline-cell.is-empty {
-    min-height: 1.5rem !important;
-    height: 1.5rem !important;
+    min-height: 1.5rem;
+    height: 1.5rem;
   }
 
   .slot-label {
@@ -257,7 +253,7 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
       var(--color-surface-muted) var(--break-stripe-size),
       color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) var(--break-stripe-size),
       color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) calc(var(--break-stripe-size) * 2)
-    ) !important;
+    );
   }
 
   .timeline-tile-container {
@@ -265,10 +261,6 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
     display: flex;
     flex-direction: column;
     min-height: 0;
-  }
-
-  .timeline-tile-container[hidden] {
-    display: none !important;
   }
 
   .break-label-abs {
