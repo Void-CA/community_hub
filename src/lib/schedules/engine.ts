@@ -1,38 +1,42 @@
-import type { ScheduleSection, OverlapConflict, ScheduleEntry } from './types';
+import type { ScheduleSection, OverlapConflict, ScheduleEntry, SchedulePathResultUnion } from './types';
 import { getBlockIndex } from './index';
 
 /**
  * Detects overlaps between a list of sections.
+ * Sections of the SAME SUBJECT are NOT conflicts (different groups are mutually exclusive).
  * Returns a map where keys are section IDs and values are the conflicts they have.
  */
 export function detectConflicts(sections: ScheduleSection[]): Map<string, OverlapConflict[]> {
   const conflicts = new Map<string, OverlapConflict[]>();
-  
+
   for (let i = 0; i < sections.length; i++) {
     for (let j = i + 1; j < sections.length; j++) {
       const sectionA = sections[i]!;
       const sectionB = sections[j]!;
-      
+
+      // Same subject = different groups of the same class, NOT a conflict
+      if (sectionA.subject.toLowerCase() === sectionB.subject.toLowerCase()) continue;
+
       const sharedBlocks = findOverlap(sectionA, sectionB);
-      
+
       if (sharedBlocks.length > 0) {
         const conflict: OverlapConflict = {
           type: 'COLLISION',
           groups: [sectionA.id, sectionB.id],
-          sharedBlocks
+          sharedBlocks,
         };
-        
+
         const listA = conflicts.get(sectionA.id) || [];
         listA.push(conflict);
         conflicts.set(sectionA.id, listA);
-        
+
         const listB = conflicts.get(sectionB.id) || [];
         listB.push(conflict);
         conflicts.set(sectionB.id, listB);
       }
     }
   }
-  
+
   return conflicts;
 }
 
@@ -41,59 +45,76 @@ export function detectConflicts(sections: ScheduleSection[]): Map<string, Overla
  */
 function findOverlap(a: ScheduleSection, b: ScheduleSection): string[] {
   const shared: string[] = [];
-  
+
   for (const entryA of a.entries) {
     for (const entryB of b.entries) {
       if (entryA.day !== entryB.day) continue;
-      
+
       const startA = getBlockIndex(entryA.start_block);
       const endA = getBlockIndex(entryA.end_block);
       const startB = getBlockIndex(entryB.start_block);
       const endB = getBlockIndex(entryB.end_block);
-      
+
       // Check for overlap [startA, endA] and [startB, endB]
       const overlapStart = Math.max(startA, startB);
       const overlapEnd = Math.min(endA, endB);
-      
+
       if (overlapStart <= overlapEnd) {
-        // Collect shared block labels (labels, not indices)
-        // We'll need to map indices back to labels if needed, 
-        // but for now let's just flag the collision.
         shared.push(`${entryA.day}::overlap`);
       }
     }
   }
-  
+
   return shared;
 }
 
 /**
- * A basic CSP-like solver to find if a valid (conflict-free) path exists.
+ * CSP-like solver to find if a valid (conflict-free) path exists.
+ * Only considers sections of different subjects for conflict checking.
  */
-export function findValidPath(sections: ScheduleSection[]): ScheduleSection[] | null {
-  const subjects = [...new Set(sections.map(s => s.subject))];
-  const sectionsBySubject = subjects.map(sub => sections.filter(s => s.subject === sub));
-  
+export function findValidPath(sections: ScheduleSection[]): SchedulePathResultUnion {
+  if (sections.length === 0) {
+    return {
+      success: false,
+      reason: 'NO_SECTIONS',
+      message: 'No sections provided to find a valid path.',
+    };
+  }
+
+  const subjects = [...new Set(sections.map((s) => s.subject))];
+  const sectionsBySubject = subjects.map((sub) =>
+    sections.filter((s) => s.subject === sub),
+  );
+
   const path: ScheduleSection[] = [];
-  
+
   function solve(subjectIndex: number): boolean {
     if (subjectIndex === subjects.length) return true;
-    
+
     const options = sectionsBySubject[subjectIndex]!;
     for (const option of options) {
       // Check if 'option' conflicts with any section already in 'path'
-      const hasConflict = path.some(p => findOverlap(p, option).length > 0);
-      
+      const hasConflict = path.some(
+        (p) => p.subject !== option.subject && findOverlap(p, option).length > 0,
+      );
+
       if (!hasConflict) {
         path.push(option);
         if (solve(subjectIndex + 1)) return true;
         path.pop();
       }
     }
-    
+
     return false;
   }
-  
-  if (solve(0)) return path;
-  return null;
+
+  if (solve(0)) {
+    return { success: true, sections: path };
+  }
+
+  return {
+    success: false,
+    reason: 'NO_VALID_PATH',
+    message: `No conflict-free schedule exists for ${subjects.length} subjects with the given sections.`,
+  };
 }

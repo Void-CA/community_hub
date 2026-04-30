@@ -47,7 +47,7 @@ const initialSections = allSections.filter(
 const summary = getScheduleSummary(scheduleEntries);
 
 const suggestedPath = findValidPath(initialSections);
-const integrityError = suggestedPath === null;
+const integrityError = !suggestedPath.success;
 
 const activeSummary = {
   totalEntries: initialSections.reduce(

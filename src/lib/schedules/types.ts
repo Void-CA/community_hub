@@ -75,3 +75,16 @@ export interface OverlapConflict {
 }
 
 export type ConflictMap = Map<string, OverlapConflict[]>;
+
+export interface SchedulePathResult {
+  success: true;
+  sections: ScheduleSection[];
+}
+
+export interface SchedulePathError {
+  success: false;
+  reason: 'NO_VALID_PATH' | 'NO_SECTIONS';
+  message: string;
+}
+
+export type SchedulePathResultUnion = SchedulePathResult | SchedulePathError;

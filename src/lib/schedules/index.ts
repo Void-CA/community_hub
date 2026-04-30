@@ -5,7 +5,7 @@ import { detectConflicts, findValidPath } from './engine';
 import { getScheduleSummary } from './summary';
 import { groupSectionsBySubject } from './organizer';
 import { scheduleSlots, dayOrder, dayLabels, oldToNewLabel, ICON_MAP, majorAccents } from './constants';
-import type { ScheduleEntry, ScheduleSection } from './types';
+import type { ScheduleEntry, ScheduleSection, SchedulePathResultUnion } from './types';
 
 const collator = new Intl.Collator('es', { sensitivity: 'base' });
 const uniqueSorted = (values: string[]) => [...new Set(values)].sort(collator.compare);
