@@ -6,6 +6,7 @@ import BentoGrid from '../components/Home/BentoGrid.astro';
 <AppLayout title="Bienvenido">
   <section class="hero section">
     <div class="container text-center">
+      <div class="hero-badge">Comunidad ULSA</div>
       <h1 class="hero-title">ULSA Community Hub</h1>
       <p class="hero-subtitle text-soft">
         Centralizando herramientas, recursos y colaboración para la comunidad
@@ -23,20 +24,36 @@ import BentoGrid from '../components/Home/BentoGrid.astro';
 
 <style>
   .hero {
-    padding-bottom: var(--space-8);
+    padding: var(--space-16) 0 var(--space-10);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+    background: var(--color-surface-muted);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-6);
   }
 
   .hero-title {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    margin-bottom: var(--space-4);
-    letter-spacing: -0.02em;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    margin: 0 0 var(--space-4);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    font-weight: var(--font-weight-black);
   }
 
   .hero-subtitle {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.6;
   }
 
   .pt-0 {

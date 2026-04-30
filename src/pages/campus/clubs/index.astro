@@ -1,9 +1,35 @@
 ---
 import AppLayout from '@/layouts/AppLayout.astro';
-import ClubCard from '@/features/clubs/components/ClubCard.astro';
 import { getAllClubs } from '@/lib/clubs';
 
 const clubs = getAllClubs();
+
+const clubIcons: Record<string, string> = {
+  programming: '💻',
+  electronics: '⚡',
+};
+
+const clubAccents: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
+  programming: {
+    bg: 'var(--brand-50)',
+    text: 'var(--brand-600)',
+    border: 'var(--brand-100)',
+    gradient: 'linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%)',
+  },
+  electronics: {
+    bg: 'var(--accent-50)',
+    text: 'var(--accent-600)',
+    border: 'color-mix(in srgb, var(--accent-500) 20%, transparent)',
+    gradient: 'linear-gradient(135deg, var(--accent-50) 0%, color-mix(in srgb, var(--accent-500) 10%, var(--neutral-50)) 100%)',
+  },
+};
+
+interface AccentColors {
+  bg: string;
+  text: string;
+  border: string;
+  gradient: string;
+}
 ---
 
 <AppLayout
@@ -12,19 +38,38 @@ const clubs = getAllClubs();
 >
   <section class="clubs-page">
     <div class="container">
-      <header class="clubs-header">
-        <p class="eyebrow">Vida Estudiantil</p>
+      <header class="clubs-hero">
+        <p class="clubs-eyebrow">Vida Estudiantil</p>
         <h1>Clubes Universitarios</h1>
         <p class="clubs-intro">
-          Iniciativas creadas por y para estudiantes. Conocé su propósito, su impacto y cuándo se reúnen.
+          Iniciativas creadas por y para estudiantes. Descubrí su propósito, su impacto y cuándo se reúnen.
         </p>
       </header>
 
       <div class="clubs-grid">
         {
-          clubs.map(({ profile }) => (
-            <ClubCard club={profile} />
-          ))
+          clubs.map(({ profile }) => {
+            const accent: AccentColors = clubAccents[profile.slug] ?? {
+              bg: 'var(--color-surface-muted)',
+              text: 'var(--color-primary)',
+              border: 'var(--color-border)',
+              gradient: 'var(--color-surface-muted)',
+            };
+            const icon = clubIcons[profile.slug] ?? '🎯';
+            return (
+              <a href={`/campus/clubs/${profile.slug}`} class="club-card" style={`--club-bg: ${accent.bg}; --club-text: ${accent.text}; --club-border: ${accent.border}; --club-gradient: ${accent.gradient};`}>
+                <div class="club-card-icon">{icon}</div>
+                <h3 class="club-card-name">{profile.name}</h3>
+                <p class="club-card-tagline">{profile.tagline}</p>
+                <div class="club-card-footer">
+                  <span class="club-card-leaders">
+                    {profile.leaders.join(' · ')}
+                  </span>
+                  <span class="club-card-cta">Ver más →</span>
+                </div>
+              </a>
+            );
+          })
         }
       </div>
     </div>
@@ -33,42 +78,129 @@ const clubs = getAllClubs();
 
 <style>
   .clubs-page {
-    padding: var(--space-12) 0;
+    padding: var(--space-12) 0 var(--space-16);
   }
 
-  .clubs-header {
-    margin-bottom: var(--space-10);
+  .clubs-hero {
+    margin-bottom: var(--space-12);
     text-align: center;
   }
 
-  .clubs-header h1 {
-    margin: var(--space-2) 0 var(--space-4);
-    font-size: var(--font-size-3xl);
+  .clubs-eyebrow {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+    margin-bottom: var(--space-4);
+  }
+
+  .clubs-hero h1 {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-5xl));
+    font-weight: var(--font-weight-black);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
 
   .clubs-intro {
     font-size: var(--font-size-lg);
     color: var(--color-text-muted);
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
     line-height: 1.6;
   }
 
-  .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-accent);
-    margin-bottom: var(--space-2);
-  }
-
   .clubs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--space-6);
     max-width: 800px;
     margin: 0 auto;
+  }
+
+  .club-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--club-border);
+    background: var(--club-gradient);
+    transition: all var(--transition-slow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .club-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--club-text);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-slow);
+  }
+
+  .club-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--club-text);
+  }
+
+  .club-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .club-card-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: var(--space-4);
+  }
+
+  .club-card-name {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  .club-card-tagline {
+    margin: 0 0 var(--space-6);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .club-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--club-border);
+  }
+
+  .club-card-leaders {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--club-text);
+  }
+
+  .club-card-cta {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--club-text);
+    transition: transform var(--transition-base);
+  }
+
+  .club-card:hover .club-card-cta {
+    transform: translateX(4px);
   }
 </style>

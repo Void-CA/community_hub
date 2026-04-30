@@ -1,7 +1,6 @@
 ---
 import AppLayout from '@/layouts/AppLayout.astro';
 import Card from '@/components/UI/Card.astro';
-import ClubMeetingRow from '@/features/clubs/components/ClubMeetingRow.astro';
 import { getAllClubSlugs, getClub } from '@/lib/clubs';
 
 export function getStaticPaths() {
@@ -11,59 +10,75 @@ export function getStaticPaths() {
 
 const { slug } = Astro.params;
 const { profile, meetings } = getClub(slug!);
+
+const clubIcons: Record<string, string> = {
+  programming: '💻',
+  electronics: '⚡',
+};
+
+const clubAccents: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
+  programming: {
+    bg: 'var(--brand-50)',
+    text: 'var(--brand-600)',
+    border: 'var(--brand-100)',
+    gradient: 'linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%)',
+  },
+  electronics: {
+    bg: 'var(--accent-50)',
+    text: 'var(--accent-600)',
+    border: 'color-mix(in srgb, var(--accent-500) 20%, transparent)',
+    gradient: 'linear-gradient(135deg, var(--accent-50) 0%, color-mix(in srgb, var(--accent-500) 10%, var(--neutral-50)) 100%)',
+  },
+};
+
+const accent = clubAccents[slug!] ?? {
+  bg: 'var(--color-surface-muted)',
+  text: 'var(--color-primary)',
+  border: 'var(--color-border)',
+  gradient: 'var(--color-surface-muted)',
+};
+const icon = clubIcons[slug!] ?? '🎯';
 ---
 
 <AppLayout
   title={`${profile.name} | Clubes Universitarios`}
   description={profile.tagline}
 >
-  <section class="club-detail">
+  <section class="club-detail" style={`--club-bg: ${accent.bg}; --club-text: ${accent.text}; --club-border: ${accent.border}; --club-gradient: ${accent.gradient};`}>
     <div class="container">
-      <a href="/campus/clubs" class="back-link">← Volver a clubes</a>
+      <a href="/campus/clubs" class="back-link">← Clubes</a>
 
-      <header class="club-header">
+      <!-- Hero -->
+      <header class="club-hero">
+        <div class="club-hero-icon">{icon}</div>
         <h1>{profile.name}</h1>
-        <p class="club-tagline">{profile.tagline}</p>
+        <p class="club-hero-tagline">{profile.tagline}</p>
       </header>
 
-      <div class="club-content">
-        <Card variant="elevated" padding="lg" class="club-info">
-          <section class="info-block">
+      <!-- Main Content -->
+      <div class="club-body">
+        <!-- Info Column -->
+        <div class="club-info">
+          <div class="info-section">
             <h2>Propósito</h2>
             <p>{profile.purpose}</p>
-          </section>
+          </div>
 
-          <section class="info-block">
+          <div class="info-section">
             <h2>Impacto</h2>
             <p>{profile.impact}</p>
-          </section>
+          </div>
 
-          <section class="info-block">
+          <div class="info-section">
             <h2>Sobre el club</h2>
             <p>{profile.description}</p>
-          </section>
-        </Card>
+          </div>
+        </div>
 
-        <Card variant="elevated" padding="lg" class="club-meetings">
-          <h2>Encuentros</h2>
-          {
-            meetings.length > 0 ? (
-              <div class="meetings-list">
-                {
-                  meetings.map((meeting) => (
-                    <ClubMeetingRow meeting={meeting} />
-                  ))
-                }
-              </div>
-            ) : (
-              <p class="no-meetings">No hay encuentros programados actualmente.</p>
-            )
-          }
-        </Card>
-
+        <!-- Sidebar -->
         <aside class="club-sidebar">
-          <Card variant="flat" padding="lg">
-            <section class="sidebar-block">
+          <Card variant="elevated" padding="lg">
+            <div class="sidebar-section">
               <h3>Líderes</h3>
               <ul class="leaders-list">
                 {
@@ -72,11 +87,11 @@ const { profile, meetings } = getClub(slug!);
                   ))
                 }
               </ul>
-            </section>
+            </div>
 
             {
               Object.keys(profile.social).length > 0 && (
-                <section class="sidebar-block">
+                <div class="sidebar-section">
                   <h3>Redes</h3>
                   <div class="social-links">
                     {
@@ -87,17 +102,43 @@ const { profile, meetings } = getClub(slug!);
                           rel="noopener noreferrer"
                           class="social-link"
                         >
-                          {platform}
+                          {platform.charAt(0).toUpperCase() + platform.slice(1)} ↗
                         </a>
                       ))
                     }
                   </div>
-                </section>
+                </div>
               )
             }
           </Card>
         </aside>
       </div>
+
+      <!-- Meetings Section -->
+      {
+        meetings.length > 0 && (
+          <div class="meetings-section">
+            <h2 class="meetings-heading">
+              <span class="meetings-icon">📅</span>
+              Encuentros
+            </h2>
+            <div class="meetings-grid">
+              {
+                meetings.map((meeting) => (
+                  <Card variant="elevated" padding="md" class="meeting-card">
+                    <div class="meeting-card-header">
+                      <span class="meeting-day">{meeting.day === 'L' ? 'Lunes' : meeting.day === 'M' ? 'Martes' : meeting.day === 'X' ? 'Miércoles' : meeting.day === 'J' ? 'Jueves' : meeting.day === 'V' ? 'Viernes' : meeting.day}</span>
+                      <span class="meeting-time">{meeting.startTime} — {meeting.endTime}</span>
+                    </div>
+                    <p class="meeting-location">{meeting.location}</p>
+                    <p class="meeting-desc">{meeting.description}</p>
+                  </Card>
+                ))
+              }
+            </div>
+          </div>
+        )
+      }
     </div>
   </section>
 </AppLayout>
@@ -108,89 +149,115 @@ const { profile, meetings } = getClub(slug!);
   }
 
   .back-link {
-    display: inline-block;
-    margin-bottom: var(--space-6);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-bottom: var(--space-8);
     font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted);
     text-decoration: none;
-    transition: color var(--transition-base);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
   }
 
   .back-link:hover {
-    color: var(--color-primary);
+    color: var(--color-text);
+    background-color: var(--color-surface-muted);
   }
 
-  .club-header {
-    margin-bottom: var(--space-8);
+  /* Hero */
+  .club-hero {
+    margin-bottom: var(--space-10);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-8);
+    background: var(--club-gradient, var(--club-bg));
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--club-border);
+    position: relative;
+    overflow: hidden;
   }
 
-  .club-header h1 {
-    margin: 0 0 var(--space-2);
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
+  .club-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--club-text);
   }
 
-  .club-tagline {
+  .club-hero-icon {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .club-hero h1 {
+    margin: 0;
+    font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .club-hero-tagline {
     margin: 0;
     font-size: var(--font-size-lg);
     color: var(--color-text-muted);
+    max-width: 500px;
+    line-height: 1.5;
   }
 
-  .club-content {
+  /* Body Layout */
+  .club-body {
     display: grid;
     grid-template-columns: 1fr 280px;
-    gap: var(--space-6);
+    gap: var(--space-8);
     align-items: start;
+    margin-bottom: var(--space-10);
   }
 
   .club-info {
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--space-6);
   }
 
-  .info-block h2 {
-    margin: 0 0 var(--space-2);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-primary);
-  }
-
-  .info-block p {
-    margin: 0;
-    font-size: var(--font-size-sm);
-    line-height: 1.7;
-    color: var(--color-text);
-  }
-
-  .club-meetings h2 {
-    margin: 0 0 var(--space-4);
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
-  }
-
-  .no-meetings {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    font-style: italic;
-  }
-
-  .club-sidebar h3 {
+  .info-section h2 {
     margin: 0 0 var(--space-3);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
+    color: var(--club-text);
+  }
+
+  .info-section p {
+    margin: 0;
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  /* Sidebar */
+  .club-sidebar h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--color-text-muted);
   }
 
-  .sidebar-block {
+  .sidebar-section {
     margin-bottom: var(--space-5);
   }
 
-  .sidebar-block:last-child {
+  .sidebar-section:last-child {
     margin-bottom: 0;
   }
 
@@ -201,7 +268,7 @@ const { profile, meetings } = getClub(slug!);
   }
 
   .leaders-list li {
-    padding: var(--space-1) 0;
+    padding: var(--space-2) 0;
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     border-bottom: 1px solid var(--color-border-soft);
@@ -219,7 +286,7 @@ const { profile, meetings } = getClub(slug!);
 
   .social-link {
     font-size: var(--font-size-sm);
-    color: var(--color-primary);
+    color: var(--club-text);
     text-decoration: none;
     font-weight: var(--font-weight-semibold);
     transition: color var(--transition-base);
@@ -229,8 +296,88 @@ const { profile, meetings } = getClub(slug!);
     color: var(--color-text);
   }
 
+  /* Meetings */
+  .meetings-section {
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .meetings-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0 0 var(--space-6);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .meetings-icon {
+    font-size: 1.5rem;
+  }
+
+  .meetings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .meeting-card {
+    transition: all var(--transition-base);
+  }
+
+  .meeting-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .meeting-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+  }
+
+  .meeting-day {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--club-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meeting-time {
+    font-size: var(--font-size-xs);
+    font-family: var(--font-family-mono);
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+
+  .meeting-location {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .meeting-desc {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
   @media (max-width: 900px) {
-    .club-content {
+    .club-body {
+      grid-template-columns: 1fr;
+    }
+
+    .club-sidebar {
+      order: -1;
+    }
+
+    .meetings-grid {
       grid-template-columns: 1fr;
     }
   }
