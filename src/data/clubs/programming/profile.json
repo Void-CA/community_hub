@@ -1,41 +1,45 @@
 {
   "name": "Club de Programación",
   "slug": "programming",
-  "tagline": "Donde el código une a los estudiantes",
-  "manifesto": "Creemos que programar es el lenguaje universal de la resolución de problemas. Este club existe para que cualquier estudiante —sin importar su carrera— pueda pasar de la curiosidad a la creación. No buscamos genios; buscamos gente con ganas de construir, romper cosas y aprender del error.",
+  "tagline": "Aprender, construir y compartir a través del código",
+  "manifesto": "Entendemos la programación como una herramienta para crear, analizar y resolver problemas reales. Este espacio existe para que cualquier estudiante —sin importar su punto de partida— pueda aprender más allá del aula, construir proyectos y discutir ideas con otros. No se trata solo de aprender tecnologías, sino de desarrollar criterio, experimentar y compartir conocimiento.",
   "tags": [
     { "label": "Desarrollo Web", "slug": "web-dev" },
     { "label": "Algoritmos", "slug": "algorithms" },
-    { "label": "Open Source", "slug": "open-source" },
-    { "label": "Competencias", "slug": "competitive-programming" }
+    { "label": "Ciencia de Datos", "slug": "data-science" },
+    { "label": "IoT", "slug": "iot" },
+    { "label": "Open Source", "slug": "open-source" }
   ],
   "gallery": [
     {
       "title": "Chat en tiempo real",
-      "description": "Aplicación de mensajería con WebSockets, autenticación JWT y persistencia en SQLite. Construida en 3 sesiones como ejercicio de arquitectura full-stack.",
+      "description": "Aplicación de mensajería con WebSockets, autenticación y persistencia. Desarrollada de forma iterativa durante varias sesiones como ejercicio de arquitectura full-stack.",
       "image": "/images/clubs/programming/chat-app.png"
     },
     {
       "title": "CLI para horarios ULSA",
-      "description": "Herramienta de línea de comandos que parsea PDFs de horarios y genera calendarios en formato .ics. Resuelve un problema real del campus.",
+      "description": "Herramienta de línea de comandos que procesa PDFs de horarios y genera calendarios en formato .ics, abordando un problema real del campus.",
       "image": "/images/clubs/programming/cli-parser.png"
     },
     {
-      "title": "Workshop: Introducción a Rust",
-      "description": "Sesión de 3 horas donde 15 estudiantes escribieron su primer programa en Rust, entendiendo ownership, borrowing y el sistema de tipos.",
-      "image": "/images/clubs/programming/rust-workshop.png"
+      "title": "Ciclo mensual: IoT",
+      "description": "Exploración de sistemas IoT desde la comunicación con dispositivos hasta la visualización de datos, construyendo un flujo completo end-to-end.",
+      "image": "/images/clubs/programming/iot-cycle.png"
     }
   ],
   "participation": {
-    "memberProfile": "Estudiantes de cualquier carrera con curiosidad por la programación. No se requiere experiencia previa; sí ganas de aprender y compartir.",
-    "commitment": "Reuniones semanales de 2 horas. Trabajo asíncrono opcional por proyectos.",
-    "requirements": "Laptop propia. No se requiere nivel mínimo."
+    "memberProfile": "Estudiantes de cualquier carrera con interés en programación, desde principiantes hasta avanzados que buscan compartir proyectos e ideas.",
+    "commitment": "Reuniones dos veces por semana. Cada mes se trabaja sobre una temática central mediante sesiones prácticas, discusiones y construcción de proyectos.",
+    "requirements": "Se suguiere traer laptop, pero se pueden usar los equipos del laboratorio."
   },
   "references": {
-    "location": "Aula D104 — Edificio de Ingeniería",
+    "location": "Aula A102",
     "contacts": [
-      { "name": "Jonathan Blanco", "role": "Coordinador General" },
-      { "name": "Carolina Téllez", "role": "Líder de Workshops" }
+      { "name": "Ari Castillo", "role": "Coordinador" },
+      { "name": "Diego Tercero", "role": "Miembro de la directiva" },
+      { "name": "Oscar Reyes", "role": "Miembro de la directiva" },
+      { "name": "Adrian Lainez", "role": "Miembro de la directiva" },
+      { "name": "David Ruiz", "role": "Miembro de la directiva" }
     ]
   },
   "social": {
