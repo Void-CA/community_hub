@@ -2,13 +2,42 @@
   "name": "Club de Electrónica",
   "slug": "electronics",
   "tagline": "Construyendo el futuro, circuito a circuito",
-  "description": "Comunidad estudiantil dedicada a la electrónica práctica. Diseñamos, soldamos y programamos circuitos desde cero, conectando la teoría con la experimentación real.",
-  "purpose": "Desarrollar habilidades prácticas en electrónica digital y analógica mediante proyectos hands-on y mentoría entre pares.",
-  "impact": "15 miembros activos, prototipos funcionales y talleres abiertos para toda la universidad.",
+  "manifesto": "La electrónica se aprende con las manos. Este club nace de la convicción de que la experimentación práctica complementa —y a veces supera— lo que se enseña en el aula. Aquí diseñamos, soldamos, fallamos y volvemos a intentar.",
+  "tags": [
+    { "label": "Circuitos Digitales", "slug": "digital-circuits" },
+    { "label": "Microcontroladores", "slug": "microcontrollers" },
+    { "label": "Diseño de PCBs", "slug": "pcb-design" },
+    { "label": "Prototipado", "slug": "prototyping" }
+  ],
+  "gallery": [
+    {
+      "title": "Estación meteorológica IoT",
+      "description": "Prototipo con ESP32 que mide temperatura, humedad y presión atmosférica. Datos enviados a un dashboard web via MQTT. Diseñado y ensamblado en 4 sesiones.",
+      "image": "/images/clubs/electronics/weather-station.png"
+    },
+    {
+      "title": "Brazo robótico de 3 ejes",
+      "description": "Controlado por Arduino con servomotores. Los estudiantes programaron la cinemática inversa y diseñaron las piezas en CAD para impresión 3D.",
+      "image": "/images/clubs/electronics/robot-arm.png"
+    },
+    {
+      "title": "Taller de soldadura SMD",
+      "description": "12 estudiantes aprendieron a soldar componentes de montaje superficial. Cada uno ensambló su propio kit de LED parpadeante con temporizador 555.",
+      "image": "/images/clubs/electronics/soldering-workshop.png"
+    }
+  ],
+  "participation": {
+    "memberProfile": "Estudiantes de ingeniería y afines con interés en electrónica práctica. Se aceptan todos los niveles: desde curiosos hasta avanzados que quieran mentorizar.",
+    "commitment": "Reuniones semanales de 2 horas en laboratorio. Proyectos extra opcionales.",
+    "requirements": "No se requiere equipo propio — el laboratorio provee lo esencial. Curiosidad y paciencia obligatorias."
+  },
+  "references": {
+    "location": "Lab. Electrónica G103 — Edificio de Ciencias",
+    "contacts": [
+      { "name": "Herson Castillo", "role": "Coordinador General" }
+    ]
+  },
   "social": {
     "discord": "https://discord.gg/ulsa-electronica"
-  },
-  "leaders": [
-    "Herson Castillo"
-  ]
+  }
 }

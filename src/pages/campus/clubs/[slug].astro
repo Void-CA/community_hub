@@ -1,8 +1,17 @@
 ---
 import AppLayout from '@/layouts/AppLayout.astro';
-import Card from '@/components/UI/Card.astro';
 import { getAllClubSlugs, getClub } from '@/lib/clubs';
-import { Code, Zap, Target, Calendar, ArrowLeft, ExternalLink } from 'lucide-astro';
+import {
+  Code,
+  Zap,
+  Target,
+  Calendar,
+  ArrowLeft,
+  Clock,
+  MapPin,
+  Users,
+  ExternalLink,
+} from 'lucide-astro';
 
 export function getStaticPaths() {
   const slugs = getAllClubSlugs();
@@ -17,33 +26,6 @@ const clubIcons: Record<string, typeof Code> = {
   electronics: Zap,
 };
 
-const clubAccents: Record<string, { lightBg: string; lightText: string; lightBorder: string; darkBg: string; darkText: string; darkBorder: string }> = {
-  programming: {
-    lightBg: 'linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%)',
-    lightText: 'var(--brand-600)',
-    lightBorder: 'var(--brand-100)',
-    darkBg: 'linear-gradient(135deg, var(--brand-950) 0%, var(--neutral-900) 100%)',
-    darkText: 'var(--brand-400, #818cf8)',
-    darkBorder: 'color-mix(in srgb, var(--brand-500) 25%, transparent)',
-  },
-  electronics: {
-    lightBg: 'linear-gradient(135deg, var(--accent-50) 0%, color-mix(in srgb, var(--accent-500) 10%, var(--neutral-50)) 100%)',
-    lightText: 'var(--accent-600)',
-    lightBorder: 'color-mix(in srgb, var(--accent-500) 20%, transparent)',
-    darkBg: 'linear-gradient(135deg, var(--accent-950) 0%, var(--neutral-900) 100%)',
-    darkText: 'var(--accent-400, #fb923c)',
-    darkBorder: 'color-mix(in srgb, var(--accent-500) 25%, transparent)',
-  },
-};
-
-const accent = clubAccents[slug!] ?? {
-  lightBg: 'var(--color-surface-muted)',
-  lightText: 'var(--color-primary)',
-  lightBorder: 'var(--color-border)',
-  darkBg: 'var(--color-surface)',
-  darkText: 'var(--color-primary)',
-  darkBorder: 'var(--color-border)',
-};
 const Icon = clubIcons[slug!] ?? Target;
 ---
 
@@ -51,7 +33,7 @@ const Icon = clubIcons[slug!] ?? Target;
   title={`${profile.name} | Clubes Universitarios`}
   description={profile.tagline}
 >
-  <section class="club-detail" style={`--club-bg-light: ${accent.lightBg}; --club-text-light: ${accent.lightText}; --club-border-light: ${accent.lightBorder}; --club-bg-dark: ${accent.darkBg}; --club-text-dark: ${accent.darkText}; --club-border-dark: ${accent.darkBorder};`}>
+  <section class="club-detail">
     <div class="container">
       <a href="/campus/clubs" class="back-link">
         <ArrowLeft size={16} strokeWidth={2} />
@@ -61,97 +43,172 @@ const Icon = clubIcons[slug!] ?? Target;
       <!-- Hero -->
       <header class="club-hero">
         <div class="club-hero-icon">
-          <Icon size={40} strokeWidth={1.5} />
+          <Icon size={36} strokeWidth={1.5} />
         </div>
         <h1>{profile.name}</h1>
         <p class="club-hero-tagline">{profile.tagline}</p>
+        <span class="club-category-badge">Dominio: {profile.tags[0]?.label ?? 'General'}</span>
       </header>
 
-      <!-- Main Content -->
+      <!-- Main Grid: 70/30 -->
       <div class="club-body">
-        <!-- Info Column -->
-        <div class="club-info">
-          <div class="info-section">
-            <h2>Propósito</h2>
-            <p>{profile.purpose}</p>
-          </div>
+        <!-- Columna Principal (70%) — Showcase -->
+        <div class="club-main">
+          <!-- Nuestra Esencia -->
+          <section class="essence-section">
+            <h2>Nuestra Esencia</h2>
+            <p class="essence-text">{profile.manifesto}</p>
+          </section>
 
-          <div class="info-section">
-            <h2>Impacto</h2>
-            <p>{profile.impact}</p>
-          </div>
-
-          <div class="info-section">
-            <h2>Sobre el club</h2>
-            <p>{profile.description}</p>
-          </div>
-        </div>
-
-        <!-- Sidebar -->
-        <aside class="club-sidebar">
-          <Card variant="elevated" padding="lg">
-            <div class="sidebar-section">
-              <h3>Líderes</h3>
-              <ul class="leaders-list">
-                {
-                  profile.leaders.map((leader) => (
-                    <li>{leader}</li>
-                  ))
-                }
-              </ul>
-            </div>
-
-            {
-              Object.keys(profile.social).length > 0 && (
-                <div class="sidebar-section">
-                  <h3>Redes</h3>
-                  <div class="social-links">
-                    {
-                      Object.entries(profile.social).map(([platform, url]) => (
-                        <a
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="social-link"
-                        >
-                          {platform.charAt(0).toUpperCase() + platform.slice(1)}
-                          <ExternalLink size={12} strokeWidth={2} />
-                        </a>
-                      ))
-                    }
-                  </div>
+          <!-- Galería de Salida -->
+          {
+            profile.gallery.length > 0 && (
+              <section class="gallery-section">
+                <h2>Galería de Salida</h2>
+                <div class="gallery-grid">
+                  {
+                    profile.gallery.map((item) => (
+                      <article class="gallery-item">
+                        <div class="gallery-item-image">
+                          {item.image ? (
+                            <img src={item.image} alt={item.title} loading="lazy" />
+                          ) : (
+                            <div class="gallery-placeholder" />
+                          )}
+                        </div>
+                        <div class="gallery-item-body">
+                          <h3>{item.title}</h3>
+                          <p>{item.description}</p>
+                        </div>
+                      </article>
+                    ))
+                  }
                 </div>
-              )
-            }
-          </Card>
-        </aside>
-      </div>
+              </section>
+            )
+          }
 
-      <!-- Meetings Section -->
-      {
-        meetings.length > 0 && (
-          <div class="meetings-section">
-            <h2 class="meetings-heading">
-              <Calendar size={22} strokeWidth={1.5} />
-              Encuentros
-            </h2>
-            <div class="meetings-grid">
+          <!-- Mapa de Habilidades -->
+          <section class="skills-section">
+            <h2>Líneas de Interés</h2>
+            <div class="tags-list">
               {
-                meetings.map((meeting) => (
-                  <Card variant="elevated" padding="md" class="meeting-card">
-                    <div class="meeting-card-header">
-                      <span class="meeting-day">{meeting.day === 'L' ? 'Lunes' : meeting.day === 'M' ? 'Martes' : meeting.day === 'X' ? 'Miércoles' : meeting.day === 'J' ? 'Jueves' : meeting.day === 'V' ? 'Viernes' : meeting.day}</span>
-                      <span class="meeting-time">{meeting.startTime} — {meeting.endTime}</span>
-                    </div>
-                    <p class="meeting-location">{meeting.location}</p>
-                    <p class="meeting-desc">{meeting.description}</p>
-                  </Card>
+                profile.tags.map((tag) => (
+                  <span class="tag-pill">{tag.label}</span>
                 ))
               }
             </div>
+          </section>
+
+          <!-- Encuentros -->
+          {
+            meetings.length > 0 && (
+              <section class="meetings-section">
+                <h2>
+                  <Calendar size={20} strokeWidth={1.5} />
+                  Encuentros
+                </h2>
+                <div class="meetings-list">
+                  {
+                    meetings.map((meeting) => (
+                      <article class="meeting-card">
+                        <div class="meeting-header">
+                          <span class="meeting-day">{meeting.day === 'L' ? 'Lunes' : meeting.day === 'M' ? 'Martes' : meeting.day === 'X' ? 'Miércoles' : meeting.day === 'J' ? 'Jueves' : meeting.day === 'V' ? 'Viernes' : meeting.day}</span>
+                          <span class="meeting-time">{meeting.startTime} — {meeting.endTime}</span>
+                        </div>
+                        <p class="meeting-location">{meeting.location}</p>
+                        <p class="meeting-desc">{meeting.description}</p>
+                      </article>
+                    ))
+                  }
+                </div>
+              </section>
+            )
+          }
+        </div>
+
+        <!-- Columna Lateral (30%) — Contrato -->
+        <aside class="club-sidebar">
+          <!-- Card de Participación -->
+          <div class="participation-card">
+            <h3>Contrato de Participación</h3>
+
+            <div class="participation-row">
+              <Clock size={18} strokeWidth={1.5} class="participation-icon" />
+              <div>
+                <span class="participation-label">Intensidad</span>
+                <p>{profile.participation.commitment}</p>
+              </div>
+            </div>
+
+            <div class="participation-row">
+              <Users size={18} strokeWidth={1.5} class="participation-icon" />
+              <div>
+                <span class="participation-label">Perfil</span>
+                <p>{profile.participation.memberProfile}</p>
+              </div>
+            </div>
+
+            <div class="participation-row">
+              <MapPin size={18} strokeWidth={1.5} class="participation-icon" />
+              <div>
+                <span class="participation-label">Ubicación</span>
+                <p>{profile.references.location}</p>
+              </div>
+            </div>
+
+            <div class="participation-row">
+              <span class="participation-icon requisites-icon">?</span>
+              <div>
+                <span class="participation-label">Requisitos</span>
+                <p>{profile.participation.requirements}</p>
+              </div>
+            </div>
           </div>
-        )
-      }
+
+          <!-- Directorio de Referentes -->
+          <div class="references-card">
+            <h3>Referentes</h3>
+            <ul class="contacts-list">
+              {
+                profile.references.contacts.map((contact) => (
+                  <li class="contact-item">
+                    <div class="contact-avatar">{contact.name.charAt(0)}</div>
+                    <div class="contact-info">
+                      <span class="contact-name">{contact.name}</span>
+                      {contact.role && <span class="contact-role">{contact.role}</span>}
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <!-- Acción Directa -->
+          {
+            Object.keys(profile.social).length > 0 && (
+              <div class="social-card">
+                <h3>Contactar</h3>
+                <div class="social-links">
+                  {
+                    Object.entries(profile.social).map(([platform, url]) => (
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link"
+                      >
+                        {platform.charAt(0).toUpperCase() + platform.slice(1)}
+                        <ExternalLink size={14} strokeWidth={2} />
+                      </a>
+                    ))
+                  }
+                </div>
+              </div>
+            )
+          }
+        </aside>
+      </div>
     </div>
   </section>
 </AppLayout>
@@ -180,7 +237,7 @@ const Icon = clubIcons[slug!] ?? Target;
     background-color: var(--color-surface-muted);
   }
 
-  /* Hero */
+  /* ── Hero ── */
   .club-hero {
     margin-bottom: var(--space-10);
     display: flex;
@@ -188,9 +245,9 @@ const Icon = clubIcons[slug!] ?? Target;
     align-items: flex-start;
     gap: var(--space-3);
     padding: var(--space-8);
-    background: var(--club-bg-light);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--club-border-light);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
     position: relative;
     overflow: hidden;
   }
@@ -202,11 +259,11 @@ const Icon = clubIcons[slug!] ?? Target;
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--club-text-light);
+    background: var(--color-primary);
   }
 
   .club-hero-icon {
-    color: var(--club-text-light);
+    color: var(--color-primary);
     display: flex;
     align-items: center;
   }
@@ -226,124 +283,144 @@ const Icon = clubIcons[slug!] ?? Target;
     line-height: 1.5;
   }
 
-  /* Body Layout */
-  .club-body {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: var(--space-8);
-    align-items: start;
-    margin-bottom: var(--space-10);
-  }
-
-  .club-info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  .info-section h2 {
-    margin: 0 0 var(--space-3);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--club-text-light);
-  }
-
-  .info-section p {
-    margin: 0;
-    font-size: var(--font-size-base);
-    line-height: 1.7;
-    color: var(--color-text);
-  }
-
-  /* Sidebar */
-  .club-sidebar h3 {
-    margin: 0 0 var(--space-3);
+  .club-category-badge {
+    display: inline-block;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-text-muted);
+    color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
-  .sidebar-section {
-    margin-bottom: var(--space-5);
+  /* ── Body Layout: 70/30 ── */
+  .club-body {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-10);
+    align-items: start;
   }
 
-  .sidebar-section:last-child {
-    margin-bottom: 0;
-  }
-
-  .leaders-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .leaders-list li {
-    padding: var(--space-2) 0;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    border-bottom: 1px solid var(--color-border-soft);
-  }
-
-  .leaders-list li:last-child {
-    border-bottom: none;
-  }
-
-  .social-links {
+  .club-main {
     display: flex;
     flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .club-main h2 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    display: flex;
+    align-items: center;
     gap: var(--space-2);
   }
 
-  .social-link {
-    font-size: var(--font-size-sm);
-    color: var(--club-text-light);
-    text-decoration: none;
-    font-weight: var(--font-weight-semibold);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    transition: color var(--transition-base);
-  }
-
-  .social-link:hover {
+  /* ── Essence ── */
+  .essence-text {
+    margin: 0;
+    font-size: var(--font-size-base);
+    line-height: 1.8;
     color: var(--color-text);
   }
 
-  /* Meetings */
-  .meetings-section {
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .meetings-heading {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin: 0 0 var(--space-6);
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-  }
-
-  .meetings-grid {
+  /* ── Gallery ── */
+  .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: var(--space-4);
   }
 
+  .gallery-item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .gallery-item-image {
+    aspect-ratio: 1 / 1;
+    background: var(--color-surface-muted);
+    overflow: hidden;
+  }
+
+  .gallery-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-surface-muted) 0%, var(--color-surface) 100%);
+  }
+
+  .gallery-item-body {
+    padding: var(--space-3);
+  }
+
+  .gallery-item-body h3 {
+    margin: 0 0 var(--space-1);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .gallery-item-body p {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── Tags ── */
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag-pill {
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-soft);
+    background: var(--color-surface-muted);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-soft);
+  }
+
+  /* ── Meetings ── */
+  .meetings-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
   .meeting-card {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
     transition: all var(--transition-base);
   }
 
   .meeting-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--color-primary);
   }
 
-  .meeting-card-header {
+  .meeting-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -353,7 +430,7 @@ const Icon = clubIcons[slug!] ?? Target;
   .meeting-day {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
-    color: var(--club-text-light);
+    color: var(--color-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -371,7 +448,6 @@ const Icon = clubIcons[slug!] ?? Target;
     margin: 0 0 var(--space-2);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-text);
   }
 
   .meeting-desc {
@@ -381,41 +457,176 @@ const Icon = clubIcons[slug!] ?? Target;
     line-height: 1.5;
   }
 
-  /* Dark Mode */
-  @media (prefers-color-scheme: dark) {
-    .club-hero {
-      background: var(--club-bg-dark);
-      border-color: var(--club-border-dark);
-    }
-
-    .club-hero::before {
-      background: var(--club-text-dark);
-    }
-
-    .club-hero-icon {
-      color: var(--club-text-dark);
-    }
-
-    .info-section h2 {
-      color: var(--club-text-dark);
-    }
-
-    .meeting-day {
-      color: var(--club-text-dark);
-    }
+  /* ── Sidebar ── */
+  .club-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    position: sticky;
+    top: calc(var(--navbar-height) + var(--space-4));
   }
 
+  .club-sidebar h3 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  /* Participation Card */
+  .participation-card {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .participation-row {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .participation-row:last-child {
+    border-bottom: none;
+  }
+
+  .participation-icon {
+    flex-shrink: 0;
+    color: var(--color-primary);
+    margin-top: 2px;
+  }
+
+  .requisites-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-top: 2px;
+  }
+
+  .participation-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-1);
+  }
+
+  .participation-row p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  /* References Card */
+  .references-card {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .contacts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .contact-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .contact-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .contact-role {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  /* Social Card */
+  .social-card {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+  }
+
+  .social-link:hover {
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+
+  /* ── Responsive ── */
   @media (max-width: 900px) {
     .club-body {
       grid-template-columns: 1fr;
     }
 
     .club-sidebar {
+      position: static;
       order: -1;
     }
 
-    .meetings-grid {
-      grid-template-columns: 1fr;
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
   }
 </style>

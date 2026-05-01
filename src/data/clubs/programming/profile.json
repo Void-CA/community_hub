@@ -2,15 +2,44 @@
   "name": "Club de Programación",
   "slug": "programming",
   "tagline": "Donde el código une a los estudiantes",
-  "description": "Un espacio donde estudiantes de todas las carreras exploran la programación más allá del aula. Desde proyectos colaborativos hasta competencias de código, aprendemos juntos construyendo soluciones reales.",
-  "purpose": "Fomentar la curiosidad técnica, el trabajo en equipo y el aprendizaje autodirigido en desarrollo de software.",
-  "impact": "Más de 20 estudiantes activos, 5 proyectos colaborativos y participación en hackathons regionales.",
+  "manifesto": "Creemos que programar es el lenguaje universal de la resolución de problemas. Este club existe para que cualquier estudiante —sin importar su carrera— pueda pasar de la curiosidad a la creación. No buscamos genios; buscamos gente con ganas de construir, romper cosas y aprender del error.",
+  "tags": [
+    { "label": "Desarrollo Web", "slug": "web-dev" },
+    { "label": "Algoritmos", "slug": "algorithms" },
+    { "label": "Open Source", "slug": "open-source" },
+    { "label": "Competencias", "slug": "competitive-programming" }
+  ],
+  "gallery": [
+    {
+      "title": "Chat en tiempo real",
+      "description": "Aplicación de mensajería con WebSockets, autenticación JWT y persistencia en SQLite. Construida en 3 sesiones como ejercicio de arquitectura full-stack.",
+      "image": "/images/clubs/programming/chat-app.png"
+    },
+    {
+      "title": "CLI para horarios ULSA",
+      "description": "Herramienta de línea de comandos que parsea PDFs de horarios y genera calendarios en formato .ics. Resuelve un problema real del campus.",
+      "image": "/images/clubs/programming/cli-parser.png"
+    },
+    {
+      "title": "Workshop: Introducción a Rust",
+      "description": "Sesión de 3 horas donde 15 estudiantes escribieron su primer programa en Rust, entendiendo ownership, borrowing y el sistema de tipos.",
+      "image": "/images/clubs/programming/rust-workshop.png"
+    }
+  ],
+  "participation": {
+    "memberProfile": "Estudiantes de cualquier carrera con curiosidad por la programación. No se requiere experiencia previa; sí ganas de aprender y compartir.",
+    "commitment": "Reuniones semanales de 2 horas. Trabajo asíncrono opcional por proyectos.",
+    "requirements": "Laptop propia. No se requiere nivel mínimo."
+  },
+  "references": {
+    "location": "Aula D104 — Edificio de Ingeniería",
+    "contacts": [
+      { "name": "Jonathan Blanco", "role": "Coordinador General" },
+      { "name": "Carolina Téllez", "role": "Líder de Workshops" }
+    ]
+  },
   "social": {
     "discord": "https://discord.gg/ulsa-dev",
     "github": "https://github.com/ulsa-programacion"
-  },
-  "leaders": [
-    "Jonathan Blanco",
-    "Carolina Téllez"
-  ]
+  }
 }

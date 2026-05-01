@@ -1,34 +1,78 @@
 ---
 import type { ClubProfile } from '@/lib/clubs';
-import Card from '@/components/UI/Card.astro';
+import { Code, Zap, Target } from 'lucide-astro';
 
 interface Props {
   club: ClubProfile;
 }
 
 const { club } = Astro.props;
+
+const clubIcons: Record<string, typeof Code> = {
+  programming: Code,
+  electronics: Zap,
+};
+
+const Icon = clubIcons[club.slug] ?? Target;
 ---
 
-<Card as="a" href={`/campus/clubs/${club.slug}`} variant="elevated" padding="lg" class="club-card">
+<a href={`/campus/clubs/${club.slug}`} class="club-card">
+  <div class="club-card-header">
+    <div class="club-card-icon">
+      <Icon size={24} strokeWidth={1.5} />
+    </div>
+  </div>
   <h3 class="club-name">{club.name}</h3>
   <p class="club-tagline">{club.tagline}</p>
-  <div class="club-meta">
-    <span class="club-leaders">
-      {club.leaders.join(' · ')}
-    </span>
+  <div class="club-tags">
+    {
+      club.tags.slice(0, 3).map((tag) => (
+        <span class="tag-pill">{tag.label}</span>
+      ))
+    }
   </div>
-</Card>
+</a>
 
 <style>
   .club-card {
     display: block;
     text-decoration: none;
     color: inherit;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    transition: all var(--transition-base);
   }
 
   .club-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
+  }
+
+  .club-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-3);
+  }
+
+  .club-card-icon {
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+  }
+
+  .club-card-category {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
   }
 
   .club-name {
@@ -45,12 +89,20 @@ const { club } = Astro.props;
     line-height: 1.5;
   }
 
-  .club-meta {
+  .club-tags {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     gap: var(--space-2);
+  }
+
+  .tag-pill {
+    display: inline-block;
     font-size: var(--font-size-xs);
-    color: var(--color-primary);
     font-weight: var(--font-weight-semibold);
+    color: var(--color-text-soft);
+    background: var(--color-surface-muted);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-soft);
   }
 </style>

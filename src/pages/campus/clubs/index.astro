@@ -49,7 +49,7 @@ interface AccentColors {
         <p class="clubs-eyebrow">Vida Estudiantil</p>
         <h1>Clubes Universitarios</h1>
         <p class="clubs-intro">
-          Iniciativas creadas por y para estudiantes. Descubrí su propósito, su impacto y cuándo se reúnen.
+          Iniciativas creadas por y para estudiantes. Descubrí su propósito, su identidad y cuándo se reúnen.
         </p>
       </header>
 
@@ -66,17 +66,27 @@ interface AccentColors {
             };
             const Icon = clubIcons[profile.slug] ?? Target;
             return (
-              <a href={`/campus/clubs/${profile.slug}`} class:list={['club-card', `is-${profile.slug}`]} style={`--club-bg-light: ${accent.lightBg}; --club-text-light: ${accent.lightText}; --club-border-light: ${accent.lightBorder}; --club-bg-dark: ${accent.darkBg}; --club-text-dark: ${accent.darkText}; --club-border-dark: ${accent.darkBorder};`}>
-                <div class="club-card-icon">
-                  <Icon size={32} strokeWidth={1.5} />
+              <a href={`/campus/clubs/${profile.slug}`} class="club-card" style={`--club-bg-light: ${accent.lightBg}; --club-text-light: ${accent.lightText}; --club-border-light: ${accent.lightBorder}; --club-bg-dark: ${accent.darkBg}; --club-text-dark: ${accent.darkText}; --club-border-dark: ${accent.darkBorder};`}>
+                <div class="club-card-header">
+                  <div class="club-identity">
+                    <div class="club-card-icon">
+                      <Icon size={28} strokeWidth={1.5} />
+                    </div>
+                    <h3 class="club-card-name">{profile.name}</h3>
+                  </div>
                 </div>
-                <h3 class="club-card-name">{profile.name}</h3>
                 <p class="club-card-tagline">{profile.tagline}</p>
+                <div class="club-card-tags">
+                  {
+                    profile.tags.slice(0, 3).map((tag) => (
+                      <span class="tag-pill">{tag.label}</span>
+                    ))
+                  }
+                  {profile.tags.length > 3 && <span class="tag-pill tag-pill-more">+{profile.tags.length - 3}</span>}
+                </div>
                 <div class="club-card-footer">
-                  <span class="club-card-leaders">
-                    {profile.leaders.join(' · ')}
-                  </span>
-                  <span class="club-card-cta">Ver más →</span>
+                  <span class="club-card-commitment">{profile.participation.commitment.split('.').shift()}</span>
+                  <span class="club-card-cta">Explorar →</span>
                 </div>
               </a>
             );
@@ -125,9 +135,9 @@ interface AccentColors {
 
   .clubs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: var(--space-6);
-    max-width: 800px;
+    max-width: 840px;
     margin: 0 auto;
   }
 
@@ -136,7 +146,7 @@ interface AccentColors {
     flex-direction: column;
     text-decoration: none;
     color: inherit;
-    padding: var(--space-8);
+    padding: var(--space-6);
     border-radius: var(--radius-lg);
     border: 1px solid var(--club-border-light);
     background: var(--club-bg-light);
@@ -168,27 +178,68 @@ interface AccentColors {
     transform: scaleX(1);
   }
 
+    .club-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+  /* Icono + nombre como unidad visual */
+  .club-identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0; /* permite que el nombre haga truncate si es necesario */
+    margin-left: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
   .club-card-icon {
-    margin-bottom: var(--space-4);
     color: var(--club-text-light);
+    flex-shrink: 0;
     display: flex;
     align-items: center;
   }
 
   .club-card-name {
-    margin: 0 0 var(--space-2);
-    font-size: var(--font-size-xl);
+    margin: 0;
+    font-size: var(--font-size-lg);
     font-weight: var(--font-weight-bold);
     color: var(--color-text);
     line-height: 1.2;
   }
 
+
   .club-card-tagline {
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--space-5);
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
     line-height: 1.5;
-    flex: 1;
+  }
+
+  .club-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+
+  .tag-pill {
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-soft);
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+    border: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+  }
+
+  .tag-pill-more {
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-bold);
   }
 
   .club-card-footer {
@@ -196,13 +247,15 @@ interface AccentColors {
     justify-content: space-between;
     align-items: center;
     padding-top: var(--space-4);
-    border-top: 1px solid var(--club-border-light);
+    border-top: 1px solid color-mix(in srgb, var(--club-text-light) 15%, transparent);
   }
 
-  .club-card-leaders {
+  .club-card-commitment {
     font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
-    color: var(--club-text-light);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    max-width: 60%;
+    line-height: 1.4;
   }
 
   .club-card-cta {
@@ -235,9 +288,22 @@ interface AccentColors {
       color: var(--club-text-dark);
     }
 
-    .club-card-leaders,
+    .club-card-category {
+      color: var(--club-text-dark);
+      background: color-mix(in srgb, var(--club-text-dark) 10%, transparent);
+    }
+
     .club-card-cta {
       color: var(--club-text-dark);
+    }
+
+    .club-card-footer {
+      border-top-color: color-mix(in srgb, var(--club-text-dark) 15%, transparent);
+    }
+
+    .tag-pill {
+      background: color-mix(in srgb, var(--color-text) 8%, transparent);
+      border-color: color-mix(in srgb, var(--color-text) 15%, transparent);
     }
   }
 </style>
