@@ -150,7 +150,7 @@ const { title, activeDays, scheduleBlocks } = Astro.props;
     border: var(--border-width-sm) solid var(--grid-line);
     background: var(--color-bg);
     position: relative;
-    max-height: calc(100vh - 220px);
+    max-height: calc(100vh - var(--navbar-height) - 40px);
   }
 
   .timeline-grid {

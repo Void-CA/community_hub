@@ -70,6 +70,10 @@ const integrityError = !suggestedPath.success;
     padding: 0 var(--space-4);
   }
 
+  .dashboard-section {
+    padding-top: var(--space-6);
+  }
+
   .eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -77,5 +81,12 @@ const integrityError = !suggestedPath.success;
     font-weight: var(--font-weight-bold);
     color: var(--color-accent);
     margin-bottom: var(--space-1);
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid,
+    .container-fluid {
+      padding: 0 var(--space-3);
+    }
   }
 </style>
