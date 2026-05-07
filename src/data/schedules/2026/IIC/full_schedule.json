@@ -1,11 +1,843 @@
 {
+  "3": [
+    {
+      "day": "Monday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Administración Financiera",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Elizabeth Ruíz Rugama",
+      "room": "G106"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Derecho Laboral",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Eliseo Raúl Valladares V anegas",
+      "room": "G106"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Investigación de Mercados",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Dalia Francisca Niño Ruíz",
+      "room": "G106"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Aplicaciones de Bases de Datos",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Karolina Lissette León Díaz",
+      "room": "A102"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Política de Costos y Precios",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Xiomara de la Concepción Martínez Méndez",
+      "room": "G106"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Política de Costos y Precios",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Xiomara de la Concepción Martínez Méndez",
+      "room": "G106"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Administración Financiera",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Elizabeth Ruíz Rugama",
+      "room": "G106"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Investigación de Mercados",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Dalia Francisca Niño Ruíz",
+      "room": "G106"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Derecho Laboral",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Eliseo Raúl Valladares V anegas",
+      "room": "G106"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Aplicaciones de Bases de Datos",
+      "majors": [
+        "LAF"
+      ],
+      "group": 1,
+      "professor": "Karolina Lissette León Díaz",
+      "room": "A102"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Dirección de Ventas",
+      "majors": [
+        "LCM"
+      ],
+      "group": 1,
+      "professor": "Maikel Karolan Ruíz Jirón",
+      "room": "F101"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Dirección de Ventas",
+      "majors": [
+        "LCM"
+      ],
+      "group": 1,
+      "professor": "Maikel Karolan Ruíz Jirón",
+      "room": "F101"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning2",
+      "end_block": "Morning2",
+      "subject": "Mantenimiento Preventivo de PC I",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Lester Baltazar Sánchez Bárcenas",
+      "room": "G109"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Mantenimiento Preventivo de PC I",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Lester Baltazar Sánchez Bárcenas",
+      "room": "G109"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Sistemas Operativos II",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Christian Eduardo Toval Ruiz",
+      "room": "A102"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Análisis y diseño de sistemas",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Aarón Emilio Cisneros Quintana",
+      "room": "A102"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning2",
+      "end_block": "Morning2",
+      "subject": "Teoría Computacional",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Hazell Yolanda Carvajal Hernández",
+      "room": "B107"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Teoría Computacional",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Hazell Yolanda Carvajal Hernández",
+      "room": "B107"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Sistemas Operativos II",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Christian Eduardo Toval Ruiz",
+      "room": "A103"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Análisis y diseño de sistemas",
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Aarón Emilio Cisneros Quintana",
+      "room": "A102"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Bryan de Jesús Soto Linarte",
+      "room": "I105"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "María Martha V erónica Lacayo Trujillo",
+      "room": "G108"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Circuitos Hidráulicos y Neumáticos",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Wilhelm Jesús Rojas Baca",
+      "room": "D103"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Mecánica de Fluidos",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Bryan de Jesús Soto Linarte",
+      "room": "G109"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "María Martha V erónica Lacayo Trujillo",
+      "room": "G108"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Termodinámica Aplicada",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Joseline Lisbeth Reyes Laguna",
+      "room": "G107"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Circuitos Hidráulicos y Neumáticos",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Wilhelm Jesús Rojas Baca",
+      "room": "I105"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Bryan de Jesús Soto Linarte",
+      "room": "I105"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Mecánica de Fluidos",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Bryan de Jesús Soto Linarte",
+      "room": "G109"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Termodinámica Aplicada",
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Joseline Lisbeth Reyes Laguna",
+      "room": "G106"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Investigación de operaciones",
+      "majors": [
+        "IGI"
+      ],
+      "group": 1,
+      "professor": "Ashley Madiel Salaverri Lainez",
+      "room": "F203"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Investigación de operaciones",
+      "majors": [
+        "IGI"
+      ],
+      "group": 1,
+      "professor": "Ashley Madiel Salaverri Lainez",
+      "room": "F203"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Ingeniería Ambiental II",
+      "majors": [
+        "IGI"
+      ],
+      "group": 1,
+      "professor": "Ashley Madiel Salaverri Lainez",
+      "room": "F203"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Electricidad y magnetismo",
+      "majors": [
+        "IMS"
+      ],
+      "group": 1,
+      "professor": "Omar Octavio Álvarez Pereira",
+      "room": "F201"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Herramientas CAD",
+      "majors": [
+        "IMS"
+      ],
+      "group": 1,
+      "professor": "Briana Lilliam Salmerón Chevez",
+      "room": "A103"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Lenguaje de Programación II",
+      "majors": [
+        "IMS"
+      ],
+      "group": 1,
+      "professor": "Aarón Emilio Cisneros Quintana",
+      "room": "D104"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Herramientas CAD",
+      "majors": [
+        "IMS"
+      ],
+      "group": 1,
+      "professor": "Briana Lilliam Salmerón Chevez",
+      "room": "E201"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Lenguaje de Programación II",
+      "majors": [
+        "IMS"
+      ],
+      "group": 1,
+      "professor": "Aarón Emilio Cisneros Quintana",
+      "room": "A102"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Electricidad y magnetismo",
+      "majors": [
+        "IMS"
+      ],
+      "group": 1,
+      "professor": "Omar Octavio Álvarez Pereira",
+      "room": "F203"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "María Martha V erónica Lacayo Trujillo",
+      "room": "F205"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "Bryan de Jesús Soto Linarte",
+      "room": "G108"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Lenguaje de Programación II",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "Aarón Emilio Cisneros Quintana",
+      "room": "A102"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Herramientas CAD",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "Briana Lilliam Salmerón Chevez",
+      "room": "A103"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "María Martha V erónica Lacayo Trujillo",
+      "room": "F201"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "Bryan de Jesús Soto Linarte",
+      "room": "G108"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Lenguaje de Programación II",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "Aarón Emilio Cisneros Quintana",
+      "room": "A103"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Herramientas CAD",
+      "majors": [
+        "IMS"
+      ],
+      "group": 2,
+      "professor": "Briana Lilliam Salmerón Chevez",
+      "room": "A103"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Administración Financiera",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Elizabeth Ruíz Rugama",
+      "room": "F102"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Derecho Laboral",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Eliseo Raúl Valladares V anegas",
+      "room": "E205"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Investigación de Mercados",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Dalia Francisca Niño Ruíz",
+      "room": "F102"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Derecho Laboral",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Eliseo Raúl Valladares V anegas",
+      "room": "E205"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Administración Financiera",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Elizabeth Ruíz Rugama",
+      "room": "F102"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning2",
+      "end_block": "Morning2",
+      "subject": "Política de Costos y Precios",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Xiomara de la Concepción Martínez Méndez",
+      "room": "F102"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Política de Costos y Precios",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Xiomara de la Concepción Martínez Méndez",
+      "room": "F102"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Investigación de Mercados",
+      "majors": [
+        "LCM"
+      ],
+      "group": 2,
+      "professor": "Dalia Francisca Niño Ruíz",
+      "room": "E205"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Investigación de operaciones",
+      "majors": [
+        "IGI"
+      ],
+      "group": 2,
+      "professor": "Ashley Madiel Salaverri Lainez",
+      "room": "F104"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Circuitos Hidráulicos y Neumáticos",
+      "majors": [
+        "IGI"
+      ],
+      "group": 2,
+      "professor": "Wilhelm Jesús Rojas Baca",
+      "room": "D103"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon1",
+      "end_block": "Afternoon2",
+      "subject": "Circuitos Hidráulicos y Neumáticos",
+      "majors": [
+        "IGI"
+      ],
+      "group": 2,
+      "professor": "Wilhelm Jesús Rojas Baca",
+      "room": "D103"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Investigación de operaciones",
+      "majors": [
+        "IGI"
+      ],
+      "group": 2,
+      "professor": "Ashley Madiel Salaverri Lainez",
+      "room": "F102"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IGI"
+      ],
+      "group": 3,
+      "professor": "Jaime Bernardo Saborío Mayorga",
+      "room": "I105"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Circuitos Hidráulicos y Neumáticos",
+      "majors": [
+        "IGI"
+      ],
+      "group": 3,
+      "professor": "Wilhelm Jesús Rojas Baca",
+      "room": "D103"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "IGI"
+      ],
+      "group": 3,
+      "professor": "María Martha V erónica Lacayo Trujillo",
+      "room": "F204"
+    },
+    {
+      "day": "Wednesday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IGI"
+      ],
+      "group": 3,
+      "professor": "Jaime Bernardo Saborío Mayorga",
+      "room": "I105"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
+      "subject": "Circuitos Hidráulicos y Neumáticos",
+      "majors": [
+        "IGI"
+      ],
+      "group": 3,
+      "professor": "Wilhelm Jesús Rojas Baca",
+      "room": "D103"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "IGI"
+      ],
+      "group": 3,
+      "professor": "María Martha V erónica Lacayo Trujillo",
+      "room": "F204"
+    },
+    {
+      "day": "Monday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon4",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IGI"
+      ],
+      "group": 4,
+      "professor": "Álvaro José Cisneros Caballero",
+      "room": "F102"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Conocimientos de materiales",
+      "majors": [
+        "IGI"
+      ],
+      "group": 4,
+      "professor": "Álvaro José Cisneros Caballero",
+      "room": "F204"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "ICE"
+      ],
+      "group": 4,
+      "professor": "Herson Eduardo Guzmán Castillo",
+      "room": "F102"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Morning3",
+      "end_block": "Morning4",
+      "subject": "Instrumentación Industrial",
+      "majors": [
+        "ICE"
+      ],
+      "group": 4,
+      "professor": "Herson Eduardo Guzmán Castillo",
+      "room": "F101"
+    }
+  ],
   "4": [
     {
       "day": "Monday",
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Lenguaje de Programación III",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "Freddy Alexander Mejía Quintana",
       "room": "A102"
@@ -15,7 +847,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Robótica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "Kevin Josué Flores Carvajal",
       "room": "B105"
@@ -25,7 +859,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Modelos de Simulación",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "José Abraham Miranda Chávez",
       "room": "E201"
@@ -35,7 +871,23 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Administración Financiera I",
-      "majors": ["IMS", "IME"],
+      "majors": [
+        "IMS",
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Anioska Josefina Alemán Chávez",
+      "room": "G109"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Administración Financiera I",
+      "majors": [
+        "IMS",
+        "IME"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "G109"
@@ -45,7 +897,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Lenguaje de Programación III",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "Freddy Alexander Mejía Quintana",
       "room": "A102"
@@ -55,7 +909,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Robótica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "Kevin Josué Flores Carvajal",
       "room": "B105"
@@ -65,7 +921,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Modelos de Simulación",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "José Abraham Miranda Chávez",
       "room": "E201"
@@ -75,7 +933,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Gestión Estratégica Publicitaria",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 1,
       "professor": "Walter Bladimir Ruíz A vendaño",
       "room": "A103"
@@ -85,7 +945,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Gestión Estratégica Publicitaria",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 1,
       "professor": "Walter Bladimir Ruíz A vendaño",
       "room": "A103"
@@ -95,7 +957,10 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Formulación y Evaluación de Proyectos",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Suyapa Carolina Vanegas Padilla",
       "room": "I102"
@@ -105,7 +970,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Diseño y Gestión Web I",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 1,
       "professor": "Freddy Alexander Mejía Quintana",
       "room": "A103"
@@ -115,7 +982,10 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Logística y Distribución Comercial",
-      "majors": ["LAF", "LCM"],
+      "majors": [
+        "LAF",
+        "LCM"
+      ],
       "group": 1,
       "professor": "Dalia Francisca Niño Ruíz",
       "room": "G105"
@@ -125,7 +995,10 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Teoría de la Decisión",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "I102"
@@ -135,7 +1008,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Teoría de la Decisión",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "I102"
@@ -145,7 +1021,10 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Logística y Distribución Comercial",
-      "majors": ["LAF", "LCM"],
+      "majors": [
+        "LAF",
+        "LCM"
+      ],
       "group": 1,
       "professor": "Dalia Francisca Niño Ruíz",
       "room": "G105"
@@ -155,7 +1034,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Diseño y Gestión Web I",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 1,
       "professor": "Freddy Alexander Mejía Quintana",
       "room": "A103"
@@ -165,7 +1046,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Formulación y Evaluación de Proyectos",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Suyapa Carolina Vanegas Padilla",
       "room": "G106"
@@ -175,7 +1059,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Energía Solar",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Briana Lilliam Salmerón Chevez",
       "room": "I102"
@@ -185,7 +1071,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Energía Solar",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Briana Lilliam Salmerón Chevez",
       "room": "I102"
@@ -195,7 +1083,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Energía Geotérmica",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Wilhelm Jesús Rojas Baca",
       "room": "F202"
@@ -205,7 +1095,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Máquinas Hidráulicas",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Benito Martín Núñez",
       "room": "F201"
@@ -215,7 +1107,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Diseño de Elementos de Máquinas",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "I102"
@@ -225,7 +1119,23 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Administración Financiera I",
-      "majors": ["IMS", "IME"],
+      "majors": [
+        "IMS",
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Anioska Josefina Alemán Chávez",
+      "room": "G109"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Administración Financiera I",
+      "majors": [
+        "IMS",
+        "IME"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "G109"
@@ -235,7 +1145,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Energía Geotérmica",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Wilhelm Jesús Rojas Baca",
       "room": "F203"
@@ -245,7 +1157,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Energía Solar",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Briana Lilliam Salmerón Chevez",
       "room": "F202"
@@ -255,7 +1169,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Máquinas Hidráulicas",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Benito Martín Núñez",
       "room": "F201"
@@ -265,7 +1181,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Diseño de Elementos de Máquinas",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "I102"
@@ -275,7 +1193,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Mercadotecnia",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 1,
       "professor": "Dalia Francisca Niño Ruíz",
       "room": "F104"
@@ -285,7 +1205,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Mercadotecnia",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 1,
       "professor": "Dalia Francisca Niño Ruíz",
       "room": "F104"
@@ -295,7 +1217,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Economia I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "F104"
@@ -305,7 +1229,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Economia I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "F104"
@@ -315,7 +1241,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Administración Recursos Humanos",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 1,
       "professor": "Cristhiam Felipe Ramos Espinoza",
       "room": "A106"
@@ -325,7 +1253,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inteligencia Artificial",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 1,
       "professor": "Aarón Emilio Cisneros Quintana",
       "room": "D104"
@@ -335,7 +1265,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Taller de Conectividad",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 1,
       "professor": "Freddy Alexander Mejía Quintana",
       "room": "B107"
@@ -345,7 +1277,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inteligencia Artificial",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 1,
       "professor": "Aarón Emilio Cisneros Quintana",
       "room": "D104"
@@ -355,7 +1289,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Taller de Conectividad",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 1,
       "professor": "Freddy Alexander Mejía Quintana",
       "room": "B107"
@@ -365,7 +1301,10 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Formulación y Evaluación de Proyectos",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Suyapa Carolina Vanegas Padilla",
       "room": "I102"
@@ -375,7 +1314,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Decisiones de Financiamiento e Inversión I",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "E101"
@@ -385,7 +1326,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Dinero y Bancos",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Elizabeth Ruíz Rugama",
       "room": "E205"
@@ -395,7 +1338,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Diagnóstico Financiero de Empresas",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Xiomara de la Concepción Martínez Méndez",
       "room": "G105"
@@ -405,7 +1350,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Decisiones de Financiamiento e Inversión I",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "G107"
@@ -415,7 +1362,10 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Logística y Distribución Comercial",
-      "majors": ["LAF", "LCM"],
+      "majors": [
+        "LAF",
+        "LCM"
+      ],
       "group": 1,
       "professor": "Dalia Francisca Niño Ruíz",
       "room": "G105"
@@ -425,7 +1375,10 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Teoría de la Decisión",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "I102"
@@ -435,7 +1388,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Teoría de la Decisión",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "I102"
@@ -445,7 +1401,10 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Logística y Distribución Comercial",
-      "majors": ["LAF", "LCM"],
+      "majors": [
+        "LAF",
+        "LCM"
+      ],
       "group": 1,
       "professor": "Dalia Francisca Niño Ruíz",
       "room": "G105"
@@ -455,7 +1414,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Dinero y Bancos",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Elizabeth Ruíz Rugama",
       "room": "E101"
@@ -465,7 +1426,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Formulación y Evaluación de Proyectos",
-      "majors": ["LCM", "LAF"],
+      "majors": [
+        "LCM",
+        "LAF"
+      ],
       "group": 1,
       "professor": "Suyapa Carolina Vanegas Padilla",
       "room": "G106"
@@ -475,7 +1439,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Diagnóstico Financiero de Empresas",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Xiomara de la Concepción Martínez Méndez",
       "room": "G105"
@@ -485,7 +1451,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Modelos de Simulación",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 2,
       "professor": "José Abraham Miranda Chávez",
       "room": "E201"
@@ -495,7 +1463,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Modelos de Simulación",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 2,
       "professor": "José Abraham Miranda Chávez",
       "room": "D104"
@@ -505,7 +1475,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Robótica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Kevin Josué Flores Carvajal",
       "room": "B105"
@@ -515,7 +1487,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Diseño de Elementos de Máquinas",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "F202"
@@ -525,7 +1499,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Robótica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Kevin Josué Flores Carvajal",
       "room": "B105"
@@ -535,7 +1511,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Diseño de Elementos de Máquinas",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "I102"
@@ -545,7 +1523,21 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Administración Financiera I",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
+      "group": 2,
+      "professor": "Anioska Josefina Alemán Chávez",
+      "room": "F104"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Administración Financiera I",
+      "majors": [
+        "ICE"
+      ],
       "group": 2,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "F104"
@@ -555,7 +1547,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Modelos de Simulación",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 3,
       "professor": "Pedro Pablo López Muñoz",
       "room": "E201"
@@ -565,7 +1559,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Robótica",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 3,
       "professor": "María Martha Verónica Lacayo Trujillo",
       "room": "B105"
@@ -575,7 +1571,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Modelos de Simulación",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 3,
       "professor": "Pedro Pablo López Muñoz",
       "room": "E201"
@@ -585,7 +1583,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Robótica",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 3,
       "professor": "María Martha Verónica Lacayo Trujillo",
       "room": "B105"
@@ -595,7 +1595,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Administración Financiera I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "F104"
@@ -605,7 +1607,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Administración Financiera I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "F104"
@@ -617,7 +1621,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "A105"
@@ -627,7 +1633,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "A105"
@@ -637,7 +1645,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Hazel Carolina Pineda Martínez",
       "room": "A105"
@@ -647,7 +1657,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Física General",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "A105"
@@ -657,7 +1669,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Dibujo Técnico",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Briana Lilliam Salmerón Chevez",
       "room": "G101"
@@ -667,7 +1681,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Dibujo Técnico",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Briana Lilliam Salmerón Chevez",
       "room": "G101"
@@ -677,7 +1693,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Eliseo Raúl Valladares Vanegas",
       "room": "A105"
@@ -687,7 +1705,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Hazel Carolina Pineda Martínez",
       "room": "A105"
@@ -697,7 +1717,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "A105"
@@ -707,7 +1729,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Física General",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "A105"
@@ -717,7 +1741,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Hazel Carolina Pineda Martínez",
       "room": "A105"
@@ -727,7 +1753,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Redacción Técnica",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Eliseo Raúl Valladares Vanegas",
       "room": "A105"
@@ -737,7 +1765,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Ética y Lasallismo",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Jason Alexander V argas Prado",
       "room": "G108"
@@ -747,7 +1777,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Ética y Lasallismo",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Jason Alexander V argas Prado",
       "room": "G108"
@@ -757,7 +1789,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Física I",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Edgard José Ramos Poveda",
       "room": "F101"
@@ -767,7 +1801,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Hazel Carolina Pineda Martínez",
       "room": "F201"
@@ -777,7 +1813,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Introducción a la Programación",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Claudia Elizabeth Martínez Darce",
       "room": "A103"
@@ -787,7 +1825,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Gerencia Hospitalaria",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Dr. Ivania del Socorro Espinoza Sandoval",
       "room": "F102"
@@ -797,7 +1837,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física I",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Edgard José Ramos Poveda",
       "room": "F103"
@@ -807,7 +1849,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Hazel Carolina Pineda Martínez",
       "room": "G108"
@@ -817,7 +1861,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Hazel Carolina Pineda Martínez",
       "room": "G109"
@@ -827,7 +1873,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Introducción a la Programación",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Claudia Elizabeth Martínez Darce",
       "room": "A102"
@@ -837,7 +1885,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Gerencia Hospitalaria",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Dr. Ivania del Socorro Espinoza Sandoval",
       "room": "G107"
@@ -847,7 +1897,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Modelos Matemáticos Aplicados a los Negocios",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Cesar Antonio Rojas Espinoza",
       "room": "A104"
@@ -857,7 +1909,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Contabilidad I",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "A104"
@@ -867,7 +1921,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Administración General",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Manfredo Josué Pastora Colindres",
       "room": "A104"
@@ -877,7 +1933,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Modelos Matemáticos Aplicados a los Negocios",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Cesar Antonio Rojas Espinoza",
       "room": "A104"
@@ -887,7 +1945,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Contabilidad I",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "A104"
@@ -897,7 +1957,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Administración General",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Manfredo Josué Pastora Colindres",
       "room": "A104"
@@ -907,7 +1969,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "A106"
@@ -917,7 +1981,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Física",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "A106"
@@ -927,7 +1993,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Física",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 1,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "A106"
@@ -937,7 +2005,21 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Dibujo Técnico Asistido",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
+      "group": 1,
+      "professor": "Weslin Antonio Rodríguez Silva",
+      "room": "D102"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Dibujo Técnico Asistido",
+      "majors": [
+        "ICE"
+      ],
       "group": 1,
       "professor": "Weslin Antonio Rodríguez Silva",
       "room": "D102"
@@ -947,7 +2029,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Dibujo Técnico Asistido",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 1,
       "professor": "Weslin Antonio Rodríguez Silva",
       "room": "G101"
@@ -957,7 +2041,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Redacción Técnica",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 10,
       "professor": "Heyssel Carolina Huete Sarria",
       "room": "E101"
@@ -967,7 +2053,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Redacción Técnica",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 10,
       "professor": "Heyssel Carolina Huete Sarria",
       "room": "E101"
@@ -977,7 +2065,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Redacción Técnica",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 11,
       "professor": "Heyssel Carolina Huete Sarria",
       "room": "E102"
@@ -987,7 +2077,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Redacción Técnica",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 11,
       "professor": "Heyssel Carolina Huete Sarria",
       "room": "E102"
@@ -997,7 +2089,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Modelos Matemáticos Aplicados a los Negocios",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Cesar Antonio Rojas Espinoza",
       "room": "E101"
@@ -1007,7 +2101,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Contabilidad I",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "E101"
@@ -1017,7 +2113,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Administración General",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Manfredo Josué Pastora Colindres",
       "room": "E101"
@@ -1027,7 +2125,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Modelos Matemáticos Aplicados a los Negocios",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Cesar Antonio Rojas Espinoza",
       "room": "E101"
@@ -1037,7 +2137,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Contabilidad I",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "E101"
@@ -1047,7 +2149,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Administración General",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Manfredo Josué Pastora Colindres",
       "room": "E101"
@@ -1057,7 +2161,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 2,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "G102"
@@ -1067,7 +2173,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 2,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "G102"
@@ -1077,7 +2185,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 2,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "G103"
@@ -1087,7 +2197,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 2,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "F205"
@@ -1097,7 +2209,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 2,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "F205"
@@ -1107,7 +2221,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Judith Nazareth Madriz Álvarez",
       "room": "A106"
@@ -1117,7 +2233,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Matemática II",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "A106"
@@ -1127,7 +2245,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Judith Nazareth Madriz Álvarez",
       "room": "A106"
@@ -1137,7 +2257,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Nidia Juana Munguía Membreño",
       "room": "A106"
@@ -1147,7 +2269,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "A106"
@@ -1157,7 +2281,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Judith Nazareth Madriz Álvarez",
       "room": "F101"
@@ -1167,7 +2293,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Briana Lilliam Salmerón Chevez",
       "room": "G101"
@@ -1177,7 +2305,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Briana Lilliam Salmerón Chevez",
       "room": "G101"
@@ -1187,7 +2317,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Nidia Juana Munguía Membreño",
       "room": "A106"
@@ -1197,7 +2329,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Introducción a la Programación",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 2,
       "professor": "Lester Baltazar Sánchez Bárcenas",
       "room": "D104"
@@ -1207,7 +2341,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Introducción a la Programación",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 2,
       "professor": "Lester Baltazar Sánchez Bárcenas",
       "room": "D104"
@@ -1217,7 +2353,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 2,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "A104"
@@ -1227,7 +2365,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 2,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "A104"
@@ -1237,7 +2377,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 2,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "A104"
@@ -1247,7 +2389,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 2,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "A104"
@@ -1257,7 +2401,10 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física",
-      "majors": ["ICE", "IMS"],
+      "majors": [
+        "ICE",
+        "IMS"
+      ],
       "group": 3,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1267,7 +2414,10 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Física",
-      "majors": ["ICE", "IMS"],
+      "majors": [
+        "ICE",
+        "IMS"
+      ],
       "group": 3,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1277,7 +2427,10 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física",
-      "majors": ["ICE", "IMS"],
+      "majors": [
+        "ICE",
+        "IMS"
+      ],
       "group": 3,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1287,7 +2440,10 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física",
-      "majors": ["ICE", "IMS"],
+      "majors": [
+        "ICE",
+        "IMS"
+      ],
       "group": 3,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1297,7 +2453,10 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Física",
-      "majors": ["ICE", "IMS"],
+      "majors": [
+        "ICE",
+        "IMS"
+      ],
       "group": 3,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1307,7 +2466,10 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física",
-      "majors": ["ICE", "IMS"],
+      "majors": [
+        "ICE",
+        "IMS"
+      ],
       "group": 3,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1317,7 +2479,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Judith Nazareth Madriz Álvarez",
       "room": "G102"
@@ -1327,7 +2491,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Dibujo Técnico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Bryan de Jesús Soto Linarte",
       "room": "G101"
@@ -1337,7 +2503,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Dibujo Técnico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Bryan de Jesús Soto Linarte",
       "room": "G101"
@@ -1347,7 +2515,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Judith Nazareth Madriz Álvarez",
       "room": "G102"
@@ -1357,7 +2527,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Física General",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "F205"
@@ -1367,7 +2539,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Matemática II",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "G102"
@@ -1377,7 +2551,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Nidia Juana Munguía Membreño",
       "room": "E205"
@@ -1387,7 +2563,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Judith Nazareth Madriz Álvarez",
       "room": "G102"
@@ -1397,7 +2575,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "G102"
@@ -1407,7 +2587,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Melvin Antonio Morales Rojas",
       "room": "F205"
@@ -1417,7 +2599,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Julissa Cristina Mendoza Sánchez",
       "room": "G102"
@@ -1427,7 +2611,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Nidia Juana Munguía Membreño",
       "room": "G102"
@@ -1437,7 +2623,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Administración General",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Manfredo Josué Pastora Colindres",
       "room": "E102"
@@ -1447,7 +2635,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "E101"
@@ -1457,7 +2647,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Modelos Matemáticos Aplicados a los Negocios",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Luisa Emilia García Moreira",
       "room": "E102"
@@ -1467,7 +2659,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "E101"
@@ -1477,7 +2671,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Contabilidad I",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "E102"
@@ -1487,7 +2683,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "E101"
@@ -1497,7 +2695,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Administración General",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Manfredo Josué Pastora Colindres",
       "room": "E102"
@@ -1507,7 +2707,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Modelos Matemáticos Aplicados a los Negocios",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Luisa Emilia García Moreira",
       "room": "E102"
@@ -1517,7 +2719,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Contabilidad I",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 3,
       "professor": "Aracely del Carmen Centeno Rivera",
       "room": "E102"
@@ -1527,7 +2731,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Dibujo Técnico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 4,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1537,7 +2743,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Dibujo Técnico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 4,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1547,7 +2755,10 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 4,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "F103"
@@ -1557,7 +2768,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 4,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "F104"
@@ -1567,7 +2781,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 4,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "E102"
@@ -1577,7 +2793,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 4,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "E102"
@@ -1587,7 +2805,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A2",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 4,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "E102"
@@ -1597,7 +2817,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "María Isabel Silva",
       "room": "G103"
@@ -1607,7 +2829,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "G103"
@@ -1617,7 +2841,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Luisa Emilia García Moreira",
       "room": "G103"
@@ -1627,7 +2853,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Luisa Emilia García Moreira",
       "room": "G103"
@@ -1637,7 +2865,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "G103"
@@ -1647,7 +2877,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Luisa Emilia García Moreira",
       "room": "G103"
@@ -1657,7 +2889,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "María Isabel Silva",
       "room": "G103"
@@ -1667,7 +2901,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "G103"
@@ -1677,7 +2913,10 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 4,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "F103"
@@ -1687,7 +2926,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 4,
       "professor": "Omar Octavio Álvarez Pereira",
       "room": "F104"
@@ -1697,7 +2939,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1707,7 +2954,11 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS", "IME", "IGI"],
+      "majors": [
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 5,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1717,7 +2968,11 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS", "IME", "IGI"],
+      "majors": [
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 5,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1727,7 +2982,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1737,7 +2997,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1747,7 +3012,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "G102"
@@ -1757,7 +3024,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "María Isabel Silva",
       "room": "G102"
@@ -1767,7 +3036,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "A105"
@@ -1777,7 +3048,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "A105"
@@ -1787,7 +3060,11 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS", "IME", "IGI"],
+      "majors": [
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 5,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1797,7 +3074,11 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS", "IME", "IGI"],
+      "majors": [
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 5,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1807,7 +3088,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "G103"
@@ -1817,7 +3100,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1827,7 +3115,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "F204"
@@ -1837,7 +3127,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "A105"
@@ -1847,7 +3139,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "María Isabel Silva",
       "room": "A105"
@@ -1857,7 +3151,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1867,7 +3166,11 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS", "IME", "IGI"],
+      "majors": [
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 5,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1877,7 +3180,11 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS", "IME", "IGI"],
+      "majors": [
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 5,
       "professor": "Álvaro José Cisneros Caballero",
       "room": "G101"
@@ -1887,7 +3194,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1897,7 +3209,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1907,7 +3224,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI", "IMS", "ICE"],
+      "majors": [
+        "IME",
+        "IGI",
+        "IMS",
+        "ICE"
+      ],
       "group": 5,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -1917,7 +3239,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -1927,7 +3254,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -1937,7 +3269,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F203"
@@ -1947,7 +3284,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -1957,7 +3299,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -1967,7 +3314,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F103"
@@ -1977,7 +3329,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -1987,7 +3344,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F205"
@@ -1997,7 +3359,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -2007,7 +3374,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -2017,7 +3389,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F203"
@@ -2027,7 +3404,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2037,7 +3419,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 6,
       "professor": "Bryan de Jesús Soto Linarte",
       "room": "G101"
@@ -2047,7 +3431,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Dibujo Técnico",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 6,
       "professor": "Bryan de Jesús Soto Linarte",
       "room": "G101"
@@ -2057,7 +3443,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2067,7 +3458,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F103"
@@ -2077,7 +3473,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2087,7 +3488,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F205"
@@ -2097,7 +3503,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -2107,7 +3518,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -2117,7 +3533,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F203"
@@ -2127,7 +3548,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2137,7 +3563,10 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -2147,7 +3576,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2157,7 +3591,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F103"
@@ -2167,7 +3606,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -2177,7 +3619,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2187,7 +3634,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F205"
@@ -2197,7 +3649,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -2207,7 +3664,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F202"
@@ -2217,7 +3679,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F203"
@@ -2227,7 +3694,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2237,7 +3709,10 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -2247,7 +3722,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2257,7 +3737,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Luisa Emilia García Moreira",
       "room": "F103"
@@ -2267,7 +3752,10 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Física General",
-      "majors": ["IME", "IGI"],
+      "majors": [
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Edgard José Ramos Poveda",
       "room": "C202"
@@ -2277,7 +3765,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Nancy del Socorro Salgado Vanegas",
       "room": "F205"
@@ -2287,7 +3780,12 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 6,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "F205"
@@ -2297,7 +3795,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2307,7 +3810,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2317,7 +3825,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2327,7 +3840,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2337,7 +3855,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2347,7 +3870,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 7,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "F103"
@@ -2357,7 +3882,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Redacción Técnica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 7,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "G107"
@@ -2367,7 +3894,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2377,7 +3909,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 7,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "G105"
@@ -2387,7 +3921,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 7,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "G103"
@@ -2397,7 +3933,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Redacción Técnica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 7,
       "professor": "Lucia del Carmen Montenegro Juárez",
       "room": "G107"
@@ -2407,7 +3945,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2417,7 +3960,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2427,7 +3975,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2437,7 +3990,12 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2447,7 +4005,12 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2457,7 +4020,12 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Matemática II",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Virginia Guadalupe Martínez Hernánez",
       "room": "G107"
@@ -2467,7 +4035,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Redacción Técnica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 8,
       "professor": "Maikel Karolan Ruíz Jirón",
       "room": "G105"
@@ -2477,7 +4047,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 8,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "F103"
@@ -2487,7 +4059,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Redacción Técnica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 8,
       "professor": "Maikel Karolan Ruíz Jirón",
       "room": "G107"
@@ -2497,7 +4071,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 8,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "F202"
@@ -2507,7 +4083,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Inglés Comunicativo A1",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 8,
       "professor": "Ana Chrisnia Rosales Vargas",
       "room": "F203"
@@ -2517,7 +4095,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Redacción Técnica",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 9,
       "professor": "Heyssel Carolina Huete Sarria",
       "room": "A104"
@@ -2527,7 +4107,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Redacción Técnica",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 9,
       "professor": "Heyssel Carolina Huete Sarria",
       "room": "A104"
@@ -2539,7 +4121,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Estática",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Fimvark Guzman Orozco",
       "room": "C201"
@@ -2549,7 +4133,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Bioquímica",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Dr. Ivania del Socorro Espinoza Sandoval",
       "room": "C201"
@@ -2559,7 +4145,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Circuitos Eléctricos I",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Weslin Antonio Rodríguez Silva",
       "room": "C201"
@@ -2569,7 +4157,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Generalidades de Instalaciones eléctricas",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "C201"
@@ -2579,7 +4169,21 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Generalidades de Instalaciones eléctricas",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
+      "group": 1,
+      "professor": "Freddy Guillermo Chavarría Gutiérrez",
+      "room": "C201"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Generalidades de Instalaciones eléctricas",
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "C201"
@@ -2589,7 +4193,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Matemática IV",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Luisa Emilia García Moreira",
       "room": "C201"
@@ -2599,7 +4205,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Matemática IV",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Luisa Emilia García Moreira",
       "room": "C201"
@@ -2609,7 +4217,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Estática",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Fimvark Guzman Orozco",
       "room": "C201"
@@ -2619,7 +4229,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Generalidades de Instalaciones eléctricas",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "C201"
@@ -2629,7 +4241,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Bioquímica",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Dr. Ivania del Socorro Espinoza Sandoval",
       "room": "C201"
@@ -2639,7 +4253,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Circuitos Eléctricos I",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Weslin Antonio Rodríguez Silva",
       "room": "C201"
@@ -2649,7 +4265,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Matemática IV",
-      "majors": ["IEM"],
+      "majors": [
+        "IEM"
+      ],
       "group": 1,
       "professor": "Luisa Emilia García Moreira",
       "room": "C201"
@@ -2659,7 +4277,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Mando Electromecánico",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Herson Eduardo Guzmán Castillo",
       "room": "D103"
@@ -2669,7 +4289,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Jonathan Alberto Fonseca Blanco",
       "room": "A102"
@@ -2679,7 +4301,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Electrónica Analógica",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Kevin Josué Flores Carvajal",
       "room": "G105"
@@ -2689,7 +4313,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Pedro Pablo López Muñoz",
       "room": "E201"
@@ -2699,7 +4325,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Kevin Josué Flores Carvajal",
       "room": "G106"
@@ -2709,7 +4337,21 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Metodología de la Investigación",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
+      "group": 1,
+      "professor": "Nora Isabel Gutiérrez Acuña",
+      "room": "F101"
+    },
+    {
+      "day": "Tuesday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Metodología de la Investigación",
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Nora Isabel Gutiérrez Acuña",
       "room": "F101"
@@ -2719,7 +4361,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Mando Electromecánico",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Herson Eduardo Guzmán Castillo",
       "room": "D103"
@@ -2729,7 +4373,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Jonathan Alberto Fonseca Blanco",
       "room": "A102"
@@ -2739,7 +4385,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Pedro Pablo López Muñoz",
       "room": "E201"
@@ -2749,7 +4397,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IME"],
+      "majors": [
+        "IME"
+      ],
       "group": 1,
       "professor": "Kevin Josué Flores Carvajal",
       "room": "G108"
@@ -2759,7 +4409,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Fundamentos de Base de Datos",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Cinthia del Carmen Granera García",
       "room": "D102"
@@ -2769,7 +4421,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Microeconomía",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "E205"
@@ -2779,7 +4433,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Administración de Personal",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Maikel Karolan Ruíz Jirón",
       "room": "E102"
@@ -2789,7 +4445,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lengua Extranjera IV",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "E102"
@@ -2799,7 +4457,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Modelos Matemáticos para Toma de Decisiones",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "José Abraham Miranda Chávez",
       "room": "E205"
@@ -2809,7 +4469,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Fundamentos de Base de Datos",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Cinthia del Carmen Granera García",
       "room": "D102"
@@ -2819,7 +4481,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Microeconomía",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Anioska Josefina Alemán Chávez",
       "room": "E205"
@@ -2829,7 +4493,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Administración de Personal",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Maikel Karolan Ruíz Jirón",
       "room": "E102"
@@ -2839,7 +4505,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lengua Extranjera IV",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "E205"
@@ -2849,7 +4517,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Modelos Matemáticos para Toma de Decisiones",
-      "majors": ["LAF"],
+      "majors": [
+        "LAF"
+      ],
       "group": 1,
       "professor": "José Abraham Miranda Chávez",
       "room": "D102"
@@ -2859,7 +4529,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Fundamentos de Comunicación Gráfica",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 1,
       "professor": "Walter Bladimir Ruíz A vendaño",
       "room": "A103"
@@ -2869,7 +4541,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Fundamentos de Comunicación Gráfica",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 1,
       "professor": "Walter Bladimir Ruíz A vendaño",
       "room": "A103"
@@ -2879,7 +4553,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Jonathan Alberto Fonseca Blanco",
       "room": "D104"
@@ -2889,7 +4565,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Mando Electromecánico",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Herson Eduardo Guzmán Castillo",
       "room": "D103"
@@ -2899,7 +4577,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Electrónica Analógica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "G107"
@@ -2909,7 +4589,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "F103"
@@ -2919,7 +4601,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Pedro Pablo López Muñoz",
       "room": "E201"
@@ -2929,7 +4613,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Jonathan Alberto Fonseca Blanco",
       "room": "D102"
@@ -2939,7 +4625,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Mando Electromecánico",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Herson Eduardo Guzmán Castillo",
       "room": "D103"
@@ -2949,7 +4637,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Electrónica Analógica",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "F101"
@@ -2959,7 +4649,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Metodología de la Investigación",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Dr. Leonardo Javier Mendoza Blanco",
       "room": "G107"
@@ -2969,7 +4661,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Metodología de la Investigación",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Dr. Leonardo Javier Mendoza Blanco",
       "room": "G107"
@@ -2979,7 +4673,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IMS"],
+      "majors": [
+        "IMS"
+      ],
       "group": 2,
       "professor": "Pedro Pablo López Muñoz",
       "room": "E201"
@@ -2989,7 +4685,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Modelos Matemáticos para Toma de Decisiones",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "José Abraham Miranda Chávez",
       "room": "G105"
@@ -2999,7 +4697,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Fundamentos de Base de Datos",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Cinthia del Carmen Granera García",
       "room": "D102"
@@ -3009,7 +4709,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Microeconomía",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Emilio José Zúñiga Hernández",
       "room": "G105"
@@ -3019,7 +4721,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Lengua Extranjera IV",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "G105"
@@ -3029,7 +4733,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Modelos Matemáticos para Toma de Decisiones",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "José Abraham Miranda Chávez",
       "room": "D104"
@@ -3039,7 +4745,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Fundamentos de Base de Datos",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Cinthia del Carmen Granera García",
       "room": "D102"
@@ -3049,7 +4757,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Lengua Extranjera IV",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Ana Beatriz Fonseca Delgadillo",
       "room": "E205"
@@ -3059,7 +4769,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Microeconomía",
-      "majors": ["LCM"],
+      "majors": [
+        "LCM"
+      ],
       "group": 2,
       "professor": "Emilio José Zúñiga Hernández",
       "room": "G105"
@@ -3069,7 +4781,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Pedro Pablo López Muñoz",
       "room": "E201"
@@ -3079,7 +4793,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "F201"
@@ -3089,7 +4805,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "D102"
@@ -3099,7 +4817,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Mando Electromecánico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "D103"
@@ -3109,7 +4829,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "G103"
@@ -3119,7 +4841,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Pedro Pablo López Muñoz",
       "room": "D104"
@@ -3129,7 +4853,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "G109"
@@ -3139,7 +4865,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "D102"
@@ -3149,7 +4877,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Mando Electromecánico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "D103"
@@ -3159,7 +4889,21 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Metodología de la Investigación",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
+      "group": 3,
+      "professor": "Dr. Leonardo Javier Mendoza Blanco",
+      "room": "G108"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Metodología de la Investigación",
+      "majors": [
+        "IGI"
+      ],
       "group": 3,
       "professor": "Dr. Leonardo Javier Mendoza Blanco",
       "room": "G108"
@@ -3169,7 +4913,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lenguaje de Programación I",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "E201"
@@ -3179,7 +4925,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Mando Electromecánico",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Herson Eduardo Guzmán Castillo",
       "room": "D103"
@@ -3189,7 +4937,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Electrónica Analógica",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "G106"
@@ -3199,7 +4949,9 @@
       "start_block": "Morning2",
       "end_block": "Morning2",
       "subject": "Metodología de la Investigación",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Dr. Leonardo Javier Mendoza Blanco",
       "room": "F101"
@@ -3209,7 +4961,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Metodología de la Investigación",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Dr. Leonardo Javier Mendoza Blanco",
       "room": "F101"
@@ -3219,7 +4973,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Mando Electromecánico",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Herson Eduardo Guzmán Castillo",
       "room": "F201"
@@ -3229,7 +4985,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Electrónica Analógica",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "G108"
@@ -3239,7 +4997,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Ashley Madiel Salaverri Lainez",
       "room": "F201"
@@ -3249,7 +5009,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lenguaje de Programación I",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "E201"
@@ -3259,7 +5021,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Probabilidad y Estadística",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Ashley Madiel Salaverri Lainez",
       "room": "F201"
@@ -3269,7 +5033,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["ICE"],
+      "majors": [
+        "ICE"
+      ],
       "group": 4,
       "professor": "Luis Isaac Herrera Velásquez",
       "room": "F202"
@@ -3279,7 +5045,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Mando Electromecánico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "F204"
@@ -3289,7 +5057,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Fimvark Guzman Orozco",
       "room": "F204"
@@ -3299,7 +5069,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Ashley Madiel Salaverri Lainez",
       "room": "D102"
@@ -3309,7 +5081,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "D102"
@@ -3319,7 +5093,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Fimvark Guzman Orozco",
       "room": "F204"
@@ -3329,7 +5105,9 @@
       "start_block": "Afternoon3",
       "end_block": "Afternoon4",
       "subject": "Probabilidad y Estadística",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Ashley Madiel Salaverri Lainez",
       "room": "A102"
@@ -3339,7 +5117,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Fimvark Guzman Orozco",
       "room": "F204"
@@ -3349,7 +5129,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Mando Electromecánico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "F205"
@@ -3359,7 +5141,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "D102"
@@ -3369,7 +5153,21 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Metodología de la Investigación",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
+      "group": 5,
+      "professor": "Nora Isabel Gutiérrez Acuña",
+      "room": "F204"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Metodología de la Investigación",
+      "majors": [
+        "IGI"
+      ],
       "group": 5,
       "professor": "Nora Isabel Gutiérrez Acuña",
       "room": "F204"
@@ -3379,7 +5177,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Fimvark Guzman Orozco",
       "room": "F101"
@@ -3389,7 +5189,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "B107"
@@ -3399,7 +5201,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Mando Electromecánico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "G109"
@@ -3409,7 +5213,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Fimvark Guzman Orozco",
       "room": "F201"
@@ -3419,7 +5225,9 @@
       "start_block": "Morning1",
       "end_block": "Morning2",
       "subject": "Mando Electromecánico",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "F202"
@@ -3429,7 +5237,9 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Electrónica Analógica",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Fimvark Guzman Orozco",
       "room": "F103"
@@ -3439,7 +5249,9 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Lenguaje de Programación I",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Carolina Lissette Icaza Téllez",
       "room": "B107"
@@ -3449,7 +5261,21 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Metodología de la Investigación",
-      "majors": ["IGI"],
+      "majors": [
+        "IGI"
+      ],
+      "group": 6,
+      "professor": "Suyapa Carolina Vanegas Padilla",
+      "room": "F201"
+    },
+    {
+      "day": "Thursday",
+      "start_block": "Afternoon3",
+      "end_block": "Afternoon3",
+      "subject": "Metodología de la Investigación",
+      "majors": [
+        "IGI"
+      ],
       "group": 6,
       "professor": "Suyapa Carolina Vanegas Padilla",
       "room": "F201"
@@ -3459,7 +5285,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Lenguaje de Programación I",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Cinthia del Carmen Granera García",
       "room": "D102"
@@ -3469,7 +5300,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Mando Electromecánico",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "F205"
@@ -3479,7 +5315,12 @@
       "start_block": "Afternoon1",
       "end_block": "Afternoon2",
       "subject": "Mando Electromecánico",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Freddy Guillermo Chavarría Gutiérrez",
       "room": "F204"
@@ -3489,692 +5330,15 @@
       "start_block": "Morning3",
       "end_block": "Morning4",
       "subject": "Lenguaje de Programación I",
-      "majors": ["ICE", "IMS", "IME", "IGI"],
+      "majors": [
+        "ICE",
+        "IMS",
+        "IME",
+        "IGI"
+      ],
       "group": 7,
       "professor": "Cinthia del Carmen Granera García",
       "room": "D104"
-    }
-  ],
-  "3": [
-    {
-      "day": "Monday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Administración Financiera",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Elizabeth Ruíz Rugama",
-      "room": "G106"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Derecho Laboral",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Eliseo Raúl Valladares V anegas",
-      "room": "G106"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Investigación de Mercados",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Dalia Francisca Niño Ruíz",
-      "room": "G106"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Aplicaciones de Bases de Datos",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Karolina Lissette León Díaz",
-      "room": "A102"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Política de Costos y Precios",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Xiomara de la Concepción Martínez Méndez",
-      "room": "G106"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Administración Financiera",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Elizabeth Ruíz Rugama",
-      "room": "G106"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Investigación de Mercados",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Dalia Francisca Niño Ruíz",
-      "room": "G106"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Derecho Laboral",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Eliseo Raúl Valladares V anegas",
-      "room": "G106"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Aplicaciones de Bases de Datos",
-      "majors": ["LAF"],
-      "group": 1,
-      "professor": "Karolina Lissette León Díaz",
-      "room": "A102"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Dirección de Ventas",
-      "majors": ["LCM"],
-      "group": 1,
-      "professor": "Maikel Karolan Ruíz Jirón",
-      "room": "F101"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Dirección de Ventas",
-      "majors": ["LCM"],
-      "group": 1,
-      "professor": "Maikel Karolan Ruíz Jirón",
-      "room": "F101"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning2",
-      "end_block": "Morning2",
-      "subject": "Mantenimiento Preventivo de PC I",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Lester Baltazar Sánchez Bárcenas",
-      "room": "G109"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Mantenimiento Preventivo de PC I",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Lester Baltazar Sánchez Bárcenas",
-      "room": "G109"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Sistemas Operativos II",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Christian Eduardo Toval Ruiz",
-      "room": "A102"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Análisis y diseño de sistemas",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Aarón Emilio Cisneros Quintana",
-      "room": "A102"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning2",
-      "end_block": "Morning2",
-      "subject": "Teoría Computacional",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Hazell Yolanda Carvajal Hernández",
-      "room": "B107"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Teoría Computacional",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Hazell Yolanda Carvajal Hernández",
-      "room": "B107"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Sistemas Operativos II",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Christian Eduardo Toval Ruiz",
-      "room": "A103"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Análisis y diseño de sistemas",
-      "majors": ["ICE"],
-      "group": 1,
-      "professor": "Aarón Emilio Cisneros Quintana",
-      "room": "A102"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Bryan de Jesús Soto Linarte",
-      "room": "I105"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Instrumentación Industrial",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "María Martha V erónica Lacayo Trujillo",
-      "room": "G108"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Circuitos Hidráulicos y Neumáticos",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Wilhelm Jesús Rojas Baca",
-      "room": "D103"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Mecánica de Fluidos",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Bryan de Jesús Soto Linarte",
-      "room": "G109"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Instrumentación Industrial",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "María Martha V erónica Lacayo Trujillo",
-      "room": "G108"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Termodinámica Aplicada",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Joseline Lisbeth Reyes Laguna",
-      "room": "G107"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Circuitos Hidráulicos y Neumáticos",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Wilhelm Jesús Rojas Baca",
-      "room": "I105"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Bryan de Jesús Soto Linarte",
-      "room": "I105"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Mecánica de Fluidos",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Bryan de Jesús Soto Linarte",
-      "room": "G109"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Termodinámica Aplicada",
-      "majors": ["IME"],
-      "group": 1,
-      "professor": "Joseline Lisbeth Reyes Laguna",
-      "room": "G106"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Investigación de operaciones",
-      "majors": ["IGI"],
-      "group": 1,
-      "professor": "Ashley Madiel Salaverri Lainez",
-      "room": "F203"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Investigación de operaciones",
-      "majors": ["IGI"],
-      "group": 1,
-      "professor": "Ashley Madiel Salaverri Lainez",
-      "room": "F203"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Ingeniería Ambiental II",
-      "majors": ["IGI"],
-      "group": 1,
-      "professor": "Ashley Madiel Salaverri Lainez",
-      "room": "F203"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Electricidad y magnetismo",
-      "majors": ["IMS"],
-      "group": 1,
-      "professor": "Omar Octavio Álvarez Pereira",
-      "room": "F201"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Herramientas CAD",
-      "majors": ["IMS"],
-      "group": 1,
-      "professor": "Briana Lilliam Salmerón Chevez",
-      "room": "A103"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Lenguaje de Programación II",
-      "majors": ["IMS"],
-      "group": 1,
-      "professor": "Aarón Emilio Cisneros Quintana",
-      "room": "D104"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Herramientas CAD",
-      "majors": ["IMS"],
-      "group": 1,
-      "professor": "Briana Lilliam Salmerón Chevez",
-      "room": "E201"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Lenguaje de Programación II",
-      "majors": ["IMS"],
-      "group": 1,
-      "professor": "Aarón Emilio Cisneros Quintana",
-      "room": "A102"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Electricidad y magnetismo",
-      "majors": ["IMS"],
-      "group": 1,
-      "professor": "Omar Octavio Álvarez Pereira",
-      "room": "F203"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Instrumentación Industrial",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "María Martha V erónica Lacayo Trujillo",
-      "room": "F205"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "Bryan de Jesús Soto Linarte",
-      "room": "G108"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Lenguaje de Programación II",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "Aarón Emilio Cisneros Quintana",
-      "room": "A102"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Herramientas CAD",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "Briana Lilliam Salmerón Chevez",
-      "room": "A103"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Instrumentación Industrial",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "María Martha V erónica Lacayo Trujillo",
-      "room": "F201"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "Bryan de Jesús Soto Linarte",
-      "room": "G108"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Lenguaje de Programación II",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "Aarón Emilio Cisneros Quintana",
-      "room": "A103"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Herramientas CAD",
-      "majors": ["IMS"],
-      "group": 2,
-      "professor": "Briana Lilliam Salmerón Chevez",
-      "room": "A103"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Administración Financiera",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Elizabeth Ruíz Rugama",
-      "room": "F102"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Derecho Laboral",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Eliseo Raúl Valladares V anegas",
-      "room": "E205"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Investigación de Mercados",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Dalia Francisca Niño Ruíz",
-      "room": "F102"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Derecho Laboral",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Eliseo Raúl Valladares V anegas",
-      "room": "E205"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Administración Financiera",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Elizabeth Ruíz Rugama",
-      "room": "F102"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning2",
-      "end_block": "Morning2",
-      "subject": "Política de Costos y Precios",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Xiomara de la Concepción Martínez Méndez",
-      "room": "F102"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Política de Costos y Precios",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Xiomara de la Concepción Martínez Méndez",
-      "room": "F102"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Investigación de Mercados",
-      "majors": ["LCM"],
-      "group": 2,
-      "professor": "Dalia Francisca Niño Ruíz",
-      "room": "E205"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Investigación de operaciones",
-      "majors": ["IGI"],
-      "group": 2,
-      "professor": "Ashley Madiel Salaverri Lainez",
-      "room": "F104"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Circuitos Hidráulicos y Neumáticos",
-      "majors": ["IGI"],
-      "group": 2,
-      "professor": "Wilhelm Jesús Rojas Baca",
-      "room": "D103"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Afternoon1",
-      "end_block": "Afternoon2",
-      "subject": "Circuitos Hidráulicos y Neumáticos",
-      "majors": ["IGI"],
-      "group": 2,
-      "professor": "Wilhelm Jesús Rojas Baca",
-      "room": "D103"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Investigación de operaciones",
-      "majors": ["IGI"],
-      "group": 2,
-      "professor": "Ashley Madiel Salaverri Lainez",
-      "room": "F102"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IGI"],
-      "group": 3,
-      "professor": "Jaime Bernardo Saborío Mayorga",
-      "room": "I105"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Circuitos Hidráulicos y Neumáticos",
-      "majors": ["IGI"],
-      "group": 3,
-      "professor": "Wilhelm Jesús Rojas Baca",
-      "room": "D103"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Instrumentación Industrial",
-      "majors": ["IGI"],
-      "group": 3,
-      "professor": "María Martha V erónica Lacayo Trujillo",
-      "room": "F204"
-    },
-    {
-      "day": "Wednesday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IGI"],
-      "group": 3,
-      "professor": "Jaime Bernardo Saborío Mayorga",
-      "room": "I105"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning1",
-      "end_block": "Morning2",
-      "subject": "Circuitos Hidráulicos y Neumáticos",
-      "majors": ["IGI"],
-      "group": 3,
-      "professor": "Wilhelm Jesús Rojas Baca",
-      "room": "D103"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Instrumentación Industrial",
-      "majors": ["IGI"],
-      "group": 3,
-      "professor": "María Martha V erónica Lacayo Trujillo",
-      "room": "F204"
-    },
-    {
-      "day": "Monday",
-      "start_block": "Afternoon3",
-      "end_block": "Afternoon4",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IGI"],
-      "group": 4,
-      "professor": "Álvaro José Cisneros Caballero",
-      "room": "F102"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Conocimientos de materiales",
-      "majors": ["IGI"],
-      "group": 4,
-      "professor": "Álvaro José Cisneros Caballero",
-      "room": "F204"
-    },
-    {
-      "day": "Tuesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Instrumentación Industrial",
-      "majors": ["ICE"],
-      "group": 4,
-      "professor": "Herson Eduardo Guzmán Castillo",
-      "room": "F102"
-    },
-    {
-      "day": "Thursday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
-      "subject": "Instrumentación Industrial",
-      "majors": ["ICE"],
-      "group": 4,
-      "professor": "Herson Eduardo Guzmán Castillo",
-      "room": "F101"
     }
   ]
 }
