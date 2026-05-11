@@ -422,8 +422,8 @@
     },
     {
       "day": "Tuesday",
-      "start_block": "Morning3",
-      "end_block": "Morning4",
+      "start_block": "Morning1",
+      "end_block": "Morning2",
       "subject": "Lenguaje de Programación II",
       "majors": [
         "IMS"

@@ -1014,8 +1014,8 @@
       "Tuesday": [
         {
           "day": "Tuesday",
-          "start_block": "Morning3",
-          "end_block": "Morning4",
+          "start_block": "Morning1",
+          "end_block": "Morning2",
           "subject": "Lenguaje de Programación II",
           "majors": [
             "IMS"
@@ -1219,7 +1219,7 @@
             "ICE"
           ],
           "group": 1,
-          "professor": "Aarón Emilio Cisneros Quintana",
+          "professor": "Freddy Alexander Mejía Quintana",
           "room": "A102"
         },
         {
