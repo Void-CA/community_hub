@@ -811,6 +811,39 @@
       ]
     }
   },
+  "Skarleth Massiel Fletes Latino": {
+    "by_day": {
+      "Monday": [
+        {
+          "day": "Monday",
+          "start_block": "Afternoon1",
+          "end_block": "Afternoon2",
+          "subject": "Inteligencia Artificial",
+          "majors": [
+            "ICE"
+          ],
+          "group": 1,
+          "professor": "Skarleth Massiel Fletes Latino",
+          "room": "D104"
+        }
+      ],
+      "Wednesday":[
+        {
+          "day": "Wednesday",
+          "start_block": "Morning3",
+          "end_block": "Morning4",
+          "subject": "Inteligencia Artificial",
+          "majors": [
+            "ICE"
+          ],
+          "group": 1,
+          "professor": "Skarleth Massiel Fletes Latino",
+          "room": "D104"
+        }
+      ]
+      
+    }
+  },
   "Jason Alexander V argas Prado": {
     "by_day": {
       "Monday": [
@@ -976,44 +1009,9 @@
   "Aarón Emilio Cisneros Quintana": {
     "by_day": {
       "Thursday": [
-        {
-          "day": "Thursday",
-          "start_block": "Morning1",
-          "end_block": "Morning2",
-          "subject": "Análisis y diseño de sistemas",
-          "majors": [
-            "ICE"
-          ],
-          "group": 1,
-          "professor": "Aarón Emilio Cisneros Quintana",
-          "room": "A102"
-        },
-        {
-          "day": "Thursday",
-          "start_block": "Afternoon1",
-          "end_block": "Afternoon2",
-          "subject": "Lenguaje de Programación II",
-          "majors": [
-            "IMS"
-          ],
-          "group": 2,
-          "professor": "Aarón Emilio Cisneros Quintana",
-          "room": "A103"
-        }
+        
       ],
       "Tuesday": [
-        {
-          "day": "Tuesday",
-          "start_block": "Morning1",
-          "end_block": "Morning2",
-          "subject": "Análisis y diseño de sistemas",
-          "majors": [
-            "ICE"
-          ],
-          "group": 1,
-          "professor": "Aarón Emilio Cisneros Quintana",
-          "room": "A102"
-        },
         {
           "day": "Tuesday",
           "start_block": "Morning3",
@@ -1021,32 +1019,6 @@
           "subject": "Lenguaje de Programación II",
           "majors": [
             "IMS"
-          ],
-          "group": 1,
-          "professor": "Aarón Emilio Cisneros Quintana",
-          "room": "D104"
-        },
-        {
-          "day": "Tuesday",
-          "start_block": "Afternoon1",
-          "end_block": "Afternoon2",
-          "subject": "Lenguaje de Programación II",
-          "majors": [
-            "IMS"
-          ],
-          "group": 2,
-          "professor": "Aarón Emilio Cisneros Quintana",
-          "room": "A102"
-        }
-      ],
-      "Monday": [
-        {
-          "day": "Monday",
-          "start_block": "Afternoon1",
-          "end_block": "Afternoon2",
-          "subject": "Inteligencia Artificial",
-          "majors": [
-            "ICE"
           ],
           "group": 1,
           "professor": "Aarón Emilio Cisneros Quintana",
@@ -1065,18 +1037,6 @@
           "group": 1,
           "professor": "Aarón Emilio Cisneros Quintana",
           "room": "A102"
-        },
-        {
-          "day": "Wednesday",
-          "start_block": "Morning3",
-          "end_block": "Morning4",
-          "subject": "Inteligencia Artificial",
-          "majors": [
-            "ICE"
-          ],
-          "group": 1,
-          "professor": "Aarón Emilio Cisneros Quintana",
-          "room": "D104"
         }
       ]
     }
@@ -1124,6 +1084,20 @@
           "room": "D102"
         }
       ],
+      "Tuesday":[
+        {
+          "day": "Tuesday",
+          "start_block": "Afternoon1",
+          "end_block": "Afternoon2",
+          "subject": "Lenguaje de Programación II",
+          "majors": [
+            "IMS"
+          ],
+          "group": 2,
+          "professor": "Cinthia del Carmen Granera García",
+          "room": "A102"
+        }
+      ],
       "Wednesday": [
         {
           "day": "Wednesday",
@@ -1165,6 +1139,18 @@
           "group": 7,
           "professor": "Cinthia del Carmen Granera García",
           "room": "D104"
+        },
+        {
+          "day": "Thursday",
+          "start_block": "Afternoon1",
+          "end_block": "Afternoon2",
+          "subject": "Lenguaje de Programación II",
+          "majors": [
+            "IMS"
+          ],
+          "group": 2,
+          "professor": "Cinthia del Carmen Granera García",
+          "room": "A103"
         }
       ]
     }
@@ -1209,9 +1195,33 @@
           "group": 1,
           "professor": "Freddy Alexander Mejía Quintana",
           "room": "B107"
+        },
+        {
+          "day": "Thursday",
+          "start_block": "Morning1",
+          "end_block": "Morning2",
+          "subject": "Análisis y diseño de sistemas",
+          "majors": [
+            "ICE"
+          ],
+          "group": 1,
+          "professor": "Freddy Alexander Mejía Quintana",
+          "room": "A102"
         }
       ],
       "Tuesday": [
+        {
+          "day": "Tuesday",
+          "start_block": "Morning1",
+          "end_block": "Morning2",
+          "subject": "Análisis y diseño de sistemas",
+          "majors": [
+            "ICE"
+          ],
+          "group": 1,
+          "professor": "Aarón Emilio Cisneros Quintana",
+          "room": "A102"
+        },
         {
           "day": "Tuesday",
           "start_block": "Afternoon1",
