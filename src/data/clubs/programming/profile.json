@@ -35,7 +35,8 @@
   "references": {
     "location": "Aula A102",
     "contacts": [
-      { "name": "Ari Castillo", "role": "Coordinador" },
+      {"name":"Ing. Christian Toval", "role":"Coordinador Académico"},
+      { "name": "Ari Castillo", "role": "Coordinador Estudiantil" },
       { "name": "Diego Tercero", "role": "Miembro de la directiva" },
       { "name": "Oscar Reyes", "role": "Miembro de la directiva" },
       { "name": "Adrian Lainez", "role": "Miembro de la directiva" },
@@ -43,7 +44,7 @@
     ]
   },
   "social": {
-    "discord": "https://discord.gg/ulsa-dev",
-    "github": "https://github.com/ulsa-programacion"
+    "discord (No sirve)": "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+    "github": "https://github.com/Programming-Club-ULSA"
   }
 }

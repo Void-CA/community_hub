@@ -1,16 +1,16 @@
 [
   {
-    "day": "M",
-    "startTime": "15:00",
-    "endTime": "17:00",
-    "location": "Aula D104",
+    "day": "X",
+    "startTime": "3:00pm",
+    "endTime": "4:40pm",
+    "location": "Aula A102",
     "description": "Sesión de proyectos colaborativos y resolución de problemas."
   },
   {
-    "day": "J",
-    "startTime": "15:00",
-    "endTime": "17:00",
-    "location": "Aula D104",
+    "day": "V",
+    "startTime": "8:00am",
+    "endTime": "9:40am",
+    "location": "Aula A102",
     "description": "Workshop temático: algoritmos, frameworks o desarrollo web."
   }
 ]

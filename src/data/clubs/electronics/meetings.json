@@ -1,16 +1,16 @@
 [
   {
     "day": "M",
-    "startTime": "16:00",
-    "endTime": "18:00",
-    "location": "Lab. Electrónica G103",
-    "description": "Prácticas de circuitos digitales y microcontroladores."
+    "startTime": "00:00",
+    "endTime": "00:00",
+    "location": "No definido",
+    "description": "No definido"
   },
   {
     "day": "V",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "location": "Lab. Electrónica G103",
-    "description": "Diseño de PCBs y prototipado rápido."
+    "startTime": "00:00",
+    "endTime": "00:00",
+    "location": "No definido",
+    "description": "No definido"
   }
 ]
