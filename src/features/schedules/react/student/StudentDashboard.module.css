@@ -1,0 +1,41 @@
+.dashboard {
+  /* Root container */
+}
+
+.section {
+  padding: var(--space-4) 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 100%;
+  padding: 0 var(--space-4);
+}
+
+.isZen {
+  grid-template-columns: 0px 1fr;
+  gap: 0;
+}
+
+.isZen .explorer {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+  margin-right: -280px;
+}
+
+@media (max-width: 1200px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout {
+    padding: 0 var(--space-3);
+  }
+}

@@ -8,7 +8,7 @@ import {
   schedulePeriods,
   findValidPath,
 } from '@/lib/schedules';
-import StudentScheduleDashboard from '@/features/schedules/components/composition/StudentScheduleDashboard.astro';
+import { StudentDashboard } from '@/features/schedules/react/student/StudentDashboard';
 
 const yearParam = Astro.url.searchParams.get('year');
 const termParam = Astro.url.searchParams.get('term');
@@ -48,11 +48,11 @@ const integrityError = !suggestedPath.success;
   title={`Horarios de Estudiantes | ${semesterLabel}`}
   description="Vista compacta de horarios para estudiantes, con selector de carrera y grilla por bloques."
 >
-  <StudentScheduleDashboard
+  <StudentDashboard
+    client:load
     allSections={allSections}
     initialMajor={initialMajor}
     initialYear={initialYear}
-    initialVisibleSections={initialSections.length}
     activeDays={activeDays}
     scheduleBlocks={scheduleBlocks}
     integrityError={integrityError}

@@ -1,0 +1,141 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  padding: var(--tile-padding);
+  border-radius: var(--radius-lg);
+  border-left: var(--tile-border-accent) solid var(--tile-accent);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  min-width: 0;
+  cursor: default;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-top: var(--border-width-sm) solid var(--color-border-soft);
+  border-right: var(--border-width-sm) solid var(--color-border-soft);
+  border-bottom: var(--border-width-sm) solid var(--color-border-soft);
+  z-index: 1;
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  z-index: 10;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--tile-gap);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.time {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-mono);
+}
+
+.groupBadge {
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-black);
+  padding: 2px 6px;
+  background: var(--color-surface-muted);
+  border: var(--border-width-sm) solid var(--color-border-soft);
+  border-radius: 6px;
+  color: var(--color-text-soft);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subject {
+  margin: 0;
+  font-size: 13px;
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--leading-tight, 1.2);
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+}
+
+.room {
+  color: var(--tile-accent);
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  border-top: var(--border-width-sm) solid
+    color-mix(in srgb, var(--color-border-soft) 50%, transparent);
+}
+
+.professor {
+  margin: 0;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.majorBadge {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--tile-accent);
+  letter-spacing: 0.02em;
+}
+
+.hasConflict {
+  border-left-color: var(--color-error) !important;
+  background: color-mix(in srgb, var(--color-error) 4%, var(--color-surface));
+}
+
+.conflictBadge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--color-error);
+  color: white;
+  font-size: var(--font-size-micro);
+  font-weight: var(--font-weight-black);
+  padding: 2px 6px;
+  border-top-left-radius: 8px;
+  letter-spacing: 0.1em;
+}
+
+/* Compact mode (single-row tiles) */
+.isCompact .footer {
+  display: none;
+}
+
+.isCompact .subject {
+  -webkit-line-clamp: 1;
+}

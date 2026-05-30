@@ -1,0 +1,266 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  background: var(--color-surface);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.isZen {
+  /* In zen mode, this takes full width — handled by parent layout */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: var(--space-2);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.zenButton {
+  background: var(--color-surface-muted);
+  border: var(--border-width-sm) solid var(--color-border);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: inherit;
+  color: inherit;
+}
+
+.zenButton:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+}
+
+.scroll {
+  overflow: auto;
+  border-radius: var(--radius-lg);
+  border: var(--border-width-sm) solid var(--grid-line);
+  background: var(--color-bg);
+  position: relative;
+  max-height: calc(100vh - var(--navbar-height) - 40px);
+}
+
+.grid {
+  display: grid;
+  gap: var(--timeline-grid-gap);
+  background: var(--grid-line);
+  min-width: 100%;
+}
+
+.corner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  background: var(--color-surface-muted);
+}
+
+.dayHeader {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  background: var(--color-surface-muted);
+  border-bottom: var(--border-width-md) solid var(--color-primary);
+}
+
+.dayHeader span {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.timeLabel {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  background: var(--color-surface-muted);
+  border-right: var(--border-width-sm) solid var(--color-border);
+  gap: 0;
+}
+
+.isBreak {
+  background: color-mix(
+    in srgb,
+    var(--color-surface-muted) 80%,
+    var(--color-bg)
+  );
+}
+
+.slotRange {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  font-family: var(--font-family-mono);
+  line-height: 1.2;
+}
+
+.slotLabel {
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  font-family: var(--font-family-mono);
+}
+
+.breakLabel {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.bgCell {
+  min-height: var(--cell-height);
+  background: var(--color-surface);
+  position: relative;
+}
+
+.bgCell.isBreak {
+  min-height: calc(var(--cell-height) * 0.55);
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-surface-muted),
+    var(--color-surface-muted) var(--break-stripe-size),
+    color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) var(--break-stripe-size),
+    color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-bg)) calc(var(--break-stripe-size) * 2)
+  );
+}
+
+.breakLabelAbs {
+  position: absolute;
+  top: 50%;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tileContainer {
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ── Legend ── */
+.legend {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.legendTitle {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+  margin-top: 0;
+}
+
+.legendGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.legendItem {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.legendSwatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.legendPattern {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-border),
+    var(--color-border) var(--break-stripe-size),
+    transparent var(--break-stripe-size),
+    transparent calc(var(--break-stripe-size) * 2)
+  );
+  border: var(--border-width-sm) solid var(--color-border);
+}
+
+.legendInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.legendLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.legendDesc {
+  font-size: var(--font-size-2xs);
+  color: var(--color-text-muted);
+  line-height: 1.3;
+}
+
+/* ── Empty State ── */
+.emptyState {
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.emptyState h3 {
+  margin-bottom: var(--space-2);
+}
+
+.emptyText {
+  color: var(--color-text-muted);
+}
