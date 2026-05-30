@@ -174,10 +174,26 @@ export function ScheduleListView({
                     <div className={styles.cardMeta}>
                       <span>G{item.entry.group}</span>
                       <span className={styles.metaSep}>·</span>
-                      <span>Aula {item.entry.room}</span>
-                      <span className={styles.metaSep}>·</span>
                       <span className={styles.cardProfessor}>{professor}</span>
                     </div>
+                  </div>
+                  <div className={styles.cardRight}>
+                    <svg
+                      className={styles.cardRoomIcon}
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      width="10"
+                      height="10"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M8 1C5.24 1 3 3.24 3 6c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z"
+                        fill="currentColor"
+                      />
+                      <circle cx="8" cy="6" r="2" fill="var(--color-surface)" />
+                    </svg>
+                    <span className={styles.cardRoomLabel}>Aula</span>
+                    <span className={styles.cardRoomValue}>{item.entry.room}</span>
                   </div>
                   {item.hasConflict && (
                     <span className={styles.conflictBadge}>CONFLICTO</span>
