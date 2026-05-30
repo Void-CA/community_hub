@@ -1,14 +1,22 @@
 .dashboard {
-  /* Root container */
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--navbar-height));
   position: relative;
 }
 
 .section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   padding: var(--space-4) 0;
   position: relative;
 }
 
 .layout {
+  flex: 1;
+  min-height: 0;
   max-width: 100%;
   padding: 0 var(--space-4);
 }

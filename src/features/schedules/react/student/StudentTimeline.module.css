@@ -3,6 +3,8 @@
   flex-direction: column;
   gap: var(--space-4);
   min-width: 0;
+  min-height: 0;
+  height: 100%;
   background: var(--color-surface);
   border: var(--border-width-sm) solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -71,12 +73,13 @@
 }
 
 .scroll {
+  flex: 1;
+  min-height: 0;
   overflow: auto;
   border-radius: var(--radius-lg);
   border: var(--border-width-sm) solid var(--grid-line);
   background: var(--color-bg);
   position: relative;
-  max-height: calc(100vh - var(--navbar-height) - 40px);
 }
 
 .grid {
