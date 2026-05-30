@@ -30,9 +30,8 @@ export interface StudentDashboardProps {
   allSections: ScheduleSection[];
   initialMajor: string;
   initialYear: number;
-  initialVisibleSections: number;
   activeDays: ActiveDay[];
-  scheduleBlocks: ScheduleBlockItem[];
+  scheduleBlocks: readonly ScheduleBlockItem[];
   integrityError?: boolean;
   schedulePeriods: SchedulePeriod[];
   activePeriodId: string;
@@ -63,10 +62,9 @@ export interface ScheduleCatalogProps {
 export interface ScheduleTimelineProps {
   selectedSections: ScheduleSection[];
   activeDays: ActiveDay[];
-  scheduleBlocks: ScheduleBlockItem[];
-  conflicts: Map<string, OverlapConflict[]>;
-  isZen: boolean;
-  onToggleZen: () => void;
+  scheduleBlocks: readonly ScheduleBlockItem[];
+  isCatalogOpen: boolean;
+  onToggleCatalog: () => void;
 }
 
 export interface ScheduleTileProps {

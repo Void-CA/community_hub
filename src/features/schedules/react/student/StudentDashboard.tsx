@@ -23,7 +23,7 @@ export function StudentDashboard({
   periodMajors,
   periodYears,
 }: StudentDashboardProps) {
-  const [isZen, setIsZen] = useState(false);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(true);
 
   // The core hook manages all selection/filter state
   const {
@@ -32,7 +32,6 @@ export function StudentDashboard({
     selectedIds,
     visibleSections,
     selectedSections,
-    conflicts,
     ghostedSections,
     sessionCount,
     setMajor,
@@ -40,7 +39,7 @@ export function StudentDashboard({
     toggleSection,
   } = useScheduleState(allSections, initialMajor, initialYear);
 
-  const toggleZen = () => setIsZen((prev) => !prev);
+  const toggleCatalog = () => setIsCatalogOpen((prev) => !prev);
 
   return (
     <div id="student-schedule-dashboard" className={styles.dashboard}>
@@ -58,7 +57,7 @@ export function StudentDashboard({
       />
 
       <section className={styles.section}>
-        <div className={`${styles.layout} ${isZen ? styles.isZen : ''}`}>
+        <div className={`${styles.layout} ${isCatalogOpen ? styles.catalogOpen : styles.catalogClosed}`}>
           <div className={styles.explorer}>
             <StudentCatalog
               visibleSections={visibleSections}
@@ -73,9 +72,8 @@ export function StudentDashboard({
               selectedSections={selectedSections}
               activeDays={activeDays}
               scheduleBlocks={scheduleBlocks}
-              conflicts={conflicts}
-              isZen={isZen}
-              onToggleZen={toggleZen}
+              isCatalogOpen={isCatalogOpen}
+              onToggleCatalog={toggleCatalog}
             />
           </div>
         </div>

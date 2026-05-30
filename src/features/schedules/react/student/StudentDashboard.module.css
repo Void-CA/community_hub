@@ -11,26 +11,40 @@
   grid-template-columns: 280px 1fr;
   gap: var(--space-4);
   align-items: start;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-columns 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   max-width: 100%;
   padding: 0 var(--space-4);
 }
 
-.isZen {
-  grid-template-columns: 0px 1fr;
+.catalogOpen {
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-4);
+}
+
+.catalogClosed {
+  grid-template-columns: 1fr;
   gap: 0;
 }
 
-.isZen .explorer {
-  transform: translateX(-100%);
-  opacity: 0;
-  pointer-events: none;
-  margin-right: -280px;
+.catalogClosed .explorer {
+  display: none;
 }
 
+/* Desktop: show explorer normally */
+.explorer {
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* On tablets (< 1200px) Explorer goes full-width above timeline */
 @media (max-width: 1200px) {
   .layout {
     grid-template-columns: 1fr;
+  }
+
+  .catalogClosed .explorer {
+    display: none;
   }
 }
 
