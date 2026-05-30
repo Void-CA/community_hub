@@ -2,24 +2,79 @@ import React, { useMemo } from 'react';
 import { sortEntries, getBlockIndex } from '@/lib/schedules';
 import { dayOrder } from '@/lib/schedules/constants';
 import { ScheduleTile } from '../shared/ScheduleTile';
-import { ProfessorScheduleListView } from './ProfessorScheduleListView';
-import type { ProfessorTimelineProps } from '../shared/types';
-import styles from './ProfessorTimeline.module.css';
+import { SubjectScheduleListView } from './SubjectScheduleListView';
+import type { SubjectTimelineProps } from '../shared/types';
+import type { ScheduleEntry } from '@/lib/schedules/types';
+import styles from './SubjectTimeline.module.css';
 
-export function ProfessorTimeline({
-  selectedProfessor,
-  professorSchedules,
+/** Entry identity for deduplication within the same slot */
+function entryKey(e: ScheduleEntry): string {
+  return [
+    e.day,
+    e.start_block,
+    e.end_block,
+    e.subject,
+    e.group,
+    e.professor,
+    e.room,
+    ...e.majors,
+  ].join('::');
+}
+
+interface SlotGroup {
+  dayIdx: number;
+  startIdx: number;
+  endIdx: number;
+  entries: ScheduleEntry[];
+}
+
+export function SubjectTimeline({
+  selectedSubject,
+  subjectSchedules,
   activeDays,
   scheduleBlocks,
   isCatalogOpen,
   onToggleCatalog,
-}: ProfessorTimelineProps) {
-  const noSelection = !selectedProfessor;
+}: SubjectTimelineProps) {
+  const noSelection = !selectedSubject;
 
-  // Get entries for the selected professor
-  const entries = selectedProfessor
-    ? professorSchedules[selectedProfessor]
+  // Get entries for the selected subject, grouped by slot
+  const entries = selectedSubject
+    ? subjectSchedules[selectedSubject]
     : null;
+
+  // Build slot groups (group overlapping entries)
+  const slotGroups: SlotGroup[] = useMemo(() => {
+    if (!entries) return [];
+
+    const groups: Record<string, SlotGroup> = {};
+
+    for (const [day, dayEntries] of Object.entries(entries.by_day)) {
+      const dayIdx = activeDays.findIndex((d) => d.code === day);
+      if (dayIdx === -1) continue;
+
+      for (const rawEntry of sortEntries(dayEntries)) {
+        const startIdx = getBlockIndex(rawEntry.start_block);
+        const endIdx = getBlockIndex(rawEntry.end_block);
+        if (startIdx === -1) continue;
+
+        const key = `${day}::${startIdx}::${endIdx}`;
+        if (!groups[key]) {
+          groups[key] = { dayIdx, startIdx, endIdx, entries: [] };
+        }
+
+        // Deduplicate within slot
+        const exists = groups[key].entries.some(
+          (e) => entryKey(e) === entryKey(rawEntry),
+        );
+        if (!exists) {
+          groups[key].entries.push(rawEntry);
+        }
+      }
+    }
+
+    return Object.values(groups);
+  }, [entries, activeDays]);
 
   // Flat entries list for mobile list view
   const allEntries = useMemo(
@@ -31,6 +86,17 @@ export function ProfessorTimeline({
         : [],
     [entries],
   );
+
+  // Deduplicate flat entries for list view
+  const dedupedEntries = useMemo(() => {
+    const seen = new Set<string>();
+    return allEntries.filter((e) => {
+      const key = entryKey(e);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [allEntries]);
 
   return (
     <main className={styles.timeline}>
@@ -117,46 +183,44 @@ export function ProfessorTimeline({
               );
             })}
 
-            {/* Selected professor tiles */}
-            {entries &&
-              activeDays.map((day) =>
-                (entries.by_day[day.code] ?? []).map((entry, entryIdx) => {
-                  const startIdx = getBlockIndex(entry.start_block);
-                  const endIdx = getBlockIndex(entry.end_block);
-                  const dayIdx = activeDays.findIndex(
-                    (d) => d.code === entry.day,
-                  );
+            {/* Selected subject slot groups */}
+            {slotGroups.map((group) => {
+              const count = group.entries.length;
+              const rowStart = group.startIdx + 2;
+              const rowSpan = group.endIdx - group.startIdx + 1;
+              const hasOverlap = count > 1;
 
-                  if (dayIdx === -1 || startIdx === -1) return null;
-
-                  const rowStart = startIdx + 2;
-                  const rowSpan = endIdx - startIdx + 1;
-                  const colStart = dayIdx + 2;
-
-                  return (
+              return (
+                <div
+                  key={`${group.dayIdx}::${group.startIdx}::${group.endIdx}`}
+                  className={`${styles.slotGroup} ${hasOverlap ? styles.hasOverlap : ''}`}
+                  style={{
+                    gridRow: `${rowStart} / span ${rowSpan}`,
+                    gridColumn: group.dayIdx + 2,
+                    zIndex: 10,
+                  }}
+                >
+                  {group.entries.map((entry, idx) => (
                     <div
-                      key={`${selectedProfessor}-${entry.day}-${entry.start_block}-${entry.end_block}-${entryIdx}`}
-                      className={styles.tileContainer}
-                      data-section-id={selectedProfessor}
-                      data-day={entry.day}
-                      data-block={entry.start_block}
+                      key={`${entry.day}-${entry.start_block}-${entry.end_block}-${entry.group}-${idx}`}
+                      className={styles.slotTileWrapper}
                       style={{
-                        gridRow: `${rowStart} / span ${rowSpan}`,
-                        gridColumn: colStart,
-                        zIndex: 10,
+                        flex: `${100 / count}%`,
+                        maxWidth: `${100 / count}%`,
                       }}
                     >
                       <ScheduleTile
                         entry={entry}
-                        sectionId={selectedProfessor ?? ''}
-                        label={entry.subject}
-                        variant="professor"
+                        sectionId={selectedSubject ?? ''}
+                        label={selectedSubject}
+                        variant="subject"
                         isCompact={rowSpan <= 1}
                       />
                     </div>
-                  );
-                }),
-              )}
+                  ))}
+                </div>
+              );
+            })}
           </div>
 
           {/* Legend */}
@@ -169,9 +233,9 @@ export function ProfessorTimeline({
                   style={{ backgroundColor: 'var(--color-primary)' }}
                 />
                 <div className={styles.legendInfo}>
-                  <span className={styles.legendLabel}>Materia</span>
+                  <span className={styles.legendLabel}>Solapamiento</span>
                   <span className={styles.legendDesc}>
-                    Cada materia tiene un color único asignado automáticamente.
+                    Grupos o profesores distintos en un mismo bloque.
                   </span>
                 </div>
               </div>
@@ -191,8 +255,8 @@ export function ProfessorTimeline({
 
       {/* ── Mobile list view ── */}
       <div className={styles.listWrapper}>
-        <ProfessorScheduleListView
-          entries={allEntries}
+        <SubjectScheduleListView
+          entries={dedupedEntries}
           activeDays={activeDays}
         />
       </div>
@@ -201,7 +265,7 @@ export function ProfessorTimeline({
         <div className={styles.emptyState}>
           <h3>No hay horarios para mostrar.</h3>
           <p className={styles.emptyText}>
-            Seleccioná un docente del catálogo para ver su horario.
+            Seleccioná una asignatura del catálogo para ver su horario.
           </p>
         </div>
       )}

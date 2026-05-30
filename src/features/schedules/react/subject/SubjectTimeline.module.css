@@ -207,11 +207,27 @@
   z-index: 5;
 }
 
-.tileContainer {
+/* ── Slot group (handles overlap) ── */
+
+.slotGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 3px;
   padding: 3px;
+  min-height: 0;
+}
+
+.slotGroup.hasOverlap {
+  background: color-mix(in srgb, var(--color-warning, #f59e0b) 8%, transparent);
+  border-radius: var(--radius-sm);
+}
+
+/* Each tile within a slot group */
+.slotTileWrapper {
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  min-width: 0;
 }
 
 /* ── Empty state ── */

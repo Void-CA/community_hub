@@ -1,5 +1,6 @@
 import fullSchedule from '../../data/schedules/2026/IIC/full_schedule.json';
 import professorSchedulesRaw from '../../data/schedules/2026/IIC/professors_schedules.json';
+import subjectSchedulesRaw from '../../data/schedules/2026/IIC/subjects_schedules.json';
 import { dayNormalization, oldToNewLabel } from './constants';
 import type {
   ProfessorSchedule,
@@ -128,11 +129,48 @@ export const schedulePeriodCatalog: SchedulePeriod[] = [
   },
 ];
 
+function normalizeSubjectSchedules(
+  rawSchedules: RawProfessorSchedules,
+  academicYearByIdentity: Map<string, number>,
+): Record<string, ProfessorSchedule> {
+  const result: Record<string, ProfessorSchedule> = {};
+
+  for (const [subjectName, subjectSchedule] of Object.entries(
+    rawSchedules,
+  )) {
+    const byDay: Record<string, ScheduleEntry[]> = {};
+
+    for (const [day, dayEntries] of Object.entries(subjectSchedule.by_day)) {
+      const normalizedDay = dayNormalization[day] ?? day;
+      const normalizedEntries: ScheduleEntry[] = dayEntries.map((entry) => {
+        const nEntry = {
+          ...entry,
+          day: dayNormalization[entry.day] ?? entry.day,
+          start_block: oldToNewLabel[entry.start_block] ?? entry.start_block,
+          end_block: oldToNewLabel[entry.end_block] ?? entry.end_block,
+        };
+        return {
+          ...nEntry,
+          academicYear:
+            academicYearByIdentity.get(buildEntryIdentity(nEntry)) ?? 0,
+        };
+      });
+
+      byDay[normalizedDay] = normalizedEntries;
+    }
+
+    result[subjectName] = { by_day: byDay };
+  }
+
+  return result;
+}
+
 export const scheduleDatasets: Record<string, ScheduleDataset> = {
   '2026-IIC': {
     period: schedulePeriodCatalog[0],
     entries: normalizeScheduleEntries(fullSchedule),
     professorSchedules: {},
+    subjectSchedules: {},
   },
 };
 
@@ -140,6 +178,10 @@ for (const dataset of Object.values(scheduleDatasets)) {
   const academicYearByIdentity = buildAcademicYearIndex(dataset.entries);
   dataset.professorSchedules = normalizeProfessorSchedules(
     professorSchedulesRaw,
+    academicYearByIdentity,
+  );
+  dataset.subjectSchedules = normalizeSubjectSchedules(
+    subjectSchedulesRaw,
     academicYearByIdentity,
   );
 }

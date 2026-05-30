@@ -1,22 +1,22 @@
 import { useEffect, useCallback } from 'react';
-import { useProfessorState } from './hooks/useProfessorState';
-import { ProfessorFilters } from './ProfessorFilters';
-import { ProfessorCatalog } from './ProfessorCatalog';
-import { ProfessorTimeline } from './ProfessorTimeline';
-import type { ProfessorDashboardProps } from '../shared/types';
-import styles from './ProfessorDashboard.module.css';
+import { useSubjectState } from './hooks/useSubjectState';
+import { SubjectFilters } from './SubjectFilters';
+import { SubjectCatalog } from './SubjectCatalog';
+import { SubjectTimeline } from './SubjectTimeline';
+import type { SubjectDashboardProps } from '../shared/types';
+import styles from './SubjectDashboard.module.css';
 
-export function ProfessorDashboard({
-  professorNames,
-  professorSchedules,
-  initialProfessor,
+export function SubjectDashboard({
+  subjectNames,
+  subjectSchedules,
+  initialSubject,
   activeDays,
   scheduleBlocks,
   schedulePeriods,
   activePeriodId,
-}: ProfessorDashboardProps) {
+}: SubjectDashboardProps) {
   const {
-    selectedProfessor,
+    selectedSubject,
     searchQuery,
     currentPage,
     totalPages,
@@ -25,16 +25,16 @@ export function ProfessorDashboard({
     sessionCount,
     totalEntries,
     isCatalogOpen,
-    selectProfessor,
+    selectSubject,
     setSearchQuery,
     setCurrentPage,
     openCatalog,
     closeCatalog,
     toggleCatalog,
-  } = useProfessorState(
-    professorNames,
-    professorSchedules,
-    initialProfessor,
+  } = useSubjectState(
+    subjectNames,
+    subjectSchedules,
+    initialSubject,
   );
 
   // Close on Escape key
@@ -49,10 +49,10 @@ export function ProfessorDashboard({
 
   return (
     <div className={styles.dashboard}>
-      <ProfessorFilters
+      <SubjectFilters
         schedulePeriods={schedulePeriods}
         activePeriodId={activePeriodId}
-        professorName={selectedProfessor}
+        subjectName={selectedSubject}
         totalEntries={totalEntries}
         sessionCount={sessionCount}
       />
@@ -70,7 +70,7 @@ export function ProfessorDashboard({
         {/* Overlay catalog panel */}
         <div
           className={`${styles.overlay} ${isCatalogOpen ? styles.overlayOpen : ''}`}
-          aria-label="Catálogo de docentes"
+          aria-label="Catálogo de asignaturas"
           aria-hidden={!isCatalogOpen}
         >
           <button
@@ -81,12 +81,12 @@ export function ProfessorDashboard({
           >
             ✕
           </button>
-          <ProfessorCatalog
+          <SubjectCatalog
             visibleNames={visibleNames}
             totalCount={filteredCount}
-            professorSchedules={professorSchedules}
-            selectedProfessor={selectedProfessor}
-            onSelectProfessor={selectProfessor}
+            subjectSchedules={subjectSchedules}
+            selectedSubject={selectedSubject}
+            onSelectSubject={selectSubject}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             currentPage={currentPage}
@@ -98,9 +98,9 @@ export function ProfessorDashboard({
 
         {/* Timeline — always full width */}
         <div className={styles.layout}>
-          <ProfessorTimeline
-            selectedProfessor={selectedProfessor}
-            professorSchedules={professorSchedules}
+          <SubjectTimeline
+            selectedSubject={selectedSubject}
+            subjectSchedules={subjectSchedules}
             activeDays={activeDays}
             scheduleBlocks={scheduleBlocks}
             isCatalogOpen={isCatalogOpen}

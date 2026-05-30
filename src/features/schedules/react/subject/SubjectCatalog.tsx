@@ -1,55 +1,54 @@
 import { useMemo, useRef, useEffect, useCallback } from 'react';
 import { dayOrder } from '@/lib/schedules/constants';
-import type { ProfessorCatalogProps } from '../shared/types';
-import styles from './ProfessorCatalog.module.css';
+import type { SubjectCatalogProps } from '../shared/types';
+import styles from './SubjectCatalog.module.css';
 
-export function ProfessorCatalog({
+export function SubjectCatalog({
   visibleNames,
   totalCount,
-  professorSchedules,
-  selectedProfessor,
-  onSelectProfessor,
+  subjectSchedules,
+  selectedSubject,
+  onSelectSubject,
   searchQuery,
   onSearchChange,
   currentPage,
   totalPages,
   onPageChange,
   isCatalogOpen,
-}: ProfessorCatalogProps) {
+}: SubjectCatalogProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   // Auto-focus search when catalog opens
   useEffect(() => {
     if (isCatalogOpen && inputRef.current) {
-      // Small delay to let the transition complete
       const timer = setTimeout(() => inputRef.current?.focus(), 150);
       return () => clearTimeout(timer);
     }
   }, [isCatalogOpen]);
 
-  // Pre-compute workload per professor (for visible names only)
+  // Pre-compute workload per subject (for visible names only)
   const workloadMap = useMemo(() => {
     const map = new Map<
       string,
-      { subjects: number; days: number; byDay: Record<string, number> }
+      { groups: number; days: number; byDay: Record<string, number> }
     >();
     for (const name of visibleNames) {
-      const schedule = professorSchedules[name];
+      const schedule = subjectSchedules[name];
       if (!schedule) continue;
       const entries = dayOrder.flatMap(
         (day) => schedule.by_day[day] ?? [],
       );
       const days = new Set(entries.map((e) => e.day)).size;
-      const subjects = new Set(entries.map((e) => e.subject)).size;
+      const groups = new Set(entries.map((e) => e.group)).size;
       const byDay: Record<string, number> = {};
       for (const day of dayOrder) {
         byDay[day] = (schedule.by_day[day] ?? []).length;
       }
-      map.set(name, { subjects, days, byDay });
+      map.set(name, { groups, days, byDay });
     }
     return map;
-  }, [visibleNames, professorSchedules]);
+  }, [visibleNames, subjectSchedules]);
 
   const getPageNumbers = useCallback(
     (current: number, total: number): (number | null)[] => {
@@ -76,12 +75,12 @@ export function ProfessorCatalog({
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       const buttons = listRef.current?.querySelectorAll<HTMLButtonElement>(
-        '[data-professor-card]',
+        '[data-subject-card]',
       );
       if (!buttons || buttons.length === 0) return;
 
       const currentIndex = Array.from(buttons).findIndex(
-        (btn) => btn.dataset.professor === selectedProfessor,
+        (btn) => btn.dataset.subject === selectedSubject,
       );
 
       let nextIndex = -1;
@@ -95,21 +94,19 @@ export function ProfessorCatalog({
           currentIndex > 0 ? currentIndex - 1 : buttons.length - 1;
       } else if (e.key === 'Enter' && currentIndex >= 0) {
         e.preventDefault();
-        onSelectProfessor(selectedProfessor);
+        onSelectSubject(selectedSubject);
         return;
       }
 
       if (nextIndex >= 0) {
         const target = buttons[nextIndex];
-        const name = target.dataset.professor ?? '';
-        // Scroll into view
+        const name = target.dataset.subject ?? '';
         target.scrollIntoView({ block: 'nearest' });
         target.focus();
-        // Select via the callback
-        onSelectProfessor(name);
+        onSelectSubject(name);
       }
     },
-    [selectedProfessor, onSelectProfessor],
+    [selectedSubject, onSelectSubject],
   );
 
   const hasResults = visibleNames.length > 0;
@@ -119,7 +116,7 @@ export function ProfessorCatalog({
       <div className={styles.head}>
         <div>
           <p className={styles.eyebrow}>Catálogo</p>
-          <h2>Docentes</h2>
+          <h2>Asignaturas</h2>
         </div>
         <p className={styles.count}>
           <span>{totalCount}</span> disponibles
@@ -127,7 +124,7 @@ export function ProfessorCatalog({
       </div>
 
       <label className={styles.searchBox}>
-        <span className={styles.srOnly}>Buscar profesor</span>
+        <span className={styles.srOnly}>Buscar asignatura</span>
         <div className={styles.searchInputWrapper}>
           <svg
             className={styles.searchIcon}
@@ -178,27 +175,25 @@ export function ProfessorCatalog({
           <div ref={listRef} className={styles.list}>
             {visibleNames.map((name) => {
               const workload = workloadMap.get(name);
-              const isSelected = name === selectedProfessor;
+              const isSelected = name === selectedSubject;
 
               return (
                 <button
                   key={name}
                   type="button"
                   className={`${styles.card} ${isSelected ? styles.isSelected : ''}`}
-                  data-professor-card
-                  data-professor={name}
+                  data-subject-card
+                  data-subject={name}
                   aria-pressed={isSelected}
-                  onClick={() => onSelectProfessor(name)}
+                  onClick={() => onSelectSubject(name)}
                 >
                   <div className={styles.cardTop}>
                     <div>
                       <h4>{name}</h4>
                       {workload && (
                         <p className={styles.subtitle}>
-                          {workload.subjects}{' '}
-                          {workload.subjects === 1
-                            ? 'materia'
-                            : 'materias'}{' '}
+                          {workload.groups}{' '}
+                          {workload.groups === 1 ? 'grupo' : 'grupos'}{' '}
                           en {workload.days}{' '}
                           {workload.days === 1 ? 'día' : 'días'}
                         </p>
@@ -281,7 +276,7 @@ export function ProfessorCatalog({
           <p className={styles.emptyDesc}>
             {searchQuery
               ? 'Probá con otro nombre o término de búsqueda.'
-              : 'No hay docentes disponibles para este período.'}
+              : 'No hay asignaturas disponibles para este período.'}
           </p>
         </div>
       )}

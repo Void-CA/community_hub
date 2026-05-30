@@ -73,7 +73,7 @@ export interface ScheduleTileProps {
   sectionId: string;
   label?: string;
   hasConflict?: boolean;
-  variant?: 'student' | 'professor';
+  variant?: 'student' | 'professor' | 'subject';
   isCompact?: boolean;
 }
 
@@ -102,7 +102,10 @@ export interface ProfessorFiltersProps {
 }
 
 export interface ProfessorCatalogProps {
-  professorNames: string[];
+  /** Filtered + paginated list to display */
+  visibleNames: string[];
+  /** Total count across all pages (for the "disponibles" label) */
+  totalCount: number;
   professorSchedules: Record<string, ProfessorSchedule>;
   selectedProfessor: string;
   onSelectProfessor: (name: string) => void;
@@ -111,6 +114,8 @@ export interface ProfessorCatalogProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  /** Whether the catalog overlay is open (for auto-focus) */
+  isCatalogOpen: boolean;
 }
 
 export interface ProfessorTimelineProps {
@@ -120,4 +125,47 @@ export interface ProfessorTimelineProps {
   scheduleBlocks: readonly ScheduleBlockItem[];
   isCatalogOpen: boolean;
   onToggleCatalog: () => void;
+}
+
+// ── Subject view ──
+
+export interface SubjectDashboardProps {
+  subjectNames: string[];
+  subjectSchedules: Record<string, ProfessorSchedule>;
+  initialSubject: string;
+  activeDays: ActiveDay[];
+  scheduleBlocks: readonly ScheduleBlockItem[];
+  schedulePeriods: SchedulePeriod[];
+  activePeriodId: string;
+}
+
+export interface SubjectCatalogProps {
+  visibleNames: string[];
+  totalCount: number;
+  subjectSchedules: Record<string, ProfessorSchedule>;
+  selectedSubject: string;
+  onSelectSubject: (name: string) => void;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  isCatalogOpen: boolean;
+}
+
+export interface SubjectTimelineProps {
+  selectedSubject: string | null;
+  subjectSchedules: Record<string, ProfessorSchedule>;
+  activeDays: ActiveDay[];
+  scheduleBlocks: readonly ScheduleBlockItem[];
+  isCatalogOpen: boolean;
+  onToggleCatalog: () => void;
+}
+
+export interface SubjectFiltersProps {
+  schedulePeriods: SchedulePeriod[];
+  activePeriodId: string;
+  subjectName: string;
+  totalEntries: number;
+  sessionCount: number;
 }

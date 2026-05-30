@@ -1,0 +1,41 @@
+---
+import AppLayout from '@/layouts/AppLayout.astro';
+import {
+  dayNames,
+  resolveScheduleDatasetByYearTerm,
+  scheduleBlocks,
+  schedulePeriods,
+} from '@/lib/schedules';
+import { SubjectDashboard } from '@/features/schedules/react/subject/SubjectDashboard';
+
+const yearParam = Astro.url.searchParams.get('year');
+const termParam = Astro.url.searchParams.get('term');
+const dataset = resolveScheduleDatasetByYearTerm(yearParam, termParam);
+const semesterLabel = dataset.period.label;
+const scheduleEntries = dataset.entries;
+const subjectSchedules = dataset.subjectSchedules;
+
+const subjectNames = Object.keys(subjectSchedules).sort((a, b) =>
+  new Intl.Collator('es', { sensitivity: 'base' }).compare(a, b),
+);
+const initialSubject = subjectNames[0] ?? '';
+const activeDays = dayNames.filter((day) =>
+  scheduleEntries.some((entry) => entry.day === day.code),
+);
+---
+
+<AppLayout
+  title={`Horarios de Asignaturas | ${semesterLabel}`}
+  description="Vista compacta de horarios para asignaturas, con búsqueda por nombre y grilla por bloques."
+>
+  <SubjectDashboard
+    client:load
+    subjectNames={subjectNames}
+    subjectSchedules={subjectSchedules}
+    initialSubject={initialSubject}
+    activeDays={activeDays}
+    scheduleBlocks={scheduleBlocks}
+    schedulePeriods={schedulePeriods}
+    activePeriodId={dataset.period.id}
+  />
+</AppLayout>

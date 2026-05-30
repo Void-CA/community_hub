@@ -7,6 +7,7 @@ import {
   ArrowRight,
   Search,
   Info,
+  BookOpen,
 } from '@lucide/astro';
 
 export const dayOrder = ['L', 'M', 'X', 'J', 'V', 'S'];
@@ -77,6 +78,7 @@ export const oldToNewLabel: Record<string, string> = {
 export const ICON_MAP = {
   student: GraduationCap,
   professor: Users,
+  subject: BookOpen,
   conflict: AlertTriangle,
   room: MapPin,
   time: Clock,

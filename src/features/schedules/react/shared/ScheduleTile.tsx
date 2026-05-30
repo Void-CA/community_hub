@@ -72,6 +72,18 @@ export function ScheduleTile({
               {academicYearLabel}
             </span>
           )}
+          {variant === 'subject' && (
+            <div className={styles.subjectFooter}>
+              {entry.majors.length > 0 && (
+                <span className={styles.majorBadge}>
+                  {entry.majors.join(' · ')}
+                </span>
+              )}
+              <span className={styles.subjectProfessor}>
+                {professorAlias}
+              </span>
+            </div>
+          )}
         </footer>
       </div>
 

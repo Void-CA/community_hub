@@ -5,24 +5,24 @@ import type { ScheduleEntry } from '@/lib/schedules/types';
 
 const PAGE_SIZE = 6;
 
-export function useProfessorState(
-  professorNames: string[],
-  professorSchedules: Record<string, { by_day: Record<string, ScheduleEntry[]> }>,
-  initialProfessor: string,
+export function useSubjectState(
+  subjectNames: string[],
+  subjectSchedules: Record<string, { by_day: Record<string, ScheduleEntry[]> }>,
+  initialSubject: string,
 ) {
-  const [selectedProfessor, setSelectedProfessor] = useState(initialProfessor);
+  const [selectedSubject, setSelectedSubject] = useState(initialSubject);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
-  // Filtered + paginated professor names
+  // Filtered + paginated subject names
   const filteredNames = useMemo(() => {
-    if (!searchQuery.trim()) return professorNames;
+    if (!searchQuery.trim()) return subjectNames;
     const q = searchQuery.toLowerCase().trim();
-    return professorNames.filter((name) =>
+    return subjectNames.filter((name) =>
       name.toLowerCase().includes(q),
     );
-  }, [professorNames, searchQuery]);
+  }, [subjectNames, searchQuery]);
 
   const filteredCount = filteredNames.length;
 
@@ -36,22 +36,22 @@ export function useProfessorState(
     return filteredNames.slice(start, start + PAGE_SIZE);
   }, [filteredNames, currentPage]);
 
-  // Entries for the currently selected professor
+  // Entries for the currently selected subject
   const currentEntries: ScheduleEntry[] = useMemo(() => {
-    if (!selectedProfessor) return [];
-    const schedule = professorSchedules[selectedProfessor];
+    if (!selectedSubject) return [];
+    const schedule = subjectSchedules[selectedSubject];
     if (!schedule) return [];
     return dayOrder.flatMap(
       (day) => sortEntries(schedule.by_day[day] ?? []),
     );
-  }, [selectedProfessor, professorSchedules]);
+  }, [selectedSubject, subjectSchedules]);
 
   const sessionCount = currentEntries.length;
 
-  // Total entries across all professors
+  // Total entries across all subjects
   const totalEntries = useMemo(
     () =>
-      Object.values(professorSchedules).reduce(
+      Object.values(subjectSchedules).reduce(
         (sum, schedule) =>
           sum +
           Object.values(schedule.by_day).reduce(
@@ -60,7 +60,7 @@ export function useProfessorState(
           ),
         0,
       ),
-    [professorSchedules],
+    [subjectSchedules],
   );
 
   // Reset page when search changes
@@ -69,8 +69,8 @@ export function useProfessorState(
     setCurrentPage(1);
   }, []);
 
-  const selectProfessor = useCallback((name: string) => {
-    setSelectedProfessor(name);
+  const selectSubject = useCallback((name: string) => {
+    setSelectedSubject(name);
     setIsCatalogOpen(false);
   }, []);
 
@@ -82,7 +82,7 @@ export function useProfessorState(
   );
 
   return {
-    selectedProfessor,
+    selectedSubject,
     searchQuery,
     currentPage,
     totalPages,
@@ -92,7 +92,7 @@ export function useProfessorState(
     sessionCount,
     currentEntries,
     isCatalogOpen,
-    selectProfessor,
+    selectSubject,
     setSearchQuery: handleSearchChange,
     setCurrentPage,
     openCatalog,

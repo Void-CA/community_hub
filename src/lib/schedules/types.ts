@@ -18,6 +18,7 @@ export interface ProfessorSchedule {
 export type IconIntent =
   | 'student'
   | 'professor'
+  | 'subject'
   | 'conflict'
   | 'room'
   | 'time'
@@ -42,6 +43,7 @@ export interface ScheduleDataset {
   period: SchedulePeriod;
   entries: ScheduleEntry[];
   professorSchedules: Record<string, ProfessorSchedule>;
+  subjectSchedules: Record<string, ProfessorSchedule>;
 }
 
 export interface ScheduleSection {

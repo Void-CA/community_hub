@@ -131,6 +131,22 @@
   letter-spacing: 0.02em;
 }
 
+.subjectFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.subjectProfessor {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .hasConflict {
   border-left-color: var(--color-error) !important;
   background: color-mix(in srgb, var(--color-error) 4%, var(--color-surface));
