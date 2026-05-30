@@ -1,0 +1,108 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--navbar-height));
+  position: relative;
+}
+
+.section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) 0;
+  position: relative;
+}
+
+.layout {
+  flex: 1;
+  min-height: 0;
+  max-width: 100%;
+  padding: 0 var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    height: auto;
+    min-height: calc(100dvh - var(--navbar-height));
+  }
+  .layout {
+    padding: 0 var(--space-3);
+  }
+}
+
+/* ── Backdrop ── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  top: var(--navbar-height);
+  z-index: 99;
+  background: color-mix(in srgb, var(--color-bg) 50%, transparent);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Overlay panel ── */
+
+.overlay {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  z-index: 100;
+  width: 340px;
+  max-width: 85vw;
+  height: calc(100dvh - var(--navbar-height));
+  background: var(--color-surface);
+  border-right: var(--border-width-sm) solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overlayOpen {
+  transform: translateX(0);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 10;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--color-surface-muted);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  transition: all var(--transition-base);
+  font-family: inherit;
+}
+
+.closeButton:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    width: 100%;
+    max-width: 100%;
+    border-right: none;
+  }
+}
