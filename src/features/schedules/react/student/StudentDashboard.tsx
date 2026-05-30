@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useScheduleState } from './hooks/useScheduleState';
 import { StudentFilters } from './StudentFilters';
 import { StudentCatalog } from './StudentCatalog';
@@ -10,6 +10,9 @@ import styles from './StudentDashboard.module.css';
  * Orchestrator for the Student Schedule feature.
  * Receives data from Astro (build-time), manages reactive state via hooks,
  * and renders the three sub-components: Filters, Catalog, Timeline.
+ *
+ * The catalog is now an OVERLAY panel that slides in from the left, leaving
+ * the schedule with full focus at all times.
  */
 export function StudentDashboard({
   allSections,
@@ -23,7 +26,7 @@ export function StudentDashboard({
   periodMajors,
   periodYears,
 }: StudentDashboardProps) {
-  const [isCatalogOpen, setIsCatalogOpen] = useState(true);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
   // The core hook manages all selection/filter state
   const {
@@ -39,7 +42,22 @@ export function StudentDashboard({
     toggleSection,
   } = useScheduleState(allSections, initialMajor, initialYear);
 
-  const toggleCatalog = () => setIsCatalogOpen((prev) => !prev);
+  const openCatalog = useCallback(() => setIsCatalogOpen(true), []);
+  const closeCatalog = useCallback(() => setIsCatalogOpen(false), []);
+  const toggleCatalog = useCallback(
+    () => setIsCatalogOpen((prev) => !prev),
+    [],
+  );
+
+  // Close on Escape key
+  useEffect(() => {
+    if (!isCatalogOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeCatalog();
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [isCatalogOpen, closeCatalog]);
 
   return (
     <div id="student-schedule-dashboard" className={styles.dashboard}>
@@ -57,25 +75,46 @@ export function StudentDashboard({
       />
 
       <section className={styles.section}>
-        <div className={`${styles.layout} ${isCatalogOpen ? styles.catalogOpen : styles.catalogClosed}`}>
-          <div className={styles.explorer}>
-            <StudentCatalog
-              visibleSections={visibleSections}
-              selectedIds={selectedIds}
-              ghostedSections={ghostedSections}
-              onToggleSection={toggleSection}
-            />
-          </div>
+        {/* Backdrop */}
+        {isCatalogOpen && (
+          <div
+            className={styles.backdrop}
+            onClick={closeCatalog}
+            aria-hidden="true"
+          />
+        )}
 
-          <div className={styles.timeline}>
-            <StudentTimeline
-              selectedSections={selectedSections}
-              activeDays={activeDays}
-              scheduleBlocks={scheduleBlocks}
-              isCatalogOpen={isCatalogOpen}
-              onToggleCatalog={toggleCatalog}
-            />
-          </div>
+        {/* Overlay catalog panel */}
+        <div
+          className={`${styles.overlay} ${isCatalogOpen ? styles.overlayOpen : ''}`}
+          aria-label="Catálogo de asignaturas"
+          aria-hidden={!isCatalogOpen}
+        >
+          <button
+            className={styles.closeButton}
+            onClick={closeCatalog}
+            aria-label="Cerrar catálogo"
+            type="button"
+          >
+            ✕
+          </button>
+          <StudentCatalog
+            visibleSections={visibleSections}
+            selectedIds={selectedIds}
+            ghostedSections={ghostedSections}
+            onToggleSection={toggleSection}
+          />
+        </div>
+
+        {/* Timeline — always full width */}
+        <div className={styles.layout}>
+          <StudentTimeline
+            selectedSections={selectedSections}
+            activeDays={activeDays}
+            scheduleBlocks={scheduleBlocks}
+            isCatalogOpen={isCatalogOpen}
+            onToggleCatalog={toggleCatalog}
+          />
         </div>
       </section>
     </div>
