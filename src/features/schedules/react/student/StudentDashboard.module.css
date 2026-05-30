@@ -24,7 +24,8 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  z-index: 90;
+  top: var(--navbar-height);
+  z-index: 99;
   background: color-mix(in srgb, var(--color-bg) 50%, transparent);
   backdrop-filter: blur(2px);
   animation: fadeIn 0.2s ease;
@@ -43,13 +44,12 @@
 
 .overlay {
   position: fixed;
-  top: 0;
+  top: var(--navbar-height);
   left: 0;
   z-index: 100;
   width: 340px;
   max-width: 85vw;
-  height: 100vh;
-  height: 100dvh;
+  height: calc(100dvh - var(--navbar-height));
   background: var(--color-surface);
   border-right: var(--border-width-sm) solid var(--color-border);
   box-shadow: var(--shadow-lg);

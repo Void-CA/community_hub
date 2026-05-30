@@ -56,7 +56,7 @@
 }
 
 @media (max-width: 768px) {
-  .catalogToggle {
+  .catalogToggle .toggleLabel {
     display: none;
   }
 }
