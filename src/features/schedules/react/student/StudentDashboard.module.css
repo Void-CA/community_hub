@@ -22,6 +22,10 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard {
+    height: auto;
+    min-height: calc(100dvh - var(--navbar-height));
+  }
   .layout {
     padding: 0 var(--space-3);
   }
